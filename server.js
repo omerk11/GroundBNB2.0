@@ -44,6 +44,3 @@ const server = http.createServer(app);
 server.on("error", onError);
 server.on("listening", onListening);
 server.listen(port);
-// server.listen(port, function() {
-//     console.log(`Example app listening on port ${port}!`)
-//   });
