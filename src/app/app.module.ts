@@ -10,13 +10,15 @@ import {MatCardModule} from '@angular/material/card';//added manualy
 import {MatButtonModule} from '@angular/material/button';//added manualy
 import {MatToolbarModule} from '@angular/material/toolbar';//added manualy
 import {MatExpansionModule} from '@angular/material/expansion';
-import { HeaderComponent } from './header/header.component';//added manualy
+import { HeaderComponent } from './header/header.component';
+import { ApartmentListComponent } from './apartments/apartment-list/apartment-list.component';//added manualy
 
 @NgModule({
   declarations: [
     AppComponent,
     ApartmentCreateComponent,
-    HeaderComponent
+    HeaderComponent,
+    ApartmentListComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,8 @@ import { HeaderComponent } from './header/header.component';//added manualy
     MatInputModule,
     MatCardModule,
     MatButtonModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
