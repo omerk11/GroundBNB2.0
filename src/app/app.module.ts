@@ -9,12 +9,14 @@ import {MatInputModule} from '@angular/material/input';//added manualy
 import {MatCardModule} from '@angular/material/card';//added manualy
 import {MatButtonModule} from '@angular/material/button';//added manualy
 import {MatToolbarModule} from '@angular/material/toolbar';//added manualy
-import {MatExpansionModule} from '@angular/material/expansion';//added manualy
+import {MatExpansionModule} from '@angular/material/expansion';
+import { HeaderComponent } from './header/header.component';//added manualy
 
 @NgModule({
   declarations: [
     AppComponent,
-    ApartmentCreateComponent
+    ApartmentCreateComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +24,8 @@ import {MatExpansionModule} from '@angular/material/expansion';//added manualy
     BrowserAnimationsModule,
     MatInputModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
