@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Apartment } from "./apartments/apartment.model"
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'groundbnb2.0';
+  storedApartments:Apartment[]=[];
 }
