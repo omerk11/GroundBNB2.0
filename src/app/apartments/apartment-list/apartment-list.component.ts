@@ -7,5 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApartmentListComponent 
 {
-
+  apartments = [
+    {
+      name:"hatira shel habanim",
+      description:"hatira of lord abba",
+      city:"Rishon LeZion",
+      address:"Harashba 10",
+      price:"39",
+      maxvisitors:"2"
+    },
+    {
+      name:"The kingdon of evil shel savta",
+      description:"mi maspik amitz laharog et savato shelo",
+      city:"Rishon LeZion",
+      address:"HaNagid 9",
+      price:"39",
+      maxvisitors:"2"
+    }
+  ]
 }
