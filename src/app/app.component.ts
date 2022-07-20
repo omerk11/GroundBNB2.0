@@ -6,12 +6,7 @@ import { Apartment } from "./apartments/apartment.model"
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  storedApartments:Apartment[]=[];
+export class AppComponent  
+{
   
-  onApartmentAdded(apartment:Apartment)
-  {
-    this.storedApartments.push(apartment)
-  }
-
 }
