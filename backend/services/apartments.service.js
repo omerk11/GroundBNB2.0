@@ -16,3 +16,8 @@ exports.getAllApartments = async function(err) {
 // mongo.get
 // validations
 // return to client
+
+exports.addApartment = async function(apartment){
+    let res = await mongoModel.addApartment(apartment);
+    return res;
+}
