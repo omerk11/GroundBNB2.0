@@ -1,23 +1,27 @@
 const mongoModel = require('../models/mongoModel');
-
+const table = 'apartments';
 
 
 exports.test = async function(){
     return('apartments')
 };
 
-exports.getAllApartments = async function(err) {
-    if (err) throw err;
-    let result = await mongoModel.getAllApartments();
+exports.getAllApartments = async function() {
+    let result = await mongoModel.getAll(table);
+    //TODO: validation and create response
+
       if (err) throw err;
       return(result);
 };
-// get all apartments 
-// mongo.get
-// validations
-// return to client
 
 exports.addApartment = async function(apartment){
-    let res = await mongoModel.addApartment(apartment);
+    let res = await mongoModel.addElement(table,apartment);
+    //TODO: validation and create response
+
     return res;
+}
+
+exports.getApartmentById = async function(apartmentId){
+    let result = await mongoModel.getElementById(table,apartmentId);
+    //TODO: validation and create response
 }
