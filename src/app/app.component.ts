@@ -7,11 +7,6 @@ import { Apartment } from "./apartments/apartment.model"
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  storedApartments:Apartment[]=[];
-  
-  onApartmentAdded(apartment:Apartment)
-  {
-    this.storedApartments.push(apartment)
-  }
+
 
 }
