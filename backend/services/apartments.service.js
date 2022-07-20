@@ -21,10 +21,18 @@ exports.getAllApartments = async function() {
 };
 
 exports.addApartment = async function(apartment){
+    let response = {message: '', data : ''}
     let res = await mongoModel.addElement(table,apartment);
-    //TODO: validation and create response
+    if(res.acknowledged == true){
+        response.message = "Succussfully added apartment";
+        response.data = res.insertedId;
+    }
+    else{
+        response.message = "Failed to add apartment";
+        response.data = res;
+    }
 
-    return res;
+    return response;
 }
 
 exports.getApartmentById = async function(apartmentId){

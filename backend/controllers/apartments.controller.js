@@ -3,6 +3,8 @@ const apartmentService = require('../services/apartments.service');
 exports.eventParser = async function(req,res){
     let result;
     let id;
+    let apartment;
+    let updates;
     // console.log(req.body);
     switch(req.body.type){
         case 'getAllApartments':
@@ -28,7 +30,7 @@ exports.eventParser = async function(req,res){
             console.log("end test");
             break;
         case 'addApartment':
-            let apartment = JSON.parse(req.body.element);
+            apartment = JSON.parse(req.body.element);
             console.log(apartment);
             console.log("apartment addApartment");
             result = await apartmentService.addApartment(apartment);
@@ -37,7 +39,7 @@ exports.eventParser = async function(req,res){
             break;
         case 'updateApartment':
             id = req.body.id;
-            let updates = JSON.parse(req.body.updates);
+            updates = JSON.parse(req.body.updates);
             console.log("apartment updateApartment");
             result = await apartmentService.updateApartmentById(id,updates);
             console.log(result);
