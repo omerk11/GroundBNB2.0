@@ -1,0 +1,12 @@
+<mat-accordion multi="true">
+    <mat-expansion-panel *ngFor="let ap of apartments">
+        <mat-expansion-panel-header>
+            Name: {{ap.name}} | City: {{ap.city}} | Price: {{ap.price}}
+        </mat-expansion-panel-header>
+        <p>
+            Description: {{ap.description}}<br>
+            Address: {{ap.address}}<br>
+            Max-Visitors: {{ap.maxvisitors}}<br>
+        </p>
+    </mat-expansion-panel>
+</mat-accordion>
