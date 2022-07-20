@@ -15,7 +15,7 @@ swaggerDocument = {
     }
 }
 
-app.use('/api/apartments',apartmentsController.eventParser);
+app.use('/api/apartments',apartmentsController.eventParser1);
 app.use('/api/users',usersController.eventParser);
 app.use('/api/reservations',reservationController.eventParser);
 
