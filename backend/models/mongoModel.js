@@ -33,7 +33,7 @@ exports.getApartmentById = async function(apartmentId){
     const db = client.db('tables');
     let collection = db.collection('apartments');
     let query = {id : apartmentId};
-    let res = await collection.findOne(query).toArray();
+    let res = await collection.findOne(query);
     return res;
   } catch (error) {
     console.error(error);
@@ -41,6 +41,7 @@ exports.getApartmentById = async function(apartmentId){
     client.close();
   }
 }
+
 exports.addApartment = async function(apartment){
     const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
   
@@ -57,10 +58,9 @@ exports.addApartment = async function(apartment){
     }finally{
       client.close();
     }
-  }
+}
 
-
-exports.deleteApartmentById = async function(){
+exports.deleteApartmentById = async function(apartmentId){
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -70,7 +70,7 @@ exports.deleteApartmentById = async function(){
     const db = client.db('tables');
     let collection = db.collection('apartments');
     let query = {id : apartmentId};
-    let res = await collection.deleteOne(query).toArray();
+    let res = await collection.deleteOne(query);
     return res;
   } catch (error) {
     console.error(error);
@@ -78,11 +78,11 @@ exports.deleteApartmentById = async function(){
     client.close();
   }
 }
+
 exports.updateApartmentById = async function(){};
 
 
 // ----------- Users Queries -----------
-// get all users
 exports.getAllUsers = async function(){
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
@@ -101,12 +101,65 @@ exports.getAllUsers = async function(){
     client.close();
   }
 }
-// add user
-// delete user
+
+exports.getUserById = async function(userId){
+  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+
+  if (!client) {
+      return;
+  }
+  try {
+    const db = client.db('tables');
+    let collection = db.collection('users');
+    let query = {id : userId};
+    let res = await collection.findOne(query);
+    return res;
+  } catch (error) {
+    console.error(error);
+  }finally{
+    client.close();
+  }
+}
+
+exports.addUser = async function(user){
+  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+
+  if (!client) {
+      return;
+  }
+  try {
+    const db = client.db('tables');
+    let collection = db.collection('users');
+    let res = await collection.insertOne(user);
+    return res;
+  } catch (error) {
+    console.error(error);
+  }finally{
+    client.close();
+  }
+}
+
+exports.deleteUserById = async function(userId){
+  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+
+  if (!client) {
+      return;
+  }
+  try {
+    const db = client.db('tables');
+    let collection = db.collection('users');
+    let query = {id : userId};
+    let res = await collection.deleteOne(query);
+    return res;
+  } catch (error) {
+    console.error(error);
+  }finally{
+    client.close();
+  }
+}
 // update user
 
 // ----------- Reservations Queries -----------
-// get all reservations
 exports.getAllReservations = async function(){
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
@@ -125,7 +178,61 @@ exports.getAllReservations = async function(){
     client.close();
   }
 }
-// add reservation
-// delete reservation
+
+exports.getReservationById = async function(reservationId){
+  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+
+  if (!client) {
+      return;
+  }
+  try {
+    const db = client.db('tables');
+    let collection = db.collection('reservations');
+    let query = {id : reservationId};
+    let res = await collection.findOne(query);
+    return res;
+  } catch (error) {
+    console.error(error);
+  }finally{
+    client.close();
+  }
+}
+
+exports.addReservation = async function(reservation){
+  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+
+  if (!client) {
+      return;
+  }
+  try {
+    const db = client.db('tables');
+    let collection = db.collection('reservations');
+    let res = await collection.insertOne(reservation);
+    return res;
+  } catch (error) {
+    console.error(error);
+  }finally{
+    client.close();
+  }
+}
+
+exports.deleteReservationById = async function(reservationId){
+  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+
+  if (!client) {
+      return;
+  }
+  try {
+    const db = client.db('tables');
+    let collection = db.collection('reservations');
+    let query = {id : reservationId};
+    let res = await collection.deleteOne(query);
+    return res;
+  } catch (error) {
+    console.error(error);
+  }finally{
+    client.close();
+  }
+}
 // update reservations
 
