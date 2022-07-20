@@ -20,7 +20,7 @@ export class ApartmentListComponent implements OnInit, OnDestroy
 
   ngOnInit(): void 
   {// when ap-list is created
-    this.apartments = this.apartmentsService.getApartments();// get all aps
+    this.apartmentsService.getApartments();// get all aps
     this.apartmentsSub = this.apartmentsService.getApartmentUpdateListener()// add the list as a observer of ap.service
     .subscribe((apartments: Apartment[])=>//on ap.service updating, update apartments list
     {

@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";//added manualy
 
 import { Apartment } from "./apartment.model";
 
@@ -9,9 +10,20 @@ export class ApartmentsService
     private apartments: Apartment[]=[];
     private apartmentsUpdated = new Subject<Apartment[]>();
 
+    constructor(private http:HttpClient)
+    {
+
+    }
+
     getApartments()
     {
-        return [...this.apartments];
+        //TODO: sync with backend apartment.service
+        this.http.get<{message:String, apartments:Apartment[]}>("http://localhost:3000/api/apartments")// requesst all apartments from app
+        .subscribe((data)=>// upon getting data
+        {
+            this.apartments = data.apartments;// update apartments arr
+            this.apartmentsUpdated.next([...this.apartments]);// notify observers
+        });
     }
 
     getApartmentUpdateListener()
@@ -31,7 +43,7 @@ export class ApartmentsService
     {
         const newAp = // create new ap from params
         {
-        id:"-1",    
+        id:"-1",//TODO: edit
         name:name,
         description:description,
         city:city,

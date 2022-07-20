@@ -6,7 +6,7 @@ import { Apartment } from "./apartments/apartment.model"
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-
-
+export class AppComponent  
+{
+  
 }
