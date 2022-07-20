@@ -1,5 +1,6 @@
 const express = require('express');
-const app = express()
+const app = express().use(express.urlencoded({ extended: false }))
+.use(express.json());
 const swaggerUi =require('swagger-ui-express')
 const usersController = require('./controllers/users.controller.js');
 const apartmentsController = require('./controllers/apartments.controller.js');

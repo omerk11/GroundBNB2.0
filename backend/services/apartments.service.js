@@ -1,17 +1,23 @@
 const mongoModel = require('../models/mongoModel');
 const table = 'apartments';
 
-
 exports.test = async function(){
     return('apartments')
 };
 
 exports.getAllApartments = async function() {
+    let response = {message: '', data : ''}
     let result = await mongoModel.getAll(table);
+    response.data = result
+    if(result.length == 0){
+        response.message = 'Didnt find any apartments';
+    }
+    else{
+        response.message = 'Apartments fetched succussfully';
+    }
     //TODO: validation and create response
 
-      if (err) throw err;
-      return(result);
+    return response;
 };
 
 exports.addApartment = async function(apartment){

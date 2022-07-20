@@ -3,7 +3,7 @@ const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://admin:1q2w3e@cluster0.hd0gejt.mongodb.net/?retryWrites=true&w=majority";
 
 
-// // ----------- Apartments Queries -----------
+// // ----------- Old Queries -----------
 // exports.getAllApartments = async function(){
 //   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
