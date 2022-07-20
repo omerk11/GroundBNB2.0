@@ -28,6 +28,18 @@ exports.addApartment = async function(apartment){
 }
 
 exports.getApartmentById = async function(apartmentId){
-    let result = await mongoModel.getElementById(table,apartmentId);
+    let result = await mongoModel.getById(table,apartmentId);
+    return result;
     //TODO: validation and create response
+}
+
+exports.deleteApartmentById = async function(apartmentId){
+    let result = await mongoModel.deleteById(table,apartmentId);
+    return result;
+    //TODO: validation and create response
+}
+
+exports.updateApartmentById = async function(apartmentId,changes){
+    let result = await mongoModel.updateElementById(table,apartmentId,changes);
+    return result;
 }

@@ -276,7 +276,7 @@ exports.getAll = async function(table){
   }
 }
 
-exports.getById = async function(table,id){
+exports.getById = async function(table,element_id){
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -285,7 +285,7 @@ exports.getById = async function(table,id){
   try {
     const db = client.db('tables');
     let collection = db.collection(table);
-    let query = {id : id};
+    let query = {id : element_id};
     let res = await collection.findOne(query);
     return res;
   } catch (error) {
@@ -313,7 +313,8 @@ exports.addElement = async function(table,element){
   }
 }
 
-exports.deleteById = async function(table,id){
+exports.deleteById = async function(table,element_id){
+  console.log("mongo deleteById")
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -322,7 +323,7 @@ exports.deleteById = async function(table,id){
   try {
     const db = client.db('tables');
     let collection = db.collection(table);
-    let query = {id : id};
+    let query = {id : element_id};
     let res = await collection.deleteOne(query);
     return res;
   } catch (error) {
