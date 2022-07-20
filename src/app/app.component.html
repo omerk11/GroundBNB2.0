@@ -1,5 +1,6 @@
 <app-header></app-header>
 <main>
-    <app-apartment-create></app-apartment-create>
-    <app-apartment-list></app-apartment-list>
+    <app-apartment-create (apartmentCreated)="onApartmentAdded($event)"></app-apartment-create>
+    <app-apartment-list [apartments]="storedApartments"></app-apartment-list>
+    <br><br><br><br><br><br><br><br>
 </main>

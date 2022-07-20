@@ -8,4 +8,9 @@ import { Apartment } from "./apartments/apartment.model"
 })
 export class AppComponent {
   storedApartments:Apartment[]=[];
+  onApartmentAdded(apartment:Apartment)
+  {
+    this.storedApartments.push(apartment)
+  }
+
 }
