@@ -9,5 +9,4 @@ export interface Apartment{
     images:string[];
     ownerid:string;
     reservations:string[];
-
 }

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Apartment } from '../apartment.model';
+
 @Component({
   selector: 'app-apartment-create',
   templateUrl: './apartment-create.component.html',
