@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
-import { HttpClient } from "@angular/common/http";//added manualy
+import { HttpClient,HttpHeaders, HttpParams } from "@angular/common/http";//added manualy
 
 import { Apartment } from "./apartment.model";
-
+const url ="http://localhost:3000/api/apartments";
 @Injectable({providedIn:"root"})
 export class ApartmentsService
 {
@@ -18,9 +18,15 @@ export class ApartmentsService
     getApartments()
     {
         //TODO: sync with backend apartment.service
-        this.http.get<{message:String, apartments:Apartment[]}>("http://localhost:3000/api/apartments")// requesst all apartments from app
+        let my_headers = new HttpHeaders();
+        my_headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        let params = new HttpParams();
+        params.set('type','getAllApartments')
+
+        this.http.get<{message:String, apartments:Apartment[]}>(url,{ headers : my_headers, params: params })// requesst all apartments from app
         .subscribe((data)=>// upon getting data
         {
+            console.log('test');
             this.apartments = data.apartments;// update apartments arr
             this.apartmentsUpdated.next([...this.apartments]);// notify observers
         });

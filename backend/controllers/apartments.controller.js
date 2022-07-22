@@ -5,12 +5,13 @@ exports.eventParser = async function(req,res){
     let id;
     let apartment;
     let updates;
-    // console.log(req.body);
+    
+    console.log(req);
     switch(req.body.type){
         case 'getAllApartments':
             console.log("apartment getAllApartment");
             result = await apartmentService.getAllApartments();
-            console.log(result);
+            // console.log(result);
             console.log("end getAllApartment");
             break;
         case 'getApartmentById':
@@ -47,12 +48,12 @@ exports.eventParser = async function(req,res){
             break;
         default:
             console.log("apartment default");
-            result = '1232131';
-            console.log(result);
+            result = await apartmentService.getAllApartments();
+            // console.log(result);
             console.log("end default");
 
     }
-    
-    return res.status(200).send(result)
+    // console.log(result);
+    return res.status(200).send(result);
 };
 
