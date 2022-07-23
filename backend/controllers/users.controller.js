@@ -1,9 +1,14 @@
 const usersService = require('../services/users.service');
 
-exports.eventParser = async function(req,res){
-    let result = await usersService.test();
-    result = result[0];
-    console.log(JSON.stringify(result))
-    console.log('done')
-    return res.status(200).send(JSON.stringify(result));
+const getAllUsers = async (req, res, next) => {
+    console.log("reservations getAllUsers");
+    result = await usersService.getAllUsers();
+    console.log(result);
+    console.log("end getAllUsers");
+    res.status(200).send(result);
+};
+
+
+module.exports = {
+    getAllUsers
 };
