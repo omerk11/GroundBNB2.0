@@ -16,7 +16,10 @@ export class ApartmentItemComponent {
 
   onDelete()
   {
-  this.apartmentsService.deleteApartment(this.apartment).subscribe(()=>this.onDeleteApartment.emit(null));
+    if(window.confirm("Are you sure you want to delete?"))
+    {
+      this.apartmentsService.deleteApartment(this.apartment).subscribe((apartment)=>this.onDeleteApartment.emit(null));
+    }//TODO: deleting doesnt refresh list
   }
 
 }

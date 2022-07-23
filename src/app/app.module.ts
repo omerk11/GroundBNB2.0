@@ -14,7 +14,8 @@ import { AppComponent } from './app.component';
 import { ApartmentCreateComponent } from './apartments/apartment-create/apartment-create.component';
 import { HeaderComponent } from './header/header.component';
 import { ApartmentListComponent } from './apartments/apartment-list/apartment-list.component';
-import { ApartmentItemComponent } from './apartments/apartment-item/apartment-item.component';//added manualy
+import { ApartmentItemComponent } from './apartments/apartment-item/apartment-item.component';
+import { ApartmentEditComponent } from './apartments/apartment-edit/apartment-edit.component';//added manualy
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ApartmentItemComponent } from './apartments/apartment-item/apartment-it
     ApartmentCreateComponent,
     HeaderComponent,
     ApartmentListComponent,
-    ApartmentItemComponent
+    ApartmentItemComponent,
+    ApartmentEditComponent
   ],
   imports: [
     BrowserModule,

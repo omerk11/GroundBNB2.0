@@ -24,8 +24,7 @@ export class ApartmentListComponent implements OnInit
   refreshList()
   {
     this.apartmentsService.getApartments()
-      .subscribe((apartments)=>{this.apartments = apartments; console.log(this.apartments);});
-
+      .subscribe((apartments)=>{this.apartments = apartments;});
   }
 
 }
