@@ -1,0 +1,59 @@
+<mat-card>
+    <form (submit)="onSubmit(userForm)" #userForm="ngForm">
+    <h2>Sign in</h2>
+    Name:
+    <mat-form-field>
+        <input 
+        matInput type="text"
+        name="name"
+        ngModel
+        required
+        minlength="3"
+        #name="ngModel">
+        <mat-error *ngIf="name.invalid">Please enter a name</mat-error>
+    </mat-form-field>
+    <br>
+    Password:
+    <mat-form-field>
+        <input 
+        matInput type="password"
+        name="password"
+        ngModel
+        required
+        minlength="3"
+        #password="ngModel">
+        <mat-error *ngIf="password.invalid">Please enter a password</mat-error>
+    </mat-form-field>
+    <br>
+    Email:
+    <mat-form-field>
+        <input 
+        matInput type="email"
+        name="email"
+        ngModel
+        required
+        minlength="3"
+        #email="ngModel">
+        <mat-error *ngIf="email.invalid">Please enter email</mat-error>
+    </mat-form-field>
+    <br>
+    Phone Number:
+    <mat-form-field>
+        <input 
+        matInput type="text"
+        name="phone"
+        ngModel
+        required
+        minlength="3"
+        #phone="ngModel">
+        <mat-error *ngIf="phone.invalid">Please enter phone number</mat-error>
+    </mat-form-field>
+    <br>
+    <button 
+        mat-raised-button
+        color="accent"
+        type="submit">
+            Sign In
+    </button>
+</form>
+</mat-card>

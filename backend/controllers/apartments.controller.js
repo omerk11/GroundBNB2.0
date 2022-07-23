@@ -1,3 +1,4 @@
+const { MongoMissingCredentialsError } = require('mongodb');
 const apartmentService = require('../services/apartments.service');
 
 
@@ -30,7 +31,9 @@ const deleteApartmentById = async (req, res, next) => {
 
 const updateApartmentById = async (req, res, next) => {
     id = req.params.id;
-    updates = req.body.updates;
+    console.log(id);
+    updates = req.body;
+    console.log(req);
     console.log("apartment updateApartment");
     result = await apartmentService.updateApartmentById(id,updates);
     console.log(result);
