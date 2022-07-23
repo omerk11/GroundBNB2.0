@@ -16,8 +16,7 @@ export class ApartmentItemComponent {
 
   onDelete()
   {
-  this.apartmentsService.deleteApartment(this.apartment);
-  this.onDeleteApartment.emit(null);
+  this.apartmentsService.deleteApartment(this.apartment).subscribe(()=>this.onDeleteApartment.emit(null));
   }
 
 }

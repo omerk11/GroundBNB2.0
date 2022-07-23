@@ -1,3 +1,5 @@
+const { ObjectID, ObjectId } = require('bson');
+
 const MongoClient = require('mongodb').MongoClient;
 
 const uri = "mongodb+srv://admin:1q2w3e@cluster0.hd0gejt.mongodb.net/?retryWrites=true&w=majority";
@@ -323,7 +325,7 @@ exports.deleteById = async function(table,element_id){
   try {
     const db = client.db('tables');
     let collection = db.collection(table);
-    let query = {id : element_id};
+    let query = {_id : new ObjectId(element_id)};
     let res = await collection.deleteOne(query);
     return res;
   } catch (error) {
