@@ -1,6 +1,14 @@
 const reservationsService = require('../services/reservations.service');
 
-exports.eventParser = async function(req,res){
-    let result = await reservationsService.test();
-    return res.status(200).send(result)
+const getAllReservations = async (req, res, next) => {
+    console.log("reservations getAllReservations");
+    result = await reservationsService.getAllReservations();
+    console.log(result);
+    console.log("end getAllReservations");
+    res.status(200).send(result);
+};
+
+
+module.exports = {
+    getAllReservations
 };
