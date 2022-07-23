@@ -22,7 +22,7 @@ const addUser = async (req, res, next) => {
     console.log("users addUser");
     result = await usersService.addUser(user);
     console.log(result);
-    console.log("end test");
+    console.log("end addUser");
     res.status(200).send();
 };
 
@@ -32,7 +32,7 @@ const deleteUserById = async (req, res, next) => {
     console.log(id);
     result = await usersService.deleteUserById(id);
     console.log(result);
-    console.log("end test");
+    console.log("end deleteUserById");
     res.status(200).send('ok');
 };
 
@@ -42,7 +42,7 @@ const updateUserById = async (req, res, next) => {
     console.log("users updateUserById");
     result = await usersService.updateUserById(id,updates);
     console.log(result);
-    console.log("end test");
+    console.log("end updateUserById");
     res.status(200).send('ok');
 };
 module.exports = {

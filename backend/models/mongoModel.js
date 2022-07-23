@@ -323,7 +323,7 @@ exports.deleteById = async function(table,element_id){
   try {
     const db = client.db('tables');
     let collection = db.collection(table);
-    let query = {id : element_id};
+    let query = {_id : new ObjectId(element_id)};
     let res = await collection.deleteOne(query);
     return res;
   } catch (error) {
@@ -342,7 +342,7 @@ exports.updateElementById = async function(table,id,updates){
     try {
       const db = client.db('tables');
       let collection = db.collection(table);
-      let query = {id : id};
+      let query = {_id : new ObjectId(id)};
       let newvalues = { $set: updates };
       let res = await collection.updateOne(query, newvalues);
       return res;
