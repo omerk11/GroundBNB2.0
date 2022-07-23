@@ -16,7 +16,7 @@ export class ApartmentsService {
     
     getApartments() {
         const params = new HttpParams().append('type', 'getAllApartments');
-        return this.http.get<HttpRequestModel<Apartment[]>>(this.API_URL, { params });
+        return this.http.get<HttpRequestModel<Apartment[]>>(this.API_URL);
     }
 
     getApartmentById(id :string){
