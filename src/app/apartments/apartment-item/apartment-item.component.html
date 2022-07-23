@@ -1,0 +1,11 @@
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        Name: {{apartment.name}} | City: {{apartment.city}} | Price: {{apartment.price}}
+    </mat-expansion-panel-header>
+    <p>
+        Description: {{apartment.description}}<br>
+        Address: {{apartment.address}}<br>
+        Max-Visitors: {{apartment.maxvisitors}}<br> 
+        <button (click)="onDelete()">Delete</button>     
+    </p>
+</mat-expansion-panel>

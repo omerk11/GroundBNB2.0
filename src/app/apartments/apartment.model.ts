@@ -1,5 +1,5 @@
 export interface Apartment{
-    id?:string;
+    _id?:string;
     name:string;
     description:string;
     city:string;
@@ -8,5 +8,5 @@ export interface Apartment{
     maxvisitors:number;
     images:string[];
     ownerid:string;
-    reservations:string[];
+    reservations:string[];//TODO: change to reservations model
 }
