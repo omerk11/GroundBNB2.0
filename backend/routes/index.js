@@ -21,12 +21,35 @@ router.delete('/api/apartments/:id',apartmentController.deleteApartmentById);
 router.put('/api/apartments/:id',apartmentController.updateApartmentById);
 
 /// ----- Users API ----- ///
-// Get all users
 
+// Get all users
 router.get('/api/users', usersController.getAllUsers); 
 
+// Get user by ID
+router.get('/api/users/:id', usersController.getUserById)
+
+// Add user
+router.post('/api/users',usersController.addUser);
+
+// Delete user
+router.delete('/api/users/:id',usersController.deleteUserById);
+
+// Update apartment
+router.put('/api/users/:id',usersController.updateUserById);
+
 /// ----- Reservations API ----- ///
-// Get all reservations
-router.get('/api/reservations', reservationController.getAllReservations); 
+
+// // Get all reservations
+// router.get('/api/reservations', reservationController.getAllReservations); 
+
+// // Add reservation
+// router.post('/api/reservations',reservationController.addReservation);
+
+// // Delete reservation
+// router.delete('/api/reservations/:id',reservationController.deleteReservationById);
+
+// // Update reservation
+// router.put('/api/reservations/:id',reservationController.updateReservationById);
+
 
 module.exports = router; // export to use in server.js
