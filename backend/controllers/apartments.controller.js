@@ -14,7 +14,7 @@ const addApartment = async (req, res, next) => {
     console.log("apartment addApartment");
     result = await apartmentService.addApartment(apartment);
     console.log(result);
-    console.log("end test");
+    console.log("end addApartment");
     res.status(200).send();
 };
 
@@ -24,18 +24,17 @@ const deleteApartmentById = async (req, res, next) => {
     console.log(id);
     result = await apartmentService.deleteApartmentById(id);
     console.log(result);
-    console.log("end test");
+    console.log("end deleteApartmentById");
     res.status(200).send('ok');
 };
 
 const updateApartmentById = async (req, res, next) => {
     id = req.params.id;
-    console.log(id);
-    // updates = JSON.parse(req.body.updates);
-    // console.log("apartment updateApartment");
-    // result = await apartmentService.updateApartmentById(id,updates);
-    // console.log(result);
-    console.log("end test");
+    updates = req.body.updates;
+    console.log("apartment updateApartment");
+    result = await apartmentService.updateApartmentById(id,updates);
+    console.log(result);
+    console.log("end updateApartment");
     res.status(200).send('ok');
 };
 

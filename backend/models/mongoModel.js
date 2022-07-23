@@ -344,7 +344,7 @@ exports.updateElementById = async function(table,id,updates){
     try {
       const db = client.db('tables');
       let collection = db.collection(table);
-      let query = {id : id};
+      let query = {_id : new ObjectId(id)};
       let newvalues = { $set: updates };
       let res = await collection.updateOne(query, newvalues);
       return res;
