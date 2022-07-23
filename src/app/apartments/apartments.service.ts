@@ -33,14 +33,14 @@ export class ApartmentsService
     // TODO : validate my apartment
     updateApartment(apartment: Apartment): Observable<Apartment> 
     {
-        const url = `${this.apiURL}/${apartment.id}`;
-        return this.http.put<Apartment>(url, JSON.stringify(apartment), this.httpOptions);// JSON.stringify(apartment)?
+        const url = `${this.apiURL}/${apartment._id}`;
+        return this.http.put<Apartment>(url, apartment, this.httpOptions);// JSON.stringify(apartment)?
     }
 
     // TODO : validate my apartment
     deleteApartment(apartment: Apartment): Observable<Apartment>
-    {
-        const url = `${this.apiURL}/${apartment.id}`;
+    {  
+        const url = `${this.apiURL}/${apartment._id}`;
         return this.http.delete<Apartment>(url);
     }
 }
