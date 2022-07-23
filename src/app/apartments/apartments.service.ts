@@ -30,13 +30,14 @@ export class ApartmentsService
     {
         return this.http.post<Apartment>(this.apiURL, apartment, this.httpOptions);
     }
-
+    // TODO : validate my apartment
     updateApartment(apartment: Apartment): Observable<Apartment> 
     {
         const url = `${this.apiURL}/${apartment.id}`;
-        return this.http.put<Apartment>(url, apartment, this.httpOptions);// JSON.stringify(apartment)?
+        return this.http.put<Apartment>(url, JSON.stringify(apartment), this.httpOptions);// JSON.stringify(apartment)?
     }
 
+    // TODO : validate my apartment
     deleteApartment(apartment: Apartment): Observable<Apartment>
     {
         const url = `${this.apiURL}/${apartment.id}`;

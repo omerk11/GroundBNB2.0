@@ -17,7 +17,7 @@ exports.getAllApartments = async function() {
     }
     //TODO: validation and create response
 
-    return response;
+    return result;
 };
 
 exports.addApartment = async function(apartment){

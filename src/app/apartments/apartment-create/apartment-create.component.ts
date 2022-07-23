@@ -26,18 +26,6 @@ export class ApartmentCreateComponent
       console.log("error");
       return;
     }
-<<<<<<< HEAD
-    this.apartmentsService.addApartment(
-    form.value.name,
-    form.value.description,
-    form.value.city,
-    form.value.address,
-    form.value.price,
-    form.value.maxvisitors,
-    [],
-    "-1",
-    []).subscribe((res: Apartment) => console.log('added'));
-=======
     const new_apartment: Apartment=
     {
       name:form.value.name,
@@ -51,7 +39,6 @@ export class ApartmentCreateComponent
       reservations:[]
     }
     this.apartmentsService.addApartment(new_apartment).subscribe((apartment)=>this.onApartmentAdded.emit(null));
->>>>>>> main
   }
 }
 

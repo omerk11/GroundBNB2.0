@@ -12,21 +12,20 @@ import { ApartmentsService } from '../apartments.service';
 export class ApartmentListComponent implements OnInit
 {
   apartments: Apartment[] = [];
-  @Input() newApartment!: Apartment;
   constructor(public apartmentsService:ApartmentsService)// this will create a new property apartmentsService in this class
   {
   }
 
   ngOnInit(): void 
   {// when apartment-list is created
-    this.apartmentsService.getApartments()
-      .subscribe(((apartments)=>this.apartments = apartments));//request all apartments
+    this.refreshList();
   }
 
   refreshList()
   {
     this.apartmentsService.getApartments()
-      .subscribe(((apartments)=>this.apartments = apartments));
+      .subscribe((apartments)=>{this.apartments = apartments; console.log(this.apartments);});
+
   }
 
 }
