@@ -9,22 +9,26 @@ import { ApartmentsService } from '../apartments.service';
   templateUrl: './apartment-list.component.html',
   styleUrls: ['./apartment-list.component.css']
 })
-export class ApartmentListComponent implements OnInit, OnDestroy {
+export class ApartmentListComponent implements OnInit
+{
   apartments: Apartment[] = [];
-  private apartmentsSub!: Subscription;
-
-  constructor(public apartmentsService: ApartmentsService) {
-    // this will create a new property apartmentsService in this class
+  @Input() newApartment!: Apartment;
+  constructor(public apartmentsService:ApartmentsService)// this will create a new property apartmentsService in this class
+  {
   }
 
-  ngOnInit(): void {// when ap-list is created
+  ngOnInit(): void 
+  {// when apartment-list is created
     this.apartmentsService.getApartments()
-          .subscribe((res: HttpRequestModel<Apartment[]>) => this.apartments = res.data);
+      .subscribe(((apartments)=>this.apartments = apartments));//request all apartments
   }
 
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+  refreshList()
+  {
+    this.apartmentsService.getApartments()
+      .subscribe(((apartments)=>this.apartments = apartments));
   }
+
 }
 
 // apartments = [

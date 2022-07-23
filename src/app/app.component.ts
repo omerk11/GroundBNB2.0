@@ -8,5 +8,4 @@ import { Apartment } from "./apartments/apartment.model"
 })
 export class AppComponent  
 {
-  
 }

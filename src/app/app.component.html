@@ -1,6 +1,6 @@
 <app-header></app-header>
 <main>
-    <app-apartment-create ></app-apartment-create>
-    <app-apartment-list ></app-apartment-list>
+    <app-apartment-create (onApartmentAdded)="apartmentList.refreshList()"></app-apartment-create>
+    <app-apartment-list #apartmentList></app-apartment-list>
     <br><br><br><br><br><br><br><br>
 </main>
