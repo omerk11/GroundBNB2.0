@@ -6,6 +6,12 @@
         Description: {{apartment.description}}<br>
         Address: {{apartment.address}}<br>
         Max-Visitors: {{apartment.maxvisitors}}<br> 
-        <button (click)="onDelete()">Delete</button>     
     </p>
+    <app-apartment-edit
+    [apartment]="apartment"
+    ></app-apartment-edit>
+    <button 
+    mat-raised-button
+    color="accent"
+    (click)="onDelete()">Delete</button>  
 </mat-expansion-panel>

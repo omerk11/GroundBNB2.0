@@ -1,0 +1,85 @@
+<form (submit)="onSubmit(apartmentForm)" #apartmentForm="ngForm">
+    <h2>Edit Apartment</h2>
+    Name:
+    <mat-form-field>
+        <input 
+        matInput type="text"
+        name="name"
+        ngModel
+        required
+        minlength="3"
+        #name="ngModel"
+        [(ngModel)]="apartment.name">
+        <mat-error *ngIf="name.invalid">Please enter title</mat-error>
+    </mat-form-field>
+    <br>
+    Description:
+    <mat-form-field>
+        <textarea matInput
+        rows=6 
+        name="description"
+        ngModel
+        required
+        #description="ngModel"
+        [(ngModel)]="apartment.description"
+        ></textarea>
+        <mat-error *ngIf="description.invalid">Please enter description</mat-error>
+    </mat-form-field>
+    <br>
+    City:
+    <mat-form-field>
+        <input 
+        matInput type="text"
+        name="city"
+        ngModel
+        required
+        minlength="3"
+        #city="ngModel"
+        [(ngModel)]="apartment.city">
+        <mat-error *ngIf="city.invalid">Please enter city</mat-error>
+    </mat-form-field>
+    <br>
+    Address:
+    <mat-form-field>
+        <input 
+        matInput type="text"
+        name="address"
+        ngModel
+        required
+        minlength="3"
+        #address="ngModel"
+        [(ngModel)]="apartment.address">
+        <mat-error *ngIf="address.invalid">Please enter address</mat-error>
+    </mat-form-field>
+    <br>
+    Price:
+    <mat-form-field>
+        <input 
+        matInput type="number"
+        name="price"
+        ngModel
+        required
+        #price="ngModel"
+        [(ngModel)]="apartment.price">
+        <mat-error *ngIf="price.invalid">Please enter price</mat-error>
+    </mat-form-field>
+    <br>
+    Max-Visitors:
+    <mat-form-field>
+        <input 
+        matInput type="number"
+        name="maxvisitors"
+        ngModel
+        required
+        #maxvisitors="ngModel"
+        [(ngModel)]="apartment.maxvisitors">
+        <mat-error *ngIf="maxvisitors.invalid">Please enter max visitors</mat-error>
+    </mat-form-field>
+    <br>
+    <button 
+        mat-raised-button
+        color="accent"
+        type="submit">
+            Edit apartment
+    </button>
+</form>
