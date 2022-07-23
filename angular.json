@@ -63,6 +63,7 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "proxyConfig": "src/proxy.conf.json",
           "configurations": {
             "production": {
               "browserTarget": "groundbnb2.0:build:production"

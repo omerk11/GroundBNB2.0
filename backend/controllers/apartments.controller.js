@@ -6,8 +6,9 @@ exports.eventParser = async function(req,res){
     let apartment;
     let updates;
     
+    
     console.log(req);
-    switch(req.body.type){
+    switch(req.query.type){
         case 'getAllApartments':
             console.log("apartment getAllApartment");
             result = await apartmentService.getAllApartments();
@@ -48,12 +49,12 @@ exports.eventParser = async function(req,res){
             break;
         default:
             console.log("apartment default");
-            result = await apartmentService.getAllApartments();
-            // console.log(result);
+            result = 'default';
+            console.log(result);
             console.log("end default");
 
     }
-    // console.log(result);
+    
     return res.status(200).send(result);
 };
 

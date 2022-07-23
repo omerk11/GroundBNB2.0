@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { HttpRequestModel } from 'src/app/models/http-request-model';
 import { Apartment } from '../apartment.model';
 import { ApartmentsService } from '../apartments.service';
 
@@ -19,6 +20,7 @@ export class ApartmentCreateComponent
   {
     if(form.invalid)
     {
+      console.log("error");
       return;
     }
     this.apartmentsService.addApartment(
@@ -30,7 +32,7 @@ export class ApartmentCreateComponent
     form.value.maxvisitors,
     [],
     "-1",
-    [])
+    []).subscribe((res: Apartment) => console.log('added'));
   }
 }
 

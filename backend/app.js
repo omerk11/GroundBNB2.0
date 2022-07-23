@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express().use(express.urlencoded({ extended: false }))
 .use(express.json());
+const cors = require('cors');
 const swaggerUi =require('swagger-ui-express')
 const usersController = require('./controllers/users.controller.js');
 const apartmentsController = require('./controllers/apartments.controller.js');
@@ -15,6 +16,8 @@ swaggerDocument = {
         termsOfService: ''
     }
 }
+
+app.use(cors());
 
 app.use('/api/apartments',apartmentsController.eventParser);
 app.use('/api/users',usersController.eventParser);
