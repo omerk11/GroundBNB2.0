@@ -35,6 +35,7 @@ export class ApartmentsService
     {
         console.log(apartment);
         const url = `${this.apiURL}/${apartment._id}`;
+        apartment._id=undefined;
         return this.http.put<Apartment>(url, apartment, this.httpOptions);// JSON.stringify(apartment)?
     }
 

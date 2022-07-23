@@ -28,7 +28,6 @@ export class ApartmentEditComponent
         console.log("error");
         return;
       }
-      
       this.apartmentsService.updateApartment(this.apartment).subscribe((apartment)=>this.onApartmentEdited.emit(null));
     }
   }
