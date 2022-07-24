@@ -30,7 +30,7 @@ export class UsersCreateComponent{
       phone:form.value.phone,
       apartments:[],
       reservations: [],
-      isadmin:false
+      roles:['user']
     }
     this.usersService.addUser(new_user).subscribe((user)=>this.onUserAdded.emit(null));
   }

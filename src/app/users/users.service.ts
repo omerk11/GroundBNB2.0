@@ -14,6 +14,7 @@ export class UsersService
     {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
+            "Access-Control-Allow-Headers" : '*',
         }),
     };
 
