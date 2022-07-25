@@ -10,4 +10,5 @@ import { Page } from './models/page.enum';
 export class AppComponent  
 {
   page: Page = Page.ApartmentsList;
+  addApartment: boolean = false;
 }

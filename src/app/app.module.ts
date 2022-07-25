@@ -3,12 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';//added manualy
 import { HttpClientModule } from "@angular/common/http";//added manualy
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatInputModule} from '@angular/material/input';//added manualy
-import {MatCardModule} from '@angular/material/card';//added manualy
-import {MatButtonModule} from '@angular/material/button';//added manualy
-import {MatToolbarModule} from '@angular/material/toolbar';//added manualy
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatInputModule } from '@angular/material/input';//added manualy
+import { MatCardModule } from '@angular/material/card';//added manualy
+import { MatButtonModule } from '@angular/material/button';//added manualy
+import { MatToolbarModule } from '@angular/material/toolbar';//added manualy
+import { MatExpansionModule } from '@angular/material/expansion';
 import { AppRoutingModule } from './app-routing.module';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppComponent } from './app.component';
 import { ApartmentCreateComponent } from './apartments/apartment-create/apartment-create.component';
@@ -43,7 +44,8 @@ import { ReservationItemComponent } from './reservations/reservation-item/reserv
     MatButtonModule,
     MatToolbarModule,
     MatExpansionModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

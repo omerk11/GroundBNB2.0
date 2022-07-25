@@ -3,9 +3,22 @@
 ></app-header>
 <main [ngSwitch]="page">
     <div *ngSwitchCase="'apartmentsList'">
-        <app-apartment-create (onApartmentAdded)="apartmentList.refreshList()"></app-apartment-create>
+        <mat-checkbox
+            type="button"
+            mat-fab
+            color="primary"
+            (change)="addApartment = !addApartment"
+            style="margin-left: 34%"></mat-checkbox>
+        <mat-card 
+            *ngIf="!addApartment">
+            <h2>Add Apartment</h2>
+        </mat-card>
+        <div *ngIf="addApartment">
+            <app-apartment-create (onApartmentAdded)="apartmentList.refreshList()"></app-apartment-create>
+        </div>
         <app-apartment-list #apartmentList></app-apartment-list>
         <br><br><br>
+        
     </div>
     <div *ngSwitchCase="'usersList'">
         <app-users-create ></app-users-create>
