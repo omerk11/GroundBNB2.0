@@ -2,7 +2,7 @@
 (onPageChange)="page=$event"
 ></app-header>
 <main [ngSwitch]="page">
-    <div *ngSwitchCase="'apartmentsList'">
+    <div *ngSwitchCase="Page.ApartmentsList">
         <mat-checkbox
             type="button"
             mat-fab
@@ -20,15 +20,15 @@
         <br><br><br>
     </div>
 
-    <div *ngSwitchCase="'reservationsList'">
+    <div *ngSwitchCase="Page.ReservationsList">
         <app-reservation-list></app-reservation-list>
     </div>
 
-    <div *ngSwitchCase="'usersList'">
+    <div *ngSwitchCase="Page.UsersList">
         <app-users-create ></app-users-create>
     </div>
 
-    <div *ngSwitchCase="'login'">
+    <div *ngSwitchCase="Page.LogIn">
         <app-user-login></app-user-login>
     </div>
 </main>
