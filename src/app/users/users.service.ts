@@ -24,7 +24,7 @@ export class UsersService
 
     getUsers() :Observable<User[]>
     {
-        return this.http.get<User[]>(this.apiURL);// requesst all apartments from app
+        return this.http.get<User[]>(this.apiURL);// requesst all Users from app
     }
 
     addUser(user: User) : Observable<User>
@@ -35,13 +35,25 @@ export class UsersService
     updateUser(user: User): Observable<User> 
     {
         const url = `${this.apiURL}/${user._id}`;
-        return this.http.put<User>(url, user, this.httpOptions);// JSON.stringify(apartment)?
+        return this.http.put<User>(url, user, this.httpOptions);// JSON.stringify(User)?
     }
 
     // TODO : validate is admin
-    deleteApartment(user: User): Observable<User>
+    deleteUser(user: User): Observable<User>
     {  
         const url = `${this.apiURL}/${user._id}`;
         return this.http.delete<User>(url);
     }
+
+    loginUser(user_email: string, user_password: string): Observable<User>
+    {
+        const body = 
+        {
+            email: user_email,
+            password: user_password
+        };
+        console.log(body);
+        return this.http.post<User>("http://localhost:3000/auth/signin", body, this.httpOptions); 
+    }
+
 }

@@ -1,6 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { HttpRequestModel } from 'src/app/models/http-request-model';
 import { Apartment } from '../apartment.model';
 import { ApartmentsService } from '../apartments.service';
 

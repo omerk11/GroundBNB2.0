@@ -8,5 +8,5 @@ export interface User{
     phone:string;
     apartments:Apartment[];
     reservations:[];//TODO: change to reservations model
-    roles:String[];
+    roles:string[];
 }

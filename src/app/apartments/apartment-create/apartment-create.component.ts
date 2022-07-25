@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { HttpRequestModel } from 'src/app/models/http-request-model';
 import { Apartment } from '../apartment.model';
 import { ApartmentsService } from '../apartments.service';
 

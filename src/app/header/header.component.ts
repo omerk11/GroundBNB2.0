@@ -24,4 +24,9 @@ export class HeaderComponent
   {
     this.onPageChange.emit(Page.UsersList);
   }
+
+  displayLoginsPage()
+  {
+    this.onPageChange.emit(Page.LogIn);
+  }
 }

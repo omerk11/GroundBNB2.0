@@ -71,7 +71,7 @@ const signup = async (req, res) => {
 const signin = async (req, res) => {
   console.log('signin')
   User.findOne({
-    username: req.body.name,
+    email: req.body.email,
   })
     .populate("roles", "-__v")
     .exec((err, user) => {
