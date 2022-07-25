@@ -16,7 +16,9 @@ import { HeaderComponent } from './header/header.component';
 import { ApartmentListComponent } from './apartments/apartment-list/apartment-list.component';
 import { ApartmentItemComponent } from './apartments/apartment-item/apartment-item.component';
 import { UsersCreateComponent } from './users/users-create/users-create.component';//added manualy
-import { ApartmentEditComponent } from './apartments/apartment-edit/apartment-edit.component';//added manualy
+import { ApartmentEditComponent } from './apartments/apartment-edit/apartment-edit.component';
+import { ReservationListComponent } from './reservations/reservation-list/reservation-list.component';
+import { ReservationItemComponent } from './reservations/reservation-item/reservation-item.component';//added manualy
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { ApartmentEditComponent } from './apartments/apartment-edit/apartment-ed
     ApartmentListComponent,
     ApartmentItemComponent,
     ApartmentEditComponent,
-    UsersCreateComponent
+    UsersCreateComponent,
+    ReservationListComponent,
+    ReservationItemComponent
   ],
   imports: [
     BrowserModule,
