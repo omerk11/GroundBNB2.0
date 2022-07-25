@@ -68,10 +68,10 @@ const signup = async (req, res) => {
 
 
 
-const signin = async (req, res) => {
-  console.log('signin')
+const login = async (req, res) => {
+  console.log('login')
   User.findOne({
-    username: req.body.name,
+    email: req.body.email,
   })
     .populate("roles", "-__v")
     .exec((err, user) => {
@@ -117,6 +117,6 @@ const signout = async (req, res) => {
 
 module.exports = {
   signup,
-  signin,
+  login,
   signout
 };

@@ -67,7 +67,7 @@ router.post(
     ],
     authenticationController.signup
   );
-  router.post("/auth/signin", authenticationController.signin);
+  router.post("/auth/login", authenticationController.login);
   router.post("/api/auth/signout", authenticationController.signout);
 
   router.get("/api/test/all", authorizationController.allAccess);
