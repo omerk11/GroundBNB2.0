@@ -1,0 +1,10 @@
+<th>Apartment Name</th>
+<th>Owner</th>
+<th>Start Date</th>
+<th>End Date</th>
+<th>My Review</th>
+<th>My Rating</th>
+<app-reservation-item
+    *ngFor="let reservation of reservations"
+    [reservation]="reservation">
+</app-reservation-item>

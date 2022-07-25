@@ -2,7 +2,7 @@
     <app-apartment-item
     *ngFor="let apartment of apartments"
     [apartment]="apartment"
-    (onDeleteApartment)="refreshList()"
+    (onDeleteApartment)="removeApartmentFromList($event)"
     ></app-apartment-item>
 </mat-accordion>
 <p class="info-text mat-body-1" *ngIf="apartments.length <= 0">No Apartments</p>

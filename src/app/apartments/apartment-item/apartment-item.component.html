@@ -9,9 +9,7 @@
     </p>
     <app-apartment-edit
     [apartment]="apartment"
+    (onDeleteApartment)="onDelete()"
     ></app-apartment-edit>
-    <button 
-    mat-raised-button
-    color="accent"
-    (click)="onDelete()">Delete</button>  
+
 </mat-expansion-panel>
