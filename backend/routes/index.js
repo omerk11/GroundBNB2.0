@@ -1,5 +1,10 @@
 const express = require('express');
 const router  = express.Router(); 
+const { verifySignUp } = require("../middlewares");
+const { authJwt } = require("../middlewares");
+const authenticationController = require("../controllers/auth.controller");
+const authorizationController = require("../controllers/authorization.controller");
+
 const apartmentController = require('../controllers/apartments.controller'); 
 const reservationController = require('../controllers/reservations.controller');
 const usersController = require('../controllers/users.controller');
@@ -30,7 +35,7 @@ router.get('/api/users', usersController.getAllUsers);
 router.get('/api/users/:id', usersController.getUserById)
 
 // Add user
-router.post('/api/users',usersController.addUser);
+// router.post('/api/users',usersController.addUser);
 
 // Delete user
 router.delete('/api/users/:id',usersController.deleteUserById);
@@ -53,5 +58,24 @@ router.delete('/api/reservations/:id',reservationController.deleteReservationByI
 // Update reservation
 router.put('/api/reservations/:id',reservationController.updateReservationById);
 
+/// ----- Authentication API ----- ///
+router.post(
+    "/api/users",
+    [
+      verifySignUp.checkDuplicateUsernameOrEmail,
+      verifySignUp.checkRolesExisted
+    ],
+    authenticationController.signup
+  );
+  router.post("/auth/signin", authenticationController.signin);
+  router.post("/api/auth/signout", authenticationController.signout);
+
+  router.get("/api/test/all", authorizationController.allAccess);
+  router.get("/api/test/user", [authJwt.verifyToken], authorizationController.userBoard);
+  router.get(
+    "/api/test/admin",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    authorizationController.adminBoard
+  );
 
 module.exports = router; // export to use in server.js
