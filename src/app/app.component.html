@@ -18,12 +18,13 @@
         </div>
         <app-apartment-list #apartmentList></app-apartment-list>
         <br><br><br>
-        
     </div>
-    <div *ngSwitchCase="'usersList'">
-        <app-users-create ></app-users-create>
-    </div>
+
     <div *ngSwitchCase="'reservationsList'">
         <app-reservation-list></app-reservation-list>
+    </div>
+
+    <div *ngSwitchCase="'usersList'">
+        <app-users-create ></app-users-create>
     </div>
 </main>

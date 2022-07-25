@@ -1,3 +1,5 @@
+import { Reservation } from "../reservations/reservation.model";
+
 export interface Apartment{
     _id?:string;
     name:string;
@@ -8,5 +10,5 @@ export interface Apartment{
     maxvisitors:number;
     images:string[];
     ownerid:string;
-    reservations:string[];//TODO: change to reservations model
+    reservations:Reservation[];
 }
