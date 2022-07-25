@@ -12,6 +12,8 @@ const signup = async (req, res) => {
     username: req.body.name,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
+    apartments:[],
+    reservations:[]
 
   });
   user.save((err, user) => {
