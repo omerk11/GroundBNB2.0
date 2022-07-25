@@ -69,7 +69,7 @@ const signup = async (req, res) => {
 
 
 const login = async (req, res) => {
-  console.log('login')
+  console.log('login');
   User.findOne({
     email: req.body.email,
   })

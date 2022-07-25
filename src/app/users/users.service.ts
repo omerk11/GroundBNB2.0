@@ -52,8 +52,8 @@ export class UsersService
             email: user_email,
             password: user_password
         };
-        console.log(body);
-        return this.http.post<User>("http://localhost:3000/auth/signin", body, this.httpOptions); 
+
+        return this.http.post<User>("http://localhost:3000/auth/login", body, this.httpOptions); 
     }
 
 }
