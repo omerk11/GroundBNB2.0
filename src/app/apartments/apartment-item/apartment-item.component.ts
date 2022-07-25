@@ -12,14 +12,11 @@ export class ApartmentItemComponent {
   constructor(public apartmentsService: ApartmentsService) { }
 
   @Input() apartment!: Apartment;
-  @Output() onDeleteApartment = new EventEmitter(); 
+  @Output() onDeleteApartment: EventEmitter<Apartment> = new EventEmitter(); 
 
   onDelete()
   {
-    if(window.confirm("Are you sure you want to delete?"))
-    {
-      this.apartmentsService.deleteApartment(this.apartment).subscribe((apartment)=>this.onDeleteApartment.emit(null));
-    }//TODO: deleting doesnt refresh list
+    this.onDeleteApartment.emit(this.apartment);
   }
 
 }

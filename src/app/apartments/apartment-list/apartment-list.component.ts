@@ -27,6 +27,10 @@ export class ApartmentListComponent implements OnInit
       .subscribe((apartments)=>{this.apartments = apartments;});
   }
 
+  removeApartmentFromList(apartment: Apartment)
+  {
+    this.apartments = this.apartments.filter((ap) => apartment._id !== ap._id);
+  }
 }
 
 // apartments = [

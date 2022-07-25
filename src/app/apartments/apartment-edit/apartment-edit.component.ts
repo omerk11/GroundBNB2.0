@@ -12,6 +12,7 @@ export class ApartmentEditComponent
 {
   @Input() apartment!: Apartment;
   @Output() onApartmentEdited = new EventEmitter(); 
+  @Output() onDeleteApartment: EventEmitter<Apartment> = new EventEmitter(); 
 
   constructor(public apartmentsService:ApartmentsService)
   {
@@ -30,5 +31,13 @@ export class ApartmentEditComponent
       }
       this.apartmentsService.updateApartment(this.apartment).subscribe((apartment)=>this.onApartmentEdited.emit(null));
     }
+  }
+
+  onDelete()
+  {
+    if(window.confirm("Are you sure you want to delete?"))
+    {
+      this.apartmentsService.deleteApartment(this.apartment).subscribe((apartment)=>this.onDeleteApartment.emit(apartment));
+    }//TODO: deleting doesnt refresh list
   }
 }

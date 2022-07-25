@@ -30,7 +30,7 @@ export class ApartmentsService
     {
         return this.http.post<Apartment>(this.apiURL, apartment, this.httpOptions);
     }
-    // TODO : validate my apartment
+    // TODO: validate my apartment
     updateApartment(apartment: Apartment): Observable<Apartment> 
     {
         console.log(apartment);
@@ -39,7 +39,7 @@ export class ApartmentsService
         return this.http.put<Apartment>(url, apartment, this.httpOptions);// JSON.stringify(apartment)?
     }
 
-    // TODO : validate my apartment
+    // TODO: validate my apartment
     deleteApartment(apartment: Apartment): Observable<Apartment>
     {  
         const url = `${this.apiURL}/${apartment._id}`;
