@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';//added manualy
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AppRoutingModule } from './app-routing.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { ApartmentCreateComponent } from './apartments/apartment-create/apartment-create.component';
@@ -47,7 +48,8 @@ import { UserLoginComponent } from './users/user-login/user-login.component';//a
     MatToolbarModule,
     MatExpansionModule,
     HttpClientModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

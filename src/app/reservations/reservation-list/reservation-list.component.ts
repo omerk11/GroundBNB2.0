@@ -18,8 +18,16 @@ export class ReservationListComponent
         endDate:new Date(),
         review:"no room service",
         rating:1
+    },
+    {
+      appartmentId:"-1",
+      ownerId:"-1",
+      buyerId:"-1",
+      startdate:new Date(),
+      endDate:new Date(),
+      review:"no room service",
+      rating:1
     }
-
   ];
 
 }
