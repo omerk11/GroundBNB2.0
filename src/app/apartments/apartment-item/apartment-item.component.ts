@@ -14,8 +14,8 @@ export class ApartmentItemComponent
   
   @Input() apartment!: Apartment;
   @Output() onDeleteApartment: EventEmitter<Apartment> = new EventEmitter();
-  @Input() startDate!: any;
-  @Input() endDate!: any;
+  @Input() searchedDates!: any;
+
 
   constructor(public apartmentsService: ApartmentsService,public reservationsService: ReservationsService) 
   {
@@ -24,15 +24,15 @@ export class ApartmentItemComponent
   
   addReservation()
   {
-    if((this.startDate && this.endDate && this.apartment._id)|| this.apartment._id)
+    if(this.searchedDates && this.apartment._id)
     {
       const newReservation: Reservation = 
       {
         appartmentId:this.apartment._id,
         ownerId: "-1",
         buyerId: "-1",
-        startdate:new Date(),//this.startDate,
-        endDate:new Date(),//this.endDate,
+        startdate:this.searchedDates.startDate,
+        endDate:this.searchedDates.endDate,
         review:"lama",
         rating:2
       }

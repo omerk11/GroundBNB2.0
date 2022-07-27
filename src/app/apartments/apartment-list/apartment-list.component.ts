@@ -11,6 +11,7 @@ import { ApartmentsService } from '../apartments.service';
 export class ApartmentListComponent implements OnInit
 {
   apartments: Apartment[] = [];
+  searchedDates!: object;
   constructor(public apartmentsService:ApartmentsService)// this will create a new property apartmentsService in this class
   {
   }

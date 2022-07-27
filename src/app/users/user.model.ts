@@ -6,7 +6,7 @@ export interface User{
     password:string;
     email:string;
     phone:string;
-    apartments:Apartment[];
-    reservations:[];//TODO: change to reservations model
+    apartments:string[];
+    reservations:string[];
     roles:string[];
 }

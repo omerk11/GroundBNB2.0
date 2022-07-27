@@ -1,8 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ApartmentsService } from '../apartments.service';
-// import { MatDateRangeInput } from '@angular/material/datepicker';
-// import { MatDateRangePicker } from '@angular/material/datepicker';
 
 
 @Component({
@@ -13,6 +11,7 @@ import { ApartmentsService } from '../apartments.service';
 export class ApartmentSearchComponent {
 
   @Output() onSearchQuery: EventEmitter<string> = new EventEmitter(); 
+  @Output() searchedDates: EventEmitter<object> = new EventEmitter();
 
   show: boolean = false;
 
@@ -62,6 +61,16 @@ export class ApartmentSearchComponent {
     params = params.substring(0,params.length - 1);
     
     this.onSearchQuery.emit(params);
+    if(form.value.startDate && form.value.endDate)
+    {
+      let dates = 
+      {
+        startDate: form.value.startDate,
+        endDate: form.value.endDate
+      }
+      this.searchedDates.emit(dates);
+    }
+    
   }
 
 }
