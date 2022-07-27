@@ -1,6 +1,11 @@
 <mat-expansion-panel>
     <mat-expansion-panel-header>
-        Name: {{apartment.name}} | City: {{apartment.city}} | Price: {{apartment.price}}
+        Name: {{apartment.name}} | City: {{apartment.city}} | Price: {{apartment.price}} | 
+        <button 
+            type="button"
+            (click)="addReservation()">
+            Reserve
+        </button>
     </mat-expansion-panel-header>
     <p>
         Description: {{apartment.description}}<br>
@@ -8,8 +13,7 @@
         Max-Visitors: {{apartment.maxvisitors}}<br> 
     </p>
     <app-apartment-edit
-    [apartment]="apartment"
-    (onDeleteApartment)="onDelete()"
+        [apartment]="apartment"
+        (onDeleteApartment)="onDelete()"
     ></app-apartment-edit>
-
 </mat-expansion-panel>
