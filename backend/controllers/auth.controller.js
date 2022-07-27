@@ -76,10 +76,13 @@ const login = async (req, res) => {
     .populate("roles", "-__v")
     .exec((err, user) => {
       if (err) {
+        console.log('user failed to login 0')
         res.status(500).send({ message: err });
         return;
       }
       if (!user) {
+        console.log('user failed to login - user was not found')
+
         return res.status(404).send({ message: "User Not found." });
       }
       var passwordIsValid = bcrypt.compareSync(
@@ -87,6 +90,7 @@ const login = async (req, res) => {
         user.password
       );
       if (!passwordIsValid) {
+        console.log('user failed to login - Invalid Password!')
         return res.status(401).send({ message: "Invalid Password!" });
       }
       var token = jwt.sign({ id: user.id }, config.secret, {
@@ -97,6 +101,7 @@ const login = async (req, res) => {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
       req.session.token = token;
+      console.log('user login succussfully')
       res.status(200).send({
         id: user._id,
         username: user.username,
@@ -109,6 +114,7 @@ const signout = async (req, res) => {
   console.log('signuout')
   try {
     req.session = null;
+    console.log('logout succussfully!')
     return res.status(200).send({ message: "You've been signed out!" });
   } catch (err) {
     this.next(err);
