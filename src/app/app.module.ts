@@ -21,7 +21,8 @@ import { UsersCreateComponent } from './users/users-create/users-create.componen
 import { ApartmentEditComponent } from './apartments/apartment-edit/apartment-edit.component';
 import { ReservationListComponent } from './reservations/reservation-list/reservation-list.component';
 import { ReservationItemComponent } from './reservations/reservation-item/reservation-item.component';
-import { UserLoginComponent } from './users/user-login/user-login.component';//added manualy
+import { UserLoginComponent } from './users/user-login/user-login.component';
+import { ApartmentSearchComponent } from './apartments/apartment-search/apartment-search.component';//added manualy
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { UserLoginComponent } from './users/user-login/user-login.component';//a
     UsersCreateComponent,
     ReservationListComponent,
     ReservationItemComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    ApartmentSearchComponent
   ],
   imports: [
     BrowserModule,

@@ -11,8 +11,6 @@ export class AppComponent
 {
   page: Page = Page.ApartmentsList;
 
-  addApartment: boolean = false;
-
   public get Page(): typeof Page {
     return Page; 
   }

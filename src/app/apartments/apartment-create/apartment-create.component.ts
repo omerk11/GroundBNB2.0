@@ -12,6 +12,8 @@ export class ApartmentCreateComponent
 {
   
   @Output() onApartmentAdded = new EventEmitter();
+
+  show: boolean = false;
   
   constructor(public apartmentsService:ApartmentsService)
   {
