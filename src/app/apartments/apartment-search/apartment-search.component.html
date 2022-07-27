@@ -9,27 +9,16 @@
     ><h2>Search Apartment</h2></mat-checkbox>
     
     <div *ngIf="show">
-            <mat-form-field>
-                <mat-label>Enter a date range</mat-label>
-                <mat-date-range-input [rangePicker]="picker">
-                  <input matStartDate matInput name="startDate" ngModel #startDate="ngModel" placeholder="Start date">
-                  <input matEndDate matInput name="endDate" ngModel #endDate="ngModel" placeholder="End date">
-                </mat-date-range-input>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker></mat-date-range-picker>
-              </mat-form-field>
-        <br>
-        <!-- Start Date:
         <mat-form-field>
-            <input 
-            matInput type="date"
-            name="startDate"
-            ngModel
-            minlength="3"
-            #startDate="ngModel">
-        </mat-form-field>
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate matInput name="startDate" ngModel #startDate="ngModel" placeholder="Start date">
+                <input matEndDate matInput name="endDate" ngModel #endDate="ngModel" placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
         <br>
-        End Date:
         <mat-form-field>
             <input 
             matInput type="date"
