@@ -4,7 +4,7 @@
 <main [ngSwitch]="page">
     <div *ngSwitchCase="Page.ApartmentsList">
         <app-apartment-create (onApartmentAdded)="apartmentList.refreshList()"></app-apartment-create>
-        <app-apartment-search></app-apartment-search>
+        <app-apartment-search (onSearchQuery)="apartmentList.refreshList($event)"></app-apartment-search>
         <app-apartment-list #apartmentList></app-apartment-list>
         <br><br><br>
     </div>

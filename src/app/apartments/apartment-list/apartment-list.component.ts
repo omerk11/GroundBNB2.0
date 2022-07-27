@@ -20,9 +20,9 @@ export class ApartmentListComponent implements OnInit
     this.refreshList();
   }
 
-  refreshList()
+  refreshList(params?: string)
   {
-    this.apartmentsService.getApartments()
+    this.apartmentsService.getApartments(params)
       .subscribe((apartments)=>{this.apartments = apartments;});
   }
 
