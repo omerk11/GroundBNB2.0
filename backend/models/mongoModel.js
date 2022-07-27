@@ -33,7 +33,7 @@ exports.getById = async function(table,element_id){
   try {
     const db = client.db('tables');
     let collection = db.collection(table);
-    let query = {id : element_id};
+    let query = {_id : new ObjectId(element_id)};
     let res = await collection.findOne(query);
     return res;
   } catch (error) {
