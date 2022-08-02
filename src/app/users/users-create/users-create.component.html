@@ -1,16 +1,16 @@
 <mat-card>
     <form (submit)="onSubmit(userForm)" #userForm="ngForm">
     <h2>Sign up</h2>
-    Name:
+    Email:
     <mat-form-field>
         <input 
-        matInput type="text"
-        name="name"
+        matInput type="email"
+        name="email"
         ngModel
         required
         minlength="3"
-        #name="ngModel">
-        <mat-error *ngIf="name.invalid">Please enter a name</mat-error>
+        #email="ngModel">
+        <mat-error *ngIf="email.invalid">Please enter email</mat-error>
     </mat-form-field>
     <br>
     Password:
@@ -25,16 +25,28 @@
         <mat-error *ngIf="password.invalid">Please enter a password</mat-error>
     </mat-form-field>
     <br>
-    Email:
+    First Name:
     <mat-form-field>
         <input 
-        matInput type="email"
-        name="email"
+        matInput type="text"
+        name="firstname"
         ngModel
         required
         minlength="3"
-        #email="ngModel">
-        <mat-error *ngIf="email.invalid">Please enter email</mat-error>
+        #firstname="ngModel">
+        <mat-error *ngIf="firstname.invalid">Please enter a name</mat-error>
+    </mat-form-field>
+    <br>
+    Last Name:
+    <mat-form-field>
+        <input 
+        matInput type="text"
+        name="lastname"
+        ngModel
+        required
+        minlength="3"
+        #lastname="ngModel">
+        <mat-error *ngIf="lastname.invalid">Please enter a name</mat-error>
     </mat-form-field>
     <br>
     Phone Number:
