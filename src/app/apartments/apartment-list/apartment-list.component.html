@@ -2,6 +2,7 @@
     <app-apartment-item
     *ngFor="let apartment of apartments"
     [apartment]="apartment"
+    [searchedDates]="searchedDates"
     (onDeleteApartment)="removeApartmentFromList($event)"
     ></app-apartment-item>
 </mat-accordion>

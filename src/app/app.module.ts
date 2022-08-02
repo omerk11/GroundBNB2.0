@@ -11,6 +11,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { AppRoutingModule } from './app-routing.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 import { AppComponent } from './app.component';
 import { ApartmentCreateComponent } from './apartments/apartment-create/apartment-create.component';
@@ -51,7 +54,9 @@ import { ApartmentSearchComponent } from './apartments/apartment-search/apartmen
     MatExpansionModule,
     HttpClientModule,
     MatCheckboxModule,
-    MatTableModule
+    MatTableModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

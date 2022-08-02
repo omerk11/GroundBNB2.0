@@ -8,7 +8,7 @@ import { Reservation } from "./reservation.model";
 
 export class ReservationsService
 {
-    apiURL = "http://localhost:3000/api/Reservations";// Reservations api url
+    apiURL = "http://localhost:3000/api/reservations";// Reservations api url
 
     httpOptions = // http options?
     {
@@ -21,17 +21,22 @@ export class ReservationsService
     {
     }
 
-    getReservations() :Observable<Reservation[]>
+    getReservations(params?: string) :Observable<Reservation[]>
     {
-        return this.http.get<Reservation[]>(this.apiURL);// requesst all Reservations from app
+        console.log
+        if(!params)
+        {
+            params = "";
+        }
+        return this.http.get<Reservation[]>(this.apiURL + params);// requesst all Reservations from app
     }
 
-    addApartment(reservation: Reservation) : Observable<Reservation>
+    addReservation(reservation: Reservation) : Observable<Reservation>
     {
         return this.http.post<Reservation>(this.apiURL, reservation, this.httpOptions);
     }
     // TODO: validate my reservation
-    updateApartment(reservation: Reservation): Observable<Reservation> 
+    updateReservation(reservation: Reservation): Observable<Reservation> 
     {
         console.log(reservation);
         const url = `${this.apiURL}/${reservation._id}`;
@@ -40,7 +45,7 @@ export class ReservationsService
     }
 
     // TODO: validate my reservation
-    deleteApartment(reservation: Reservation): Observable<Reservation>
+    deleteReservation(reservation: Reservation): Observable<Reservation>
     {  
         const url = `${this.apiURL}/${reservation._id}`;
         return this.http.delete<Reservation>(url);

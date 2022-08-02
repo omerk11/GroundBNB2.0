@@ -21,9 +21,22 @@ export class ApartmentsService
     {
     }
 
-    getApartments() :Observable<Apartment[]>
+    getApartments(params?: string) :Observable<Apartment[]>
     {
-        return this.http.get<Apartment[]>(this.apiURL);// requesst all apartments from app
+        if(params)
+        {
+            return this.http.get<Apartment[]>(this.apiURL+params);
+        }
+        else
+        {
+            return this.http.get<Apartment[]>(this.apiURL);// requesst all apartments from app
+        }
+    }
+
+    getApartmentById(id: string) :Observable<Apartment>
+    {
+        const url = `${this.apiURL}/${id}`;
+        return this.http.get<Apartment>(url);
     }
 
     addApartment(apartment: Apartment) : Observable<Apartment>

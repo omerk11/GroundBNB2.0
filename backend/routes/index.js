@@ -16,6 +16,9 @@ const usersController = require('../controllers/users.controller');
 // Get all apartments
 router.get('/api/apartments', apartmentController.getAllApartments); 
 
+// Get all apartments
+router.get('/api/apartments/:id', apartmentController.getApartmentbyId); 
+
 // Add apartment
 router.post('/api/apartments',apartmentController.addApartment);
 
