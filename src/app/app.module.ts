@@ -11,6 +11,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { AppRoutingModule } from './app-routing.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
+import { authInterceptorProviders } from './_helpers/auth.interceptor';
+import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
@@ -25,7 +27,8 @@ import { ApartmentEditComponent } from './apartments/apartment-edit/apartment-ed
 import { ReservationListComponent } from './reservations/reservation-list/reservation-list.component';
 import { ReservationItemComponent } from './reservations/reservation-item/reservation-item.component';
 import { UserLoginComponent } from './users/user-login/user-login.component';
-import { ApartmentSearchComponent } from './apartments/apartment-search/apartment-search.component';//added manualy
+import { ApartmentSearchComponent } from './apartments/apartment-search/apartment-search.component';
+import { UserProfileComponent } from './users/user-profile/user-profile.component';//added manualy
 
 
 @NgModule({
@@ -40,7 +43,8 @@ import { ApartmentSearchComponent } from './apartments/apartment-search/apartmen
     ReservationListComponent,
     ReservationItemComponent,
     UserLoginComponent,
-    ApartmentSearchComponent
+    ApartmentSearchComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -57,8 +61,10 @@ import { ApartmentSearchComponent } from './apartments/apartment-search/apartmen
     MatTableModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    HttpClientModule,
+    MatFormFieldModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

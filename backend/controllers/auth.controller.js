@@ -4,17 +4,20 @@ const User = db.user;
 const Role = db.role;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const usersService = require('../services/users.service');
+
 
 
 const signup = async (req, res) => {
-  console.log('signup')
+  console.log(req.body.firstname);
   const user = new User({
-    username: req.body.name,
+    firstname:req.body.firstname,
+    lastname: req.body.lastname,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
+    phone:req.body.phone,
     apartments:[],
     reservations:[]
-
   });
   user.save((err, user) => {
     if (err) {
@@ -48,6 +51,8 @@ const signup = async (req, res) => {
     } else {
       Role.findOne({ name: "user" }, (err, role) => {
         if (err) {
+          console.log("err1");
+
           res.status(500).send({ message: err });
           return;
         }
@@ -66,8 +71,6 @@ const signup = async (req, res) => {
   });
 };
 
-
-
 const login = async (req, res) => {
   console.log('login');
   User.findOne({
@@ -85,7 +88,7 @@ const login = async (req, res) => {
 
         return res.status(404).send({ message: "User Not found." });
       }
-      var passwordIsValid = bcrypt.compareSync(
+      let passwordIsValid = bcrypt.compareSync(
         req.body.password,
         user.password
       );
@@ -93,36 +96,51 @@ const login = async (req, res) => {
         console.log('user failed to login - Invalid Password!')
         return res.status(401).send({ message: "Invalid Password!" });
       }
-      var token = jwt.sign({ id: user.id }, config.secret, {
+      let token = jwt.sign({ id: user.id }, config.secret, {
         expiresIn: 86400, // 24 hours
       });
-      var authorities = [];
+      let authorities = [];
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
       req.session.token = token;
       console.log('user login succussfully')
       res.status(200).send({
+        accessToken:token,
         id: user._id,
-        username: user.username,
+        firstname: user.firstname,
+        lastname: user.lastname,
         email: user.email,
+        phone:user.phone,
         roles: authorities,
+        apartments: user.apartments,
+        reservations: user.reservations
       });
     });
 };
-const signout = async (req, res) => {
+const logout = async (req, res) => {
   console.log('signuout')
   try {
     req.session = null;
     console.log('logout succussfully!')
     return res.status(200).send({ message: "You've been signed out!" });
   } catch (err) {
+    console.log('failed to logout!')
+
     this.next(err);
   }
 };
 
+const getUsersList = async (req,res)=>{
+  console.log("auth getAllUsers");
+  result = await usersService.getAllUsers();
+  console.log(result);
+  console.log("end auth getAllUsers");
+  res.status(200).send(result);
+}
 module.exports = {
   signup,
   login,
-  signout
+  logout,
+  getUsersList
 };

@@ -18,8 +18,8 @@
     mat-raised-button
     color="accent"
     type="button"
-    (click)="displayUsersPage()">
-        Users
+    (click)="displaySignUpPage()">
+        Sign Up
 </button>
 <button 
     mat-raised-button
@@ -31,7 +31,15 @@
 <button 
     mat-raised-button
     color="accent"
-    type="button">
+    type="button"
+    (click)="Logout()">
         Sign Out
+</button>
+<button 
+    mat-raised-button
+    color="accent"
+    type="button"
+    (click)="displayAllUsersPage()">
+        Users list
 </button>
 </mat-toolbar>

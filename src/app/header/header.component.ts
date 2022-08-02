@@ -1,5 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Page } from '../models/page.enum';
+// import { UsersService } from '../users/users.service';
+import {AuthService} from '../users/auth.service'
+
 
 @Component({
   selector: 'app-header',
@@ -9,6 +12,7 @@ import { Page } from '../models/page.enum';
 export class HeaderComponent
 {
   @Output() onPageChange: EventEmitter<Page> = new EventEmitter();
+  constructor( public authService:AuthService) { }
 
   displayApartmentsPage()
   {
@@ -20,13 +24,23 @@ export class HeaderComponent
     this.onPageChange.emit(Page.ReservationsList);
   }
 
-  displayUsersPage()
+  displaySignUpPage()
   {
-    this.onPageChange.emit(Page.UsersList);
+    this.onPageChange.emit(Page.SignUp);
   }
 
   displayLoginsPage()
   {
     this.onPageChange.emit(Page.LogIn);
   }
+  Logout(){
+
+    this.authService.logOutUser().subscribe((user)=>this.onPageChange.emit(Page.LogIn));
+  }
+
+  displayAllUsersPage()
+  {
+    this.authService.getUsers().subscribe((user)=>this.onPageChange.emit(Page.UsersList));
+  }
+
 }
