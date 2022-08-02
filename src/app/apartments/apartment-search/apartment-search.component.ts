@@ -29,13 +29,21 @@ export class ApartmentSearchComponent {
       console.log("error");
       return;
     }
+    console.log(form.value.startDate.getMonth());
+    console.log(form.value.endDate);
     if(form.value.startDate != "")
     {
-      params += "startDate="+form.value.startDate +"&";
+      let date: string = form.value.startDate.getDate() + "/";
+      date += (form.value.startDate.getMonth()+1) + "/";
+      date += form.value.startDate.getFullYear();
+      params += "startDate="+ date +"&";
     }
     if(form.value.endDate != "")
     {
-      params += "endDate="+form.value.endDate +"&";
+      let date: string = form.value.endDate.getDate() + "/";
+      date += (form.value.endDate.getMonth()+1) + "/";
+      date += form.value.endDate.getFullYear();
+      params += "endDate="+ date +"&";
     }
     if(form.value.name != "")
     {
@@ -60,6 +68,8 @@ export class ApartmentSearchComponent {
 
     params = params.substring(0,params.length - 1);
     
+    console.log(params);
+
     this.onSearchQuery.emit(params);
     if(form.value.startDate && form.value.endDate)
     {
