@@ -61,4 +61,10 @@ export class HeaderComponent
     return this.tokenService.isAdmin();
   }
 
+  getName()
+  {
+    let user = this.tokenService.getUser();
+    return user.firstname + " " + user.lastname;
+  }
+
 }
