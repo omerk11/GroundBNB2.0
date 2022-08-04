@@ -8,6 +8,7 @@
         Apartments
 </button>
 <button 
+    *ngIf="this.tokenService.isAdmin()"
     mat-raised-button
     color="accent"
     type="button"
@@ -15,6 +16,7 @@
         Reservations
 </button>
 <button 
+*ngIf="this.tokenService.getMyId()"
     mat-raised-button
     color="accent"
     type="button"
@@ -22,6 +24,7 @@
     My Apartments
 </button>
 <button 
+    *ngIf="!this.tokenService.getMyId()"
     mat-raised-button
     color="accent"
     type="button"
@@ -29,13 +32,15 @@
         Sign Up
 </button>
 <button 
+    *ngIf="!this.tokenService.getMyId()"
     mat-raised-button
     color="accent"
     type="button"
     (click)="displayLoginsPage()">
         Login
 </button>
-<button *ngIf="isLoggedIn"
+<button 
+    *ngIf="this.tokenService.getMyId()"
     mat-raised-button
     color="accent"
     type="button"
@@ -43,11 +48,12 @@
         Sign Out
 </button>
 <button 
+    *ngIf="this.tokenService.isAdmin()"
     mat-raised-button
     color="accent"
     type="button"
     (click)="displayAllUsersPage()">
         Users list
 </button>
-<h3>Hello {{this.tokenService.getUser().firstname + " " + this.tokenService.getUser().lastname}}</h3>
+<h3>Hello {{this.tokenService.getUser().firstname + " " + this.tokenService.getUser().lastname + (this.tokenService.getMyId() ? " log ":" dis ") + this.tokenService.isAdmin()}}</h3>
 </mat-toolbar>

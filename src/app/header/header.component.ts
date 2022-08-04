@@ -15,7 +15,7 @@ export class HeaderComponent
 {
   @Output() onPageChange: EventEmitter<Page> = new EventEmitter();
   constructor( public authService:AuthService, public tokenService:TokenStorageService) { }
-  isLoggedIn = this.tokenService.getToken();
+  
   displayApartmentsPage()
   {
     this.onPageChange.emit(Page.ApartmentsList);

@@ -31,4 +31,14 @@ export class TokenStorageService {
   {
     return this.getUser().id;
   }
+  public isAdmin()
+  {
+    let user = this.getUser();
+    console.log();
+    if(Object.keys(user).length === 0)
+    {
+      return false;
+    }
+    return user.roles.includes("ROLE_ADMIN");
+  }
 }
