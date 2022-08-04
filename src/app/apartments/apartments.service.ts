@@ -3,6 +3,7 @@ import { Observable, Subject } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";//added manualy
 
 import { Apartment } from "./apartment.model";
+import { TokenStorageService } from "../users/token-storage.service";
 
 @Injectable({providedIn:"root"})
 export class ApartmentsService
@@ -17,7 +18,7 @@ export class ApartmentsService
         }),
     };
 
-    constructor(private http:HttpClient)
+    constructor(private http:HttpClient, private tokenStorage: TokenStorageService)
     {
     }
 
@@ -39,6 +40,14 @@ export class ApartmentsService
         return this.http.get<Apartment>(url);
     }
 
+    getApartmentsByOwnerId() :Observable<Apartment[]>
+    {
+        let user = this.tokenStorage.getUser();
+        let id = user.id;
+        const url = `${this.apiURL}/getapartmentsbyownerid/${id}`;
+        return this.http.get<Apartment[]>(url);
+    }
+
     addApartment(apartment: Apartment) : Observable<Apartment>
     {
         return this.http.post<Apartment>(this.apiURL, apartment, this.httpOptions);
@@ -49,7 +58,7 @@ export class ApartmentsService
         console.log(apartment);
         const url = `${this.apiURL}/${apartment._id}`;
         apartment._id=undefined;
-        return this.http.put<Apartment>(url, apartment, this.httpOptions);// JSON.stringify(apartment)?
+        return this.http.put<Apartment>(url, apartment, this.httpOptions);
     }
 
     // TODO: validate my apartment

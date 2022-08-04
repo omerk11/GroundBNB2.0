@@ -13,6 +13,7 @@ export class ApartmentListComponent implements OnInit
   apartments: Apartment[] = [];
   searchedDates!: object;
   sortOrder: string = "rating_desc";
+  @Input() isMyApartments: boolean = false;
 
   constructor(public apartmentsService:ApartmentsService)// this will create a new property apartmentsService in this class
   {
@@ -25,6 +26,12 @@ export class ApartmentListComponent implements OnInit
 
   refreshList(params?: string)
   {
+    if(this.isMyApartments)
+    {
+      this.apartmentsService.getApartmentsByOwnerId()
+      .subscribe((apartments)=>{this.apartments = apartments;});
+      return;
+    }
     if(params)
     {
       params += "&sort=" + this.sortOrder;

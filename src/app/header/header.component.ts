@@ -44,5 +44,9 @@ export class HeaderComponent
   {
     this.authService.getUsers().subscribe((user)=>this.onPageChange.emit(Page.UsersList));
   }
+  displayMyApartmentsPage()
+  {
+    this.onPageChange.emit(Page.MyApartmentsList);
+  }
 
 }

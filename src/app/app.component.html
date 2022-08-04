@@ -3,7 +3,6 @@
 ></app-header>
 <main [ngSwitch]="page">
     <div *ngSwitchCase="Page.ApartmentsList">
-        <app-apartment-create (onApartmentAdded)="apartmentList.refreshList()"></app-apartment-create>
         <app-apartment-search (onSearchQuery)="apartmentList.refreshList($event)" (searchedDates)="apartmentList.searchedDates=$event"></app-apartment-search>
         <app-apartment-list #apartmentList></app-apartment-list>
         <br><br><br>
@@ -11,6 +10,11 @@
 
     <div *ngSwitchCase="Page.ReservationsList">
         <app-reservation-list></app-reservation-list>
+    </div>
+
+    <div *ngSwitchCase="Page.MyApartmentsList">
+        <app-apartment-create (onApartmentAdded)="myApartmentList.refreshList()"></app-apartment-create>
+        <app-apartment-list [isMyApartments]="true" #myApartmentList></app-apartment-list>
     </div>
 
     <div *ngSwitchCase="Page.SignUp">
