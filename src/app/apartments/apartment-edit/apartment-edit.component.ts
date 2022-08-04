@@ -11,7 +11,7 @@ import { ApartmentsService } from '../apartments.service';
 export class ApartmentEditComponent
 {
   @Input() apartment!: Apartment;
-  @Output() onApartmentEdited = new EventEmitter(); 
+
   @Output() onDeleteApartment: EventEmitter<Apartment> = new EventEmitter(); 
 
   constructor(public apartmentsService:ApartmentsService)
@@ -29,7 +29,7 @@ export class ApartmentEditComponent
         console.log("error");
         return;
       }
-      this.apartmentsService.updateApartment(this.apartment).subscribe((apartment)=>this.onApartmentEdited.emit(null));
+      this.apartmentsService.updateApartment(this.apartment).subscribe();
     }
   }
 

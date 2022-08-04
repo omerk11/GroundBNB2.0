@@ -13,8 +13,9 @@ export class ApartmentItemComponent
 {
   
   @Input() apartment!: Apartment;
-  @Output() onDeleteApartment: EventEmitter<Apartment> = new EventEmitter();
   @Input() searchedDates!: any;
+  @Input() allowEdit: boolean = false;
+  @Output() onDeleteApartment: EventEmitter<Apartment> = new EventEmitter();
 
 
   constructor(public apartmentsService: ApartmentsService,public reservationsService: ReservationsService) 

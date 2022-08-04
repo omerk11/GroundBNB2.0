@@ -31,6 +31,7 @@
     *ngFor="let apartment of apartments"
     [apartment]="apartment"
     [searchedDates]="searchedDates"
+    [allowEdit]="isMyApartments"
     (onDeleteApartment)="removeApartmentFromList($event)"
     ></app-apartment-item>
     
