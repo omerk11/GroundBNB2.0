@@ -53,7 +53,7 @@ export class HeaderComponent
   // User Functions
   isLoggedIn()
   {
-    return this.tokenService.getMyId();
+    return this.tokenService.isLoggedIn();
   }
 
   isAdmin()

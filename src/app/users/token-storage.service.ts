@@ -41,4 +41,12 @@ export class TokenStorageService {
     }
     return user.roles.includes("ROLE_ADMIN");
   }
+
+  public isLoggedIn(){
+    let token = this.getToken();
+    if(token){
+      return true;
+    }
+    return false;
+  }
 }
