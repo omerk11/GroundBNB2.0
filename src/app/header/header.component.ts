@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Page } from '../models/page.enum';
 // import { UsersService } from '../users/users.service';
 import {AuthService} from '../users/auth.service'
+import { TokenStorageService } from '../users/token-storage.service';
+
 
 
 @Component({
@@ -12,8 +14,8 @@ import {AuthService} from '../users/auth.service'
 export class HeaderComponent
 {
   @Output() onPageChange: EventEmitter<Page> = new EventEmitter();
-  constructor( public authService:AuthService) { }
-
+  constructor( public authService:AuthService, public tokenService:TokenStorageService) { }
+  isLoggedIn = this.tokenService.getToken();
   displayApartmentsPage()
   {
     this.onPageChange.emit(Page.ApartmentsList);

@@ -28,7 +28,7 @@
     (click)="displayLoginsPage()">
         Login
 </button>
-<button 
+<button *ngIf="isLoggedIn"
     mat-raised-button
     color="accent"
     type="button"

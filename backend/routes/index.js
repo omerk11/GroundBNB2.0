@@ -16,7 +16,7 @@ const usersController = require('../controllers/users.controller');
 // Get all apartments
 router.get('/api/apartments', apartmentController.getAllApartments); 
 
-// Get all apartments
+// Get apartment by id
 router.get('/api/apartments/:id', apartmentController.getApartmentbyId); 
 
 // Add apartment
@@ -27,6 +27,9 @@ router.delete('/api/apartments/:id',apartmentController.deleteApartmentById);
 
 // Update apartment
 router.put('/api/apartments/:id',apartmentController.updateApartmentById);
+
+// Get all apartments by owner
+router.get('/api/apartments/getapartmentsbyownerid/:id',apartmentController.getApartmentByOwnerId);
 
 
 /// ----- Users API ----- ///
@@ -60,6 +63,13 @@ router.delete('/api/reservations/:id',reservationController.deleteReservationByI
 
 // Update reservation
 router.put('/api/reservations/:id',reservationController.updateReservationById);
+
+// Get all reservations of a buyer id
+router.get('/api/reservations/getreservationsbybuyerid/:id',reservationController.getReservationtByBuyerId);
+
+// Get all reservations to my apartments
+router.get('/api/reservations/getreservationsbyownerid/:id',reservationController.getReservationtByOwnerId);
+
 
 /// ----- Authentication API ----- ///
 
