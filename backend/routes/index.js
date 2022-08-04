@@ -17,19 +17,19 @@ const usersController = require('../controllers/users.controller');
 router.get('/api/apartments', apartmentController.getAllApartments); 
 
 // Get apartment by id
-router.get('/api/apartments/:id', apartmentController.getApartmentbyId); 
+router.get('/api/apartments/:id',[authJwt.verifyToken], apartmentController.getApartmentbyId); 
 
 // Add apartment
-router.post('/api/apartments',apartmentController.addApartment);
+router.post('/api/apartments',[authJwt.verifyToken],apartmentController.addApartment);
 
 // Delete apartment
-router.delete('/api/apartments/:id',apartmentController.deleteApartmentById);
+router.delete('/api/apartments/:id',[authJwt.verifyToken],apartmentController.deleteApartmentById);
 
 // Update apartment
-router.put('/api/apartments/:id',apartmentController.updateApartmentById);
+router.put('/api/apartments/:id',[authJwt.verifyToken],apartmentController.updateApartmentById);
 
 // Get all apartments by owner
-router.get('/api/apartments/getapartmentsbyownerid/:id',apartmentController.getApartmentByOwnerId);
+router.get('/api/apartments/getapartmentsbyownerid/:id',[authJwt.verifyToken],apartmentController.getApartmentByOwnerId);
 
 
 /// ----- Users API ----- ///
@@ -38,37 +38,37 @@ router.get('/api/apartments/getapartmentsbyownerid/:id',apartmentController.getA
 // router.get('/api/users', usersController.getAllUsers); 
 
 // Get user by ID
-router.get('/api/users/:id', usersController.getUserById)
+router.get('/api/users/:id',[authJwt.verifyToken, authJwt.isAdmin], usersController.getUserById)
 
 // Add user
 // router.post('/api/users',usersController.addUser);
 
 // Delete user
-router.delete('/api/users/:id',usersController.deleteUserById);
+router.delete('/api/users/:id',[authJwt.verifyToken], usersController.deleteUserById);
 
-// Update apartment
-router.put('/api/users/:id',usersController.updateUserById);
+// Update user
+router.put('/api/users/:id',[authJwt.verifyToken],usersController.updateUserById);
 
 
 /// ----- Reservations API ----- ///
 
 // Get all reservations
-router.get('/api/reservations', reservationController.getAllReservations); 
+router.get('/api/reservations', [authJwt.verifyToken, authJwt.isAdmin],reservationController.getAllReservations); 
 
 // Add reservation
-router.post('/api/reservations',reservationController.addReservation);
+router.post('/api/reservations',[authJwt.verifyToken],reservationController.addReservation);
 
 // Delete reservation
-router.delete('/api/reservations/:id',reservationController.deleteReservationById);
+router.delete('/api/reservations/:id',[authJwt.verifyToken],reservationController.deleteReservationById);
 
 // Update reservation
-router.put('/api/reservations/:id',reservationController.updateReservationById);
+router.put('/api/reservations/:id',[authJwt.verifyToken],reservationController.updateReservationById);
 
 // Get all reservations of a buyer id
-router.get('/api/reservations/getreservationsbybuyerid/:id',reservationController.getReservationtByBuyerId);
+router.get('/api/reservations/getreservationsbybuyerid/:id',[authJwt.verifyToken],reservationController.getReservationtByBuyerId);
 
 // Get all reservations to my apartments
-router.get('/api/reservations/getreservationsbyownerid/:id',reservationController.getReservationtByOwnerId);
+router.get('/api/reservations/getreservationsbyownerid/:id',[authJwt.verifyToken],reservationController.getReservationtByOwnerId);
 
 
 /// ----- Authentication API ----- ///
