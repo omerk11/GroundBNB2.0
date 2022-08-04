@@ -3,6 +3,7 @@ export enum Page {
     ReservationsList = "reservationsList",
     UsersList = "usersList",
     MyApartmentsList = "myApartmentsList",
+    MyReservationsList = "myReservationsList",
     SignUp = 'signup',
     LogIn = "login",
     LogOut = 'logout',

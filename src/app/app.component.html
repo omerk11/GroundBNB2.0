@@ -15,6 +15,11 @@
     <div *ngSwitchCase="Page.MyApartmentsList">
         <app-apartment-create (onApartmentAdded)="myApartmentList.refreshList()"></app-apartment-create>
         <app-apartment-list [isMyApartments]="true" #myApartmentList></app-apartment-list>
+        <app-reservation-list [isForMyApartments]="true"></app-reservation-list>
+    </div>
+
+    <div *ngSwitchCase="Page.MyReservationsList">
+        <app-reservation-list [isMyReservations]="true"></app-reservation-list>
     </div>
 
     <div *ngSwitchCase="Page.SignUp">

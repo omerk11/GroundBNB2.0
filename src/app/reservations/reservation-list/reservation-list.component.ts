@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Reservation } from '../reservation.model';
 import { ReservationsService } from '../reservations.service';
 
@@ -10,7 +10,10 @@ import { ReservationsService } from '../reservations.service';
 export class ReservationListComponent implements OnInit
 {
 
+  @Input() isMyReservations: boolean = false;
+  @Input() isForMyApartments: boolean = false;
   reservations: Reservation[] = [];
+  
 
   constructor(public reservationsService:ReservationsService)// this will create a new property ReservationsService in this class
   {
@@ -23,6 +26,16 @@ export class ReservationListComponent implements OnInit
 
   refreshList(params?: string)
   {
+    if(this.isMyReservations)
+    {
+      this.reservationsService.getReservationsByBuyerId().subscribe((reservations)=>{this.reservations = reservations;});
+      return;
+    }
+    else if(this.isForMyApartments)
+    {
+      this.reservationsService.getReservationsByOwnerId().subscribe((reservations)=>{this.reservations = reservations;});
+      return;
+    }
     this.reservationsService.getReservations(params)
       .subscribe((reservations)=>{this.reservations = reservations;});
   }

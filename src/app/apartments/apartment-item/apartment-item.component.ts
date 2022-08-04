@@ -28,11 +28,11 @@ export class ApartmentItemComponent
     {
       const newReservation: Reservation = 
       {
-        appartmentId:this.apartment._id,
-        ownerId: "-1",
-        buyerId: "-1",
+        apartmentid:this.apartment._id,
+        ownerid: "-1",
+        buyerid: "-1",
         startdate:this.searchedDates.startDate,
-        endDate:this.searchedDates.endDate,
+        enddate:this.searchedDates.endDate,
         review:"lama",
         rating:2
       }

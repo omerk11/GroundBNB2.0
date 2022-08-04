@@ -1,10 +1,10 @@
 export interface Reservation{
     _id?:string;
-    appartmentId:string,
-    ownerId:string,
-    buyerId:string,
+    apartmentid:string,
+    ownerid:string,
+    buyerid:string,
     startdate:Date,
-    endDate:Date,
+    enddate:Date,
     review:string,
     rating:number
 }

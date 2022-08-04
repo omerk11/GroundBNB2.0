@@ -3,6 +3,7 @@ import { Observable, Subject } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";//added manualy
 
 import { Reservation } from "./reservation.model";
+import { TokenStorageService } from "../users/token-storage.service";
 
 @Injectable({providedIn:"root"})
 
@@ -17,7 +18,7 @@ export class ReservationsService
         }),
     };
 
-    constructor(private http:HttpClient)
+    constructor(private http:HttpClient, private tokenStorage: TokenStorageService)
     {
     }
 
@@ -29,6 +30,20 @@ export class ReservationsService
             params = "";
         }
         return this.http.get<Reservation[]>(this.apiURL + params);// requesst all Reservations from app
+    }
+
+    getReservationsByBuyerId() :Observable<Reservation[]>
+    {
+        let id = this.tokenStorage.getMyId();
+        const url = `${this.apiURL}/getreservationsbybuyerid/${id}`;
+        return this.http.get<Reservation[]>(url);
+    }
+
+    getReservationsByOwnerId() :Observable<Reservation[]>
+    {
+        let id = this.tokenStorage.getMyId();
+        const url = `${this.apiURL}/getreservationsbyownerid/${id}`;
+        return this.http.get<Reservation[]>(url);
     }
 
     addReservation(reservation: Reservation) : Observable<Reservation>

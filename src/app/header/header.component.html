@@ -5,7 +5,7 @@
     color="accent"
     type="button"
     (click)="displayApartmentsPage()">
-        Apartments
+        All Apartments
 </button>
 <button 
 *ngIf="isLoggedIn()"
@@ -14,6 +14,14 @@
     type="button"
     (click)="displayMyApartmentsPage()">
     My Apartments
+</button>
+<button 
+*ngIf="isLoggedIn()"
+    mat-raised-button
+    color="accent"
+    type="button"
+    (click)="displayMyReservationsPage()">
+    My Reservations
 </button>
 <button 
     *ngIf="isAdmin()"

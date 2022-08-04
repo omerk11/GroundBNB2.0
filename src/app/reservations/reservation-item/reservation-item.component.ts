@@ -20,7 +20,7 @@ export class ReservationItemComponent implements OnInit
 
   ngOnInit(): void 
   {
-    this.apartmentsService.getApartmentById(this.reservation.appartmentId).subscribe(
+    this.apartmentsService.getApartmentById(this.reservation.apartmentid).subscribe(
       (apartment) => {this.apartmentName = apartment.name});
   }
 
