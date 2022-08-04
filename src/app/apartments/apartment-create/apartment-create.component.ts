@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { TokenStorageService } from 'src/app/users/token-storage.service';
 import { Apartment } from '../apartment.model';
 import { ApartmentsService } from '../apartments.service';
 
@@ -15,7 +16,7 @@ export class ApartmentCreateComponent
 
   show: boolean = false;
   
-  constructor(public apartmentsService:ApartmentsService)
+  constructor(public apartmentsService:ApartmentsService, private tokenStorage: TokenStorageService)
   {
     // this will create a new property apartmentsService in this class
   }
@@ -36,21 +37,9 @@ export class ApartmentCreateComponent
       price:form.value.price,
       maxvisitors:form.value.maxvisitors,
       images:[],
-      ownerid:"-1",
+      ownerid:this.tokenStorage.getMyId(),
       reservations:[]
     }
     this.apartmentsService.addApartment(new_apartment).subscribe((apartment)=>this.onApartmentAdded.emit(null));
   }
 }
-
-  // new apartment variabls
-  // entered_id="-1";
-  // entered_name="";
-  // entered_description="";
-  // entered_city="";
-  // entered_address="";
-  // entered_price=0;
-  // entered_maxvisitors=0;
-  // entered_images=[];
-  // entered_ownerid="-1";
-  // entered_reservations=[];

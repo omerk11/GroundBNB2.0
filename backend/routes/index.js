@@ -29,7 +29,7 @@ router.delete('/api/apartments/:id',apartmentController.deleteApartmentById);
 router.put('/api/apartments/:id',apartmentController.updateApartmentById);
 
 // Get all apartments by owner
-router.get('/api/apartments/getapartmentsbyownerid/:id',apartmentController.getApartmentByOwnerId);
+router.get('/api/apartments/getapartmentsbyownerid/:id',apartmentController.getApartmentsByOwnerId);
 
 
 /// ----- Users API ----- ///

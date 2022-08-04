@@ -27,4 +27,8 @@ export class TokenStorageService {
     }
     return {};
   }
+  public getMyId()
+  {
+    return this.getUser().id;
+  }
 }

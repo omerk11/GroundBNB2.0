@@ -42,8 +42,7 @@ export class ApartmentsService
 
     getApartmentsByOwnerId() :Observable<Apartment[]>
     {
-        let user = this.tokenStorage.getUser();
-        let id = user.id;
+        let id = this.tokenStorage.getMyId();
         const url = `${this.apiURL}/getapartmentsbyownerid/${id}`;
         return this.http.get<Apartment[]>(url);
     }
