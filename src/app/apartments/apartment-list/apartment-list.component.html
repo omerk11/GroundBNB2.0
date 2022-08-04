@@ -1,3 +1,29 @@
+<h2>Sort By:</h2>
+<button 
+        mat-raised-button
+        color="warn"
+        type="button"
+        (click)="sortApartments('price')">Price
+</button>
+<button 
+        mat-raised-button
+        color="warn"
+        type="button"
+        (click)="sortApartments('rooms')">Rooms
+</button>
+<button 
+        mat-raised-button
+        color="warn"
+        type="button"
+        (click)="sortApartments('guests')">Guests
+</button>
+<button 
+        mat-raised-button
+        color="warn"
+        type="button"
+        (click)="sortApartments('rating')">Rating
+</button>
+<h3>Sorting By {{sortOrder}}</h3>
 <mat-accordion multi="true" *ngIf="apartments.length > 0">
     <app-apartment-item
     *ngFor="let apartment of apartments"

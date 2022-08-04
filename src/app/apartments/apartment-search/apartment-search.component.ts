@@ -45,17 +45,9 @@ export class ApartmentSearchComponent {
       date += form.value.endDate.getFullYear();
       params += "endDate="+ date +"&";
     }
-    if(form.value.name != "")
-    {
-      params += "name="+form.value.name +"&";
-    }
     if(form.value.city != "")
     {
       params += "city="+form.value.city +"&";
-    }
-    if(form.value.address != "")
-    {
-      params += "address="+form.value.address +"&";
     }
     if(form.value.maxprice != "")
     {
