@@ -42,3 +42,13 @@ exports.updateReservationById = async function(reservationId,changes){
     let result = await mongoModel.updateElementById(table,reservationId,changes);
     return result;
 }
+
+exports.getReservationtByBuyerId = async function(userId){ 
+    let result = await mongoModel.getAllElementsByUserID(table,userId);
+    return result;
+}
+
+exports.getReservationtByOwnerId = async function(userId){ 
+    let result = await mongoModel.getReservationtByOwnerId(table,userId);
+    return result;
+}

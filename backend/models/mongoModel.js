@@ -101,3 +101,47 @@ exports.updateElementById = async function(table,id,updates){
     }
 }
 
+exports.getAllElementsByUserID = async function(table,userID){
+  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+  
+  if (!client) {
+    return;
+  }
+  try {
+    let query = '';
+    if(table === 'apartments'){
+      query = {ownerid : userID}
+    }
+    else{
+      query = {buyerid : userID}
+    }
+    const db = client.db('tables');
+    let collection = db.collection(table);
+    let res = await collection.find(query).toArray();
+  return res;
+} catch (error) {
+  console.error(error);
+}finally{
+  client.close();
+}
+
+}
+exports.getReservationtByOwnerId = async function(table,userID){
+  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+  
+  if (!client) {
+    return;
+  }
+  try {
+    const db = client.db('tables');
+    let collection = db.collection(table);
+    let query = {ownerid : userID}
+    let res = await collection.find(query).toArray();
+  return res;
+} catch (error) {
+  console.error(error);
+}finally{
+  client.close();
+}
+
+}

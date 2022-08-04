@@ -51,3 +51,8 @@ exports.updateApartmentById = async function(apartmentId,changes){
     let result = await mongoModel.updateElementById(table,apartmentId,changes);
     return result;
 }
+
+exports.getApartmentByOwnerId = async function(userId){ 
+    let result = await mongoModel.getAllElementsByUserID(table,userId);
+    return result;
+}

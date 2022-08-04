@@ -50,10 +50,21 @@ const updateApartmentById = async (req, res, next) => {
     res.status(200).send('ok');
 };
 
+const getApartmentByOwnerId = async(req, res, next)=>{
+    id = req.params.id;
+    console.log(id);
+    console.log("apartment getApartmentByUserId");
+    result = await apartmentService.getApartmentByOwnerId(id);
+    console.log(result);
+    console.log("end getApartmentByUserId");
+    res.status(200).send(result);
+};
+
 module.exports = {
     getAllApartments, 
     addApartment,
     deleteApartmentById,
     updateApartmentById,
-    getApartmentbyId
+    getApartmentbyId,
+    getApartmentByOwnerId
 };
