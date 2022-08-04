@@ -55,5 +55,5 @@
     (click)="displayAllUsersPage()">
         Users list
 </button>
-<h3>Hello {{this.tokenService.getUser().firstname + " " + this.tokenService.getUser().lastname + (this.tokenService.getMyId() ? " log ":" dis ") + this.tokenService.isAdmin()}}</h3>
+<h3>Hello {{this.tokenService.getUser().firstname + " " + this.tokenService.getUser().lastname + (this.tokenService.getMyId() ? " log ":" dis ") + this.tokenService.isAdmin()? " admin ":" pesent "}}</h3>
 </mat-toolbar>
