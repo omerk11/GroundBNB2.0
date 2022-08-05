@@ -5,11 +5,11 @@ const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://admin:1q2w3e@cluster0.hd0gejt.mongodb.net/?retryWrites=true&w=majority";
 
 
-exports.getAll = async function(table){
+exports.getAll = async function (table) {
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
-      return;
+    return;
   }
   try {
     const db = client.db('tables');
@@ -19,46 +19,46 @@ exports.getAll = async function(table){
     return res;
   } catch (error) {
     console.error(error);
-  }finally{
+  } finally {
     client.close();
   }
 }
 
-exports.getById = async function(table,element_id){
+exports.getById = async function (table, element_id) {
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
-      return;
+    return;
   }
   try {
     const db = client.db('tables');
     let collection = db.collection(table);
-    let query = {_id : new ObjectId(element_id)};
+    let query = { _id: new ObjectId(element_id) };
     let res = await collection.findOne(query);
     return res;
   } catch (error) {
     console.error(error);
-  }finally{
+  } finally {
     client.close();
   }
 }
 
-exports.addElement = async function(table,element){
+exports.addElement = async function (table, element) {
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
-      return;
+    return;
   }
   try {
     const db = client.db('tables');
-    switch (table){
+    switch (table) {
       case "apartments":
         element.ownerid = new ObjectId(element.ownerid);
         break;
       case "reservations":
         element.ownerid = new ObjectId(element.ownerid);
         element.buyerid = new ObjectId(element.buyerid);
-        break;     
+        break;
       default:
         break;
     }
@@ -67,91 +67,157 @@ exports.addElement = async function(table,element){
     return res;
   } catch (error) {
     console.error(error);
-  }finally{
+  } finally {
     client.close();
   }
 }
 
-exports.deleteById = async function(table,element_id){
+exports.deleteById = async function (table, element_id) {
   console.log("mongo deleteById")
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
-      return;
+    return;
   }
   try {
     const db = client.db('tables');
     let collection = db.collection(table);
-    let query = {_id : new ObjectId(element_id)};
+    let query = { _id: new ObjectId(element_id) };
     let res = await collection.deleteOne(query);
     return res;
   } catch (error) {
     console.error(error);
-  }finally{
+  } finally {
     client.close();
   }
 }
 
-exports.updateElementById = async function(table,id,updates){
+exports.updateElementById = async function (table, id, updates) {
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
-  
-    if (!client) {
-        return;
-    }
-    try {
-      const db = client.db('tables');
-      let collection = db.collection(table);
-      let query = {_id : new ObjectId(id)};
-      let newvalues = { $set: updates };
-      let res = await collection.updateOne(query, newvalues);
-      return res;
-    } catch (error) {
-      console.error(error);
-    }finally{
-      client.close();
-    }
+
+  if (!client) {
+    return;
+  }
+  try {
+    const db = client.db('tables');
+    let collection = db.collection(table);
+    let query = { _id: new ObjectId(id) };
+    let newvalues = { $set: updates };
+    let res = await collection.updateOne(query, newvalues);
+    return res;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    client.close();
+  }
 }
 
-exports.getAllElementsByUserID = async function(table,userID){
+exports.getAllElementsByUserID = async function (table, userID) {
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
-  
+
   if (!client) {
     return;
   }
   try {
     let query = '';
-    if(table === 'apartments'){
-      query = {ownerid : new ObjectId(userID)}
+    if (table === 'apartments') {
+      query = { ownerid: new ObjectId(userID) }
     }
-    else{
-      query = {buyerid : new ObjectId(userID)}
+    else {
+      query = { buyerid: new ObjectId(userID) }
     }
     const db = client.db('tables');
     let collection = db.collection(table);
     let res = await collection.find(query).toArray();
-  return res;
-} catch (error) {
-  console.error(error);
-}finally{
-  client.close();
-}
+    return res;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    client.close();
+  }
 
 }
-exports.getReservationtsByOwnerId = async function(table,userID){
+exports.getReservationtsByOwnerId = async function (table, userID) {
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
-  
+
   if (!client) {
     return;
   }
   try {
     const db = client.db('tables');
     let collection = db.collection(table);
-    let query = {ownerid : userID}
+    let query = { ownerid: userID }
     let res = await collection.find(query).toArray();
-  return res;
-} catch (error) {
-  console.error(error);
-}finally{
-  client.close();
+    return res;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    client.close();
+  }
 }
+
+exports.getApartmentsByQuery = async function (query) {
+  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+
+  if (!client) {
+    return;
+  }
+
+  try {
+    const db = client.db('tables');
+    let collection = db.collection(table);
+    let match = {
+      $match: {
+        $and: []
+      }
+    };
+    let aggregateContent = [];
+    if (query.city) {
+      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: /Rishon LeZion/ } } } });
+      match.$match.$and.push({
+        $expr: {
+          $eq: ["$containsCity", true]
+        }
+      });
+    }
+
+    if (query.price) {
+      match.$match.$and.push({
+        $expr: {
+          $lte: ["$price", query.price]
+        }
+      });
+    }
+
+    if (query.maxvisitors) {
+      match.$match.$and.push({
+        $expr: {
+          $lte: ["$maxvisitors", query.maxvisitors]
+        }
+      });
+    }
+    if (match.$match.$and.length > 0) {
+      aggregateContent.push(match);
+    }
+    let sortParam = query.sortorder;
+    let sortValue = 1;
+    if (sortParam.includes("_desc")) {
+      sortParam = sortParam.split("_")[0];
+      sortValue = -1;
+    }
+    aggregateContent.push({
+      $sort: {
+        sortParam: sortValue
+      }
+    });
+
+    let res = await collection.aggregate(aggregateContent).toArray();
+    return res;
+  } catch (err) { 
+    console.log("failed to fetch by query");
+    console.log(err);
+  }
+  finally {
+    client.close();
+  }
 }
