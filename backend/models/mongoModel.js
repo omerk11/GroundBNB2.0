@@ -146,8 +146,9 @@ exports.getReservationtsByOwnerId = async function (table, userID) {
   try {
     const db = client.db('tables');
     let collection = db.collection(table);
-    let query = { ownerid: userID }
+    let query = { ownerid: new ObjectId(userID) }
     let res = await collection.find(query).toArray();
+    console.log(res);
     return res;
   } catch (error) {
     console.error(error);
