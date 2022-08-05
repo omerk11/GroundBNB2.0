@@ -65,9 +65,9 @@ const getApartmentsByQuery = async(req, res, next)=>{
     console.log("apartment getApartmentsByQuery");
     console.log(query);
     result = await apartmentService.getApartmentsByQuery(query);
-    console.log(result);
+    // console.log(result);
     console.log("end getApartmentsByQuery");
-    res.status(200).send();
+    res.status(200).send(result);
 };
 
 module.exports = {

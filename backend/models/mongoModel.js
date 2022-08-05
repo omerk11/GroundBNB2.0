@@ -156,7 +156,7 @@ exports.getReservationtsByOwnerId = async function (table, userID) {
   }
 }
 
-exports.getApartmentsByQuery = async function (query) {
+exports.getApartmentsByQuery = async function (table,query) {
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -173,7 +173,7 @@ exports.getApartmentsByQuery = async function (query) {
     };
     let aggregateContent = [];
     if (query.city) {
-      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: /Rishon LeZion/ } } } });
+      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city,"g") } } } });
       match.$match.$and.push({
         $expr: {
           $eq: ["$containsCity", true]
@@ -181,18 +181,18 @@ exports.getApartmentsByQuery = async function (query) {
       });
     }
 
-    if (query.price) {
+    if (query.maxprice) {
       match.$match.$and.push({
         $expr: {
-          $lte: ["$price", query.price]
+          $lte: ["$price", query.maxprice]
         }
       });
     }
 
-    if (query.maxvisitors) {
+    if (query.minvisitors) {
       match.$match.$and.push({
         $expr: {
-          $lte: ["$maxvisitors", query.maxvisitors]
+          $lte: ["$maxvisitors", query.minvisitors]
         }
       });
     }
@@ -207,11 +207,14 @@ exports.getApartmentsByQuery = async function (query) {
     }
     aggregateContent.push({
       $sort: {
-        sortParam: sortValue
+        [sortParam]: sortValue
       }
     });
-
+    console.log("-------")
+    console.log(JSON.stringify(aggregateContent));
+    console.log("-------")
     let res = await collection.aggregate(aggregateContent).toArray();
+    // console.log(res);
     return res;
   } catch (err) { 
     console.log("failed to fetch by query");
