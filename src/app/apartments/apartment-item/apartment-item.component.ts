@@ -32,8 +32,8 @@ export class ApartmentItemComponent
         apartmentid:this.apartment._id,
         ownerid: "-1",
         buyerid: "-1",
-        startdate:this.searchedDates.startDate,
-        enddate:this.searchedDates.endDate,
+        startdate:this.searchedDates.startdate,
+        enddate:this.searchedDates.enddate,
         review:"lama",
         rating:2
       }

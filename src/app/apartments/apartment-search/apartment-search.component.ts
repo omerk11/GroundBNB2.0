@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, QueryList } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ApartmentsService } from '../apartments.service';
 
@@ -10,7 +10,7 @@ import { ApartmentsService } from '../apartments.service';
 })
 export class ApartmentSearchComponent {
 
-  @Output() onSearchQuery: EventEmitter<string> = new EventEmitter(); 
+  @Output() onSearchQuery: EventEmitter<any> = new EventEmitter(); 
   @Output() searchedDates: EventEmitter<object> = new EventEmitter();
 
   show: boolean = false;
@@ -19,60 +19,100 @@ export class ApartmentSearchComponent {
   {
     // this will create a new property apartmentsService in this class
   }
-
   onSubmit(form:NgForm)
   {
-    let params: string = "?";
-
+    let query: any = {};
     if(form.invalid)
     {
       console.log("error");
       return;
     }
-    console.log(form.value.startDate.getMonth());
-    console.log(form.value.endDate);
-    if(form.value.startDate != "")
+    if(form.value.startdate != "")
     {
-      let date: string = form.value.startDate.getDate() + "/";
-      date += (form.value.startDate.getMonth()+1) + "/";
-      date += form.value.startDate.getFullYear();
-      params += "startDate="+ date +"&";
+      query.startdate = form.value.startDate;
     }
-    if(form.value.endDate != "")
+    if(form.value.enddate != "")
     {
-      let date: string = form.value.endDate.getDate() + "/";
-      date += (form.value.endDate.getMonth()+1) + "/";
-      date += form.value.endDate.getFullYear();
-      params += "endDate="+ date +"&";
+      query.enddate =  form.value.enddate
     }
     if(form.value.city != "")
     {
-      params += "city="+form.value.city +"&";
+      query.city = form.value.city;
     }
     if(form.value.maxprice != "")
     {
-      params += "maxprice="+form.value.maxprice +"&";
+      query.maxprice = form.value.maxprice;
     }
     if(form.value.minvisitors != "")
     {
-      params += "minvisitors="+form.value.minvisitors+"&";
+      query.minvisitors = form.value.minvisitors;
     }
 
-    params = params.substring(0,params.length - 1);
-    
-    console.log(params);
-
-    this.onSearchQuery.emit(params);
-    if(form.value.startDate && form.value.endDate)
+    this.onSearchQuery.emit(query);
+    if(form.value.startdate && form.value.enddate)
     {
       let dates = 
       {
-        startDate: form.value.startDate,
-        endDate: form.value.endDate
+        startdate: form.value.startdate,
+        enddate: form.value.enddate
       }
       this.searchedDates.emit(dates);
     }
     
   }
+  
 
 }
+
+// onSubmit(form:NgForm)
+//   {
+//     let params: string = "?";
+//     let query = {};
+//     if(form.invalid)
+//     {
+//       console.log("error");
+//       return;
+//     }
+//     if(form.value.startDate != "")
+//     {
+//       let date: string = form.value.startDate.getDate() + "/";
+//       date += (form.value.startDate.getMonth()+1) + "/";
+//       date += form.value.startDate.getFullYear();
+//       params += "startDate="+ date +"&";
+//     }
+//     if(form.value.endDate != "")
+//     {
+//       let date: string = form.value.endDate.getDate() + "/";
+//       date += (form.value.endDate.getMonth()+1) + "/";
+//       date += form.value.endDate.getFullYear();
+//       params += "endDate="+ date +"&";
+//     }
+//     if(form.value.city != "")
+//     {
+//       params += "city="+form.value.city +"&";
+//     }
+//     if(form.value.maxprice != "")
+//     {
+//       params += "maxprice="+form.value.maxprice +"&";
+//     }
+//     if(form.value.minvisitors != "")
+//     {
+//       params += "minvisitors="+form.value.minvisitors+"&";
+//     }
+
+//     params = params.substring(0,params.length - 1);
+    
+//     console.log(params);
+
+//     this.onSearchQuery.emit(params);
+//     if(form.value.startDate && form.value.endDate)
+//     {
+//       let dates = 
+//       {
+//         startDate: form.value.startDate,
+//         endDate: form.value.endDate
+//       }
+//       this.searchedDates.emit(dates);
+//     }
+    
+//   }

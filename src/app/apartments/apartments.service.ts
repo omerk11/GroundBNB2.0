@@ -22,15 +22,15 @@ export class ApartmentsService
     {
     }
 
-    getApartments(params?: string) :Observable<Apartment[]>
+    getApartments(query?: any) :Observable<Apartment[]>
     {
-        if(params)
+        if(query)
         {
-            return this.http.get<Apartment[]>(this.apiURL+params);
+            return this.http.post<Apartment[]>(this.apiURL+"/getapartmentsbyquery",query,this.httpOptions);
         }
         else
         {
-            return this.http.get<Apartment[]>(this.apiURL);// requesst all apartments from app
+            return this.http.get<Apartment[]>(this.apiURL);// request all apartments from app
         }
     }
 
