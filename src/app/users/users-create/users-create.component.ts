@@ -70,8 +70,10 @@ export class UsersCreateComponent implements OnInit {
     this.authService.signup(new_user).subscribe({
       next: data => {
         console.log(data);
+
         this.isSuccessful = true;
         this.isSignUpFailed = false;
+        this.errorMessage = "";
       },
       error: err => {
         this.errorMessage = err.error.message;

@@ -61,11 +61,14 @@
         <mat-error *ngIf="phone.invalid">Please enter phone number</mat-error>
     </mat-form-field>
     <br>
+    <mat-error *ngIf="errorMessage">{{errorMessage}}</mat-error>
+    <br>
     <button 
         mat-raised-button
         color="accent"
         type="submit">
             Sign up
     </button>
+    
 </form>
 </mat-card>
