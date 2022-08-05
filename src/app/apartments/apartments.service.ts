@@ -24,7 +24,7 @@ export class ApartmentsService
 
     getApartments(query?: any) :Observable<Apartment[]>
     {
-        if(query)
+        if(Object.keys(query).length>1)
         {
             return this.http.post<Apartment[]>(this.apiURL+"/getapartmentsbyquery",query,this.httpOptions);
         }

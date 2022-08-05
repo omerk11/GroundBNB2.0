@@ -56,3 +56,7 @@ exports.getApartmentsByOwnerId = async function(userId){
     let result = await mongoModel.getAllElementsByUserID(table,userId);
     return result;
 }
+
+exports.getApartmentsByQuery = async function(query){
+    
+}

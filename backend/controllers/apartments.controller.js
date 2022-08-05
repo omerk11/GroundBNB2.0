@@ -60,11 +60,22 @@ const getApartmentsByOwnerId = async(req, res, next)=>{
     res.status(200).send(result);
 };
 
+const getApartmentsByQuery = async(req, res, next)=>{
+    let query = req.body;
+    console.log("apartment getApartmentsByQuery");
+    console.log(query);
+    result = await apartmentService.getApartmentsByQuery(query);
+    console.log(result);
+    console.log("end getApartmentsByQuery");
+    res.status(200).send();
+};
+
 module.exports = {
     getAllApartments, 
     addApartment,
     deleteApartmentById,
     updateApartmentById,
     getApartmentbyId,
-    getApartmentsByOwnerId
+    getApartmentsByOwnerId,
+    getApartmentsByQuery
 };

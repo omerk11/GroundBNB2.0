@@ -31,6 +31,8 @@ router.put('/api/apartments/:id',[authJwt.verifyToken],apartmentController.updat
 // Get all apartments by owner
 router.get('/api/apartments/getapartmentsbyownerid/:id',[authJwt.verifyToken],apartmentController.getApartmentsByOwnerId);
 
+// Get apartments by query
+router.post('/api/apartments/getapartmentsbyquery',[authJwt.verifyToken],apartmentController.getApartmentsByQuery);
 
 /// ----- Users API ----- ///
 

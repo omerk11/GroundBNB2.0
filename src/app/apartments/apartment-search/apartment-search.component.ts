@@ -29,7 +29,7 @@ export class ApartmentSearchComponent {
     }
     if(form.value.startdate != "")
     {
-      query.startdate = form.value.startDate;
+      query.startdate = form.value.startdate;
     }
     if(form.value.enddate != "")
     {
