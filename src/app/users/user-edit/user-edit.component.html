@@ -1,0 +1,89 @@
+<mat-card>
+    <form (submit)="onSubmit(userForm)" #userForm="ngForm">
+    <h2>Update User</h2>
+    Email:
+    <mat-form-field>
+        <input 
+        matInput type="email"
+        name="email"
+        ngModel
+        required
+        [(ngModel)] = "user.email"
+        minlength="3"
+        #email="ngModel">
+        <mat-error *ngIf="email.invalid">Please enter email</mat-error>
+    </mat-form-field>
+    <br>
+    First Name:
+    <mat-form-field>
+        <input 
+        matInput type="text"
+        name="firstname"
+        ngModel
+        [(ngModel)] = "user.firstname"
+        required
+        minlength="3"
+        #firstname="ngModel">
+        <mat-error *ngIf="firstname.invalid">Please enter a name</mat-error>
+    </mat-form-field>
+    <br>
+    Last Name:
+    <mat-form-field>
+        <input 
+        matInput type="text"
+        name="lastname"
+        ngModel
+        [(ngModel)] = "user.lastname"
+        required
+        minlength="3"
+        #lastname="ngModel">
+        <mat-error *ngIf="lastname.invalid">Please enter a name</mat-error>
+    </mat-form-field>
+    <br>
+    Phone Number:
+    <mat-form-field>
+        <input 
+        matInput type="text"
+        name="phone"
+        ngModel
+        [(ngModel)] = "user.phone"
+        required
+        minlength="3"
+        #phone="ngModel">
+        <mat-error *ngIf="phone.invalid">Please enter phone number</mat-error>
+    </mat-form-field>
+    <br>
+    Current Password:
+    <mat-form-field>
+        <input 
+        matInput type="password"
+        name="password"
+        ngModel
+        [(ngModel)] = "user.password"
+        required
+        minlength="3"
+        #password="ngModel">
+        <mat-error *ngIf="password.invalid">Please enter a password</mat-error>
+    </mat-form-field>
+    <br>
+    New Password:
+    <mat-form-field>
+        <input 
+        matInput type="password"
+        name="newpassword"
+        ngModel
+        [(ngModel)] = "user.newpassword"
+        minlength="3"
+        #newpassword="ngModel">
+        <mat-error *ngIf="newpassword.invalid">Please enter a password</mat-error>
+    </mat-form-field>
+    <br>
+    <button 
+        mat-raised-button
+        color="accent"
+        type="submit">
+            Submit
+    </button>
+</form>
+</mat-card>
+

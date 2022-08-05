@@ -1,5 +1,11 @@
 const mongoModel = require('../models/mongoModel');
 const table = 'users';
+const config = require("../config/auth.config");
+const db = require("../models");
+const User = db.user;
+const Role = db.role;
+var jwt = require("jsonwebtoken");
+var bcrypt = require("bcryptjs");
 
 exports.getAllUsers = async function() {
     let response = {message: '', data : ''}
@@ -53,6 +59,32 @@ exports.deleteUserById = async function(userId){
 }
 
 exports.updateUserById = async function(userId,changes){
-    let result = await mongoModel.updateElementById(table,userId,changes);
-    return result;
+    // Validate users password
+    console.log(changes);
+    User.findOne({
+        email: changes.email,
+      })
+        .populate("roles", "-__v")
+        .exec((err, user) => {
+          if (err) {
+            console.log('user failed to login 0')
+            return { error: err };
+          }
+          if (!user) {
+            console.log('user failed to login - user was not found')
+    
+            return { error: "User Not found." };
+          }
+          let passwordIsValid = bcrypt.compareSync(
+            changes.password,
+            user.password
+          );
+          if (!passwordIsValid) {
+            console.log('user failed to login - Invalid Password!')
+            return { error: "Invalid Password!" };
+          }});
+    // Check if new password exists
+        if(changes.newpassword){}
+    // let result = await mongoModel.updateElementById(table,userId,changes);
+    return;
 }

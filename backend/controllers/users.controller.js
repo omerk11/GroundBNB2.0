@@ -40,9 +40,12 @@ const updateUserById = async (req, res, next) => {
     id = req.params.id;
     updates = req.body;
     console.log("users updateUserById");
-    result = await usersService.updateUserById(id,updates);
-    console.log(result);
-    console.log("end updateUserById");
+    // console.log(id);
+    // console.log(updates);
+    result =  await usersService.updateUserById(id,updates);
+    // result = await usersService.updateUserById(id,updates);
+    // console.log(result);
+    // console.log("end updateUserById");
     res.status(200).send('ok');
 };
 module.exports = {
