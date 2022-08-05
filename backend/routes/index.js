@@ -65,10 +65,10 @@ router.delete('/api/reservations/:id',[authJwt.verifyToken],reservationControlle
 router.put('/api/reservations/:id',[authJwt.verifyToken],reservationController.updateReservationById);
 
 // Get all reservations of a buyer id
-router.get('/api/reservations/getreservationsbybuyerid/:id',[authJwt.verifyToken],reservationController.getReservationtByBuyerId);
+router.get('/api/reservations/getreservationsbybuyerid/:id',[authJwt.verifyToken],reservationController.getReservationtsByBuyerId);
 
 // Get all reservations to my apartments
-router.get('/api/reservations/getreservationsbyownerid/:id',[authJwt.verifyToken],reservationController.getReservationtByOwnerId);
+router.get('/api/reservations/getreservationsbyownerid/:id',[authJwt.verifyToken],reservationController.getReservationtsByOwnerId);
 
 
 /// ----- Authentication API ----- ///

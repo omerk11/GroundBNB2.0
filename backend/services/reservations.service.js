@@ -43,12 +43,12 @@ exports.updateReservationById = async function(reservationId,changes){
     return result;
 }
 
-exports.getReservationtByBuyerId = async function(userId){ 
+exports.getReservationtsByBuyerId = async function(userId){ 
     let result = await mongoModel.getAllElementsByUserID(table,userId);
     return result;
 }
 
-exports.getReservationtByOwnerId = async function(userId){ 
-    let result = await mongoModel.getReservationtByOwnerId(table,userId);
+exports.getReservationtsByOwnerId = async function(userId){ 
+    let result = await mongoModel.getReservationtsByOwnerId(table,userId);
     return result;
 }

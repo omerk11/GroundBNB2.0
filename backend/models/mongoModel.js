@@ -126,7 +126,7 @@ exports.getAllElementsByUserID = async function(table,userID){
 }
 
 }
-exports.getReservationtByOwnerId = async function(table,userID){
+exports.getReservationtsByOwnerId = async function(table,userID){
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
   
   if (!client) {
