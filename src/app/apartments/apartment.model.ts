@@ -10,5 +10,4 @@ export interface Apartment{
     maxvisitors:number;
     images:string[];
     ownerid:string;
-    reservations:string[];
 }

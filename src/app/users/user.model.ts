@@ -7,7 +7,5 @@ export interface User{
     password:string;
     email:string;
     phone:string;
-    apartments:string[];
-    reservations:string[];
     roles:string[];
 }
