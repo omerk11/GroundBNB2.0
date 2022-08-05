@@ -17,18 +17,17 @@ exports.getAllReservations = async function() {
 };
 
 exports.addReservation = async function(reservation){
-    let response = {message: '', data : ''}
     let res = await mongoModel.addElement(table,reservation);
-    if(res.acknowledged == true){
-        response.message = "Succussfully added reservation";
-        response.data = res.insertedId;
-    }
-    else{
-        response.message = "Failed to add reservation";
-        response.data = res;
-    }
+    // if(res.acknowledged == true){
+    //     response.message = "Succussfully added reservation";
+    //     response.data = res.insertedId;
+    // }
+    // else{
+    //     response.message = "Failed to add reservation";
+    //     response.data = res;
+    // }
 
-    return response;
+    return res;
 }
 
 
