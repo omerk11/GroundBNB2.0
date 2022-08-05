@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Apartment } from "./apartments/apartment.model"
+import { Page } from './models/page.enum';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,9 @@ import { Apartment } from "./apartments/apartment.model"
 })
 export class AppComponent  
 {
+  page: Page = Page.ApartmentsList;
+
+  public get Page(): typeof Page {
+    return Page; 
+  }
 }

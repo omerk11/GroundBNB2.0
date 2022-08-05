@@ -1,13 +1,39 @@
+<div *ngIf="!isMyApartments">
+    <h2>Sort By:</h2>
+    <button 
+            mat-raised-button
+            color="warn"
+            type="button"
+            (click)="sortApartments('price')">Price
+    </button>
+    <button 
+            mat-raised-button
+            color="warn"
+            type="button"
+            (click)="sortApartments('rooms')">Rooms
+    </button>
+    <button 
+            mat-raised-button
+            color="warn"
+            type="button"
+            (click)="sortApartments('guests')">Guests
+    </button>
+    <button 
+            mat-raised-button
+            color="warn"
+            type="button"
+            (click)="sortApartments('rating')">Rating
+    </button>
+    <h3>Sorting By {{sortOrder}}</h3>
+</div>
 <mat-accordion multi="true" *ngIf="apartments.length > 0">
-    <mat-expansion-panel *ngFor="let ap of apartments">
-        <mat-expansion-panel-header>
-            Name: {{ap.name}} | City: {{ap.city}} | Price: {{ap.price}}
-        </mat-expansion-panel-header>
-        <p>
-            Description: {{ap.description}}<br>
-            Address: {{ap.address}}<br>
-            Max-Visitors: {{ap.maxvisitors}}<br>
-        </p>
-    </mat-expansion-panel>
+    <app-apartment-item
+    *ngFor="let apartment of apartments"
+    [apartment]="apartment"
+    [searchedDates]="searchedDates"
+    [allowEdit]="isMyApartments"
+    (onDeleteApartment)="removeApartmentFromList($event)"
+    ></app-apartment-item>
+    
 </mat-accordion>
 <p class="info-text mat-body-1" *ngIf="apartments.length <= 0">No Apartments</p>

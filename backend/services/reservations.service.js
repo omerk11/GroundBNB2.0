@@ -13,5 +13,42 @@ exports.getAllReservations = async function() {
     }
     //TODO: validation and create response
 
-    return response;
+    return result;
 };
+
+exports.addReservation = async function(reservation){
+    let response = {message: '', data : ''}
+    let res = await mongoModel.addElement(table,reservation);
+    if(res.acknowledged == true){
+        response.message = "Succussfully added reservation";
+        response.data = res.insertedId;
+    }
+    else{
+        response.message = "Failed to add reservation";
+        response.data = res;
+    }
+
+    return response;
+}
+
+
+exports.deleteReservationById = async function(reservationId){
+    let result = await mongoModel.deleteById(table,reservationId);
+    return result;
+    //TODO: validation and create response
+}
+
+exports.updateReservationById = async function(reservationId,changes){
+    let result = await mongoModel.updateElementById(table,reservationId,changes);
+    return result;
+}
+
+exports.getReservationtByBuyerId = async function(userId){ 
+    let result = await mongoModel.getAllElementsByUserID(table,userId);
+    return result;
+}
+
+exports.getReservationtByOwnerId = async function(userId){ 
+    let result = await mongoModel.getReservationtByOwnerId(table,userId);
+    return result;
+}
