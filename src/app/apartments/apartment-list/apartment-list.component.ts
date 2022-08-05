@@ -24,7 +24,7 @@ export class ApartmentListComponent implements OnInit
     this.refreshList();
   }
 
-  refreshList(params?: string)
+  refreshList(query?: any)
   {
     if(this.isMyApartments)
     {
@@ -32,14 +32,14 @@ export class ApartmentListComponent implements OnInit
       .subscribe((apartments)=>{this.apartments = apartments;});
       return;
     }
-    if(params)
+    if(query)
     {
-      params += "&sort=" + this.sortOrder;
+      query.sortorder = this.sortOrder;
     }
     else{
-      params = "?sort="+ this.sortOrder;
+      query = {sortorder:this.sortOrder};
     }
-    this.apartmentsService.getApartments(params)
+    this.apartmentsService.getApartments(query)
       .subscribe((apartments)=>{this.apartments = apartments;});
   }
 

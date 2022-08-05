@@ -137,4 +137,21 @@ exports.getAllElementsByUserID = async function(table,userID){
 }
 
 }
+exports.getReservationtsByOwnerId = async function(table,userID){
+  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+  
+  if (!client) {
+    return;
+  }
+  try {
+    const db = client.db('tables');
+    let collection = db.collection(table);
+    let query = {ownerid : userID}
+    let res = await collection.find(query).toArray();
+  return res;
+} catch (error) {
+  console.error(error);
+}finally{
+  client.close();
+}
 

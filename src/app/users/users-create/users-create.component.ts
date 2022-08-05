@@ -65,8 +65,6 @@ export class UsersCreateComponent implements OnInit {
       password:form.value.password,
       email:form.value.email,
       phone:form.value.phone,
-      apartments:[],
-      reservations:[],
       roles:['user']
     }
     this.authService.signup(new_user).subscribe({

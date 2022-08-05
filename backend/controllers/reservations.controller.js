@@ -37,21 +37,21 @@ const updateReservationById = async (req, res, next) => {
     res.status(200).send('ok');
 };
 
-const getReservationtByBuyerId = async (req, res, next) => {
+const getReservationtsByBuyerId = async (req, res, next) => {
     id = req.params.id;
     console.log(id);
     console.log("reservations getReservationtByBuyerId");
-    result = await reservationsService.getReservationtByBuyerId(id);
+    result = await reservationsService.getReservationtsByBuyerId(id);
     console.log(result);
     console.log("end getReservationtByBuyerId");
     res.status(200).send(result);
 }
 
-const getReservationtByOwnerId = async (req, res, next) => {
+const getReservationtsByOwnerId = async (req, res, next) => {
     id = req.params.id;
     console.log(id);
     console.log("reservations getReservationtByOwnerId");
-    result = await reservationsService.getReservationtByOwnerId(id);
+    result = await reservationsService.getReservationtsByOwnerId(id);
     console.log(result);
     console.log("end getReservationtByOwnerId");
     res.status(200).send(result);
@@ -63,6 +63,6 @@ module.exports = {
     addReservation,
     deleteReservationById,
     updateReservationById,
-    getReservationtByBuyerId,
-    getReservationtByOwnerId
+    getReservationtsByBuyerId,
+    getReservationtsByOwnerId
 };

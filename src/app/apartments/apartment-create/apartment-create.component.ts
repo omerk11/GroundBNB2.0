@@ -38,7 +38,6 @@ export class ApartmentCreateComponent
       maxvisitors:form.value.maxvisitors,
       images:[],
       ownerid:this.tokenStorage.getMyId(),
-      reservations:[]
     }
     this.apartmentsService.addApartment(new_apartment).subscribe((apartment)=>this.onApartmentAdded.emit(null));
   }

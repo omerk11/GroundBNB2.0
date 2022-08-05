@@ -3,6 +3,7 @@ import { ReservationsService } from 'src/app/reservations/reservations.service';
 import { Apartment } from '../apartment.model';
 import { Reservation } from 'src/app/reservations/reservation.model';
 import { ApartmentsService } from '../apartments.service';
+import { TokenStorageService } from 'src/app/users/token-storage.service';
 
 @Component({
   selector: 'app-apartment-item',
@@ -18,7 +19,7 @@ export class ApartmentItemComponent
   @Output() onDeleteApartment: EventEmitter<Apartment> = new EventEmitter();
 
 
-  constructor(public apartmentsService: ApartmentsService,public reservationsService: ReservationsService) 
+  constructor(public apartmentsService: ApartmentsService,public reservationsService: ReservationsService, private tokenStorage: TokenStorageService) 
   {
 
   }
@@ -30,12 +31,10 @@ export class ApartmentItemComponent
       const newReservation: Reservation = 
       {
         apartmentid:this.apartment._id,
-        ownerid: "-1",
-        buyerid: "-1",
-        startdate:this.searchedDates.startDate,
-        enddate:this.searchedDates.endDate,
-        review:"lama",
-        rating:2
+        ownerid: this.apartment.ownerid,
+        buyerid: this.tokenStorage.getMyId(),
+        startdate:this.searchedDates.startdate,
+        enddate:this.searchedDates.enddate,
       }
       this.reservationsService.addReservation(newReservation).subscribe();
     }

@@ -5,8 +5,8 @@ export interface Reservation{
     buyerid:string,
     startdate:Date,
     enddate:Date,
-    review:string,
-    rating:number
+    review?:string,
+    rating?:number
 }
 
     
