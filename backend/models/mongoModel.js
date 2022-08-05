@@ -1,4 +1,4 @@
-const { ObjectId } = require('bson');
+const { ObjectID, ObjectId } = require('bson');
 
 const MongoClient = require('mongodb').MongoClient;
 
@@ -51,6 +51,17 @@ exports.addElement = async function(table,element){
   }
   try {
     const db = client.db('tables');
+    switch (table){
+      case "apartments":
+        element.ownerid = new ObjectId(element.ownerid);
+        break;
+      case "reservations":
+        element.ownerid = new ObjectId(element.ownerid);
+        element.buyerid = new ObjectId(element.buyerid);
+        break;     
+      default:
+        break;
+    }
     let collection = db.collection(table);
     let res = await collection.insertOne(element);
     return res;
@@ -110,10 +121,10 @@ exports.getAllElementsByUserID = async function(table,userID){
   try {
     let query = '';
     if(table === 'apartments'){
-      query = {ownerid : userID}
+      query = {ownerid : new ObjectId(userID)}
     }
     else{
-      query = {buyerid : userID}
+      query = {buyerid : new ObjectId(userID)}
     }
     const db = client.db('tables');
     let collection = db.collection(table);
@@ -126,22 +137,4 @@ exports.getAllElementsByUserID = async function(table,userID){
 }
 
 }
-exports.getReservationtByOwnerId = async function(table,userID){
-  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
-  
-  if (!client) {
-    return;
-  }
-  try {
-    const db = client.db('tables');
-    let collection = db.collection(table);
-    let query = {ownerid : userID}
-    let res = await collection.find(query).toArray();
-  return res;
-} catch (error) {
-  console.error(error);
-}finally{
-  client.close();
-}
 
-}
