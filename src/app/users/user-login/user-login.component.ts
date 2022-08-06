@@ -58,6 +58,7 @@ export class UserLoginComponent implements OnInit {
 
     this.authService.login(email, password).subscribe({
       next: data => {
+        this.errorMessage = "";
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
         this.isLoginFailed = false;

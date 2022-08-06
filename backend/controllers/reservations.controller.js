@@ -49,7 +49,7 @@ const getReservationtsByBuyerId = async (req, res, next) => {
 
 const getReservationtsByOwnerId = async (req, res, next) => {
     id = req.params.id;
-    console.log(id);
+    // console.log(id);
     console.log("reservations getReservationtByOwnerId");
     result = await reservationsService.getReservationtsByOwnerId(id);
     console.log(result);
