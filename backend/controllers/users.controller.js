@@ -29,11 +29,10 @@ const addUser = async (req, res, next) => {
 const deleteUserById = async (req, res, next) => {
     id = req.params.id;
     console.log("users deleteUserById");
-    console.log(id);
     result = await usersService.deleteUserById(id);
     console.log(result);
     console.log("end deleteUserById");
-    res.status(200).send('ok');
+    res.status(200).send(result);
 };
 
 const updateUserById = async (req, res, next) => {

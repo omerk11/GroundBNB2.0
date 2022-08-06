@@ -75,6 +75,7 @@ exports.addElement = async function (table, element) {
 
 exports.deleteById = async function (table, element_id) {
   console.log("mongo deleteById")
+  console.log(element_id);
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {

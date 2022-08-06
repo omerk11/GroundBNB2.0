@@ -32,6 +32,6 @@
     </div>
 
     <div *ngSwitchCase="Page.UserEdit">
-        <app-user-edit></app-user-edit>
+        <app-user-edit (onDeleteUser)="page=Page.SignUp"></app-user-edit>
     </div>
 </main>

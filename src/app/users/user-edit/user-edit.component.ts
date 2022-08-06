@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { TokenStorageService } from '../token-storage.service';
@@ -10,6 +10,7 @@ import { User } from '../user.model';
   styleUrls: ['./user-edit.component.css']
 })
 export class UserEditComponent implements OnInit {
+  @Output() onDeleteUser: EventEmitter<any> = new EventEmitter(); 
 
   constructor(public tokenService: TokenStorageService, private authService: AuthService) { }
   user: any = {};
@@ -51,6 +52,20 @@ export class UserEditComponent implements OnInit {
     }
     );
 
+  }
+
+  onDelete()
+  {
+    if(window.confirm("Are you sure you want to delete?"))
+    {
+      let id = this.tokenService.getMyId();
+      console.log(id);
+      this.authService.deleteUser(id).subscribe((user)=>{
+        this.tokenService.signOut();
+        this.onDeleteUser.emit(user)});
+
+      // this.authService.deleteApartment(this.apartment).subscribe((apartment)=>this.onDeleteApartment.emit(apartment));
+    }//TODO: deleting doesnt refresh list
   }
 
 }

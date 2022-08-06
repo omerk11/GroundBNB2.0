@@ -46,7 +46,6 @@ router.get('/api/users/:id',[authJwt.verifyToken, authJwt.isAdmin], usersControl
 // router.post('/api/users',usersController.addUser);
 
 // Delete user
-router.delete('/api/users/:id',[authJwt.verifyToken], usersController.deleteUserById);
 
 // Update user
 // router.put('/api/users/:id',[authJwt.verifyToken],usersController.updateUserById);
@@ -96,8 +95,11 @@ router.get('/api/auth/users',[authJwt.verifyToken, authJwt.isAdmin], authenticat
 
 // Update user
 
-router.put('/api/auth/updateuser/:id',[authJwt.verifyToken],usersController.updateUserById)
-router.get('/api/auth/getuser/:id',[authJwt.verifyToken],usersController.getUserById)
+router.put('/api/auth/updateuser/:id',[authJwt.verifyToken],usersController.updateUserById);
+router.get('/api/auth/getuser/:id',[authJwt.verifyToken],usersController.getUserById);
+
+router.delete('/api/auth/deleteuser/:id',[authJwt.verifyToken], usersController.deleteUserById);
+
 // router.get("/api/test/all", authorizationController.allAccess);
 // router.get("/api/test/user", [authJwt.verifyToken], authorizationController.userBoard);
 // router.get(
