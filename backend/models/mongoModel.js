@@ -99,11 +99,16 @@ exports.updateElementById = async function (table, id, updates) {
     return;
   }
   try {
+    if(updates._id){
+      delete updates._id;
+    }
+
     const db = client.db('tables');
     let collection = db.collection(table);
     let query = { _id: new ObjectId(id) };
     let newvalues = { $set: updates };
     let res = await collection.updateOne(query, newvalues);
+    // console.log(res);
     return res;
   } catch (error) {
     console.error(error);

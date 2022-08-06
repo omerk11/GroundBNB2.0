@@ -20,13 +20,13 @@ router.get('/api/apartments', apartmentController.getAllApartments);
 router.get('/api/apartments/:id',[authJwt.verifyToken], apartmentController.getApartmentbyId); 
 
 // Add apartment
-router.post('/api/apartments',[authJwt.verifyToken],apartmentController.addApartment);
+router.post('/api/apartments/add',[authJwt.verifyToken],apartmentController.addApartment);
 
 // Delete apartment
-router.delete('/api/apartments/:id',[authJwt.verifyToken],apartmentController.deleteApartmentById);
+router.delete('/api/apartments/delete/:id',[authJwt.verifyToken],apartmentController.deleteApartmentById);
 
 // Update apartment
-router.put('/api/apartments/:id',[authJwt.verifyToken],apartmentController.updateApartmentById);
+router.put('/api/apartments/update/:id',[authJwt.verifyToken],apartmentController.updateApartmentById);
 
 // Get all apartments by owner
 router.get('/api/apartments/getapartmentsbyownerid/:id',[authJwt.verifyToken],apartmentController.getApartmentsByOwnerId);
@@ -49,7 +49,7 @@ router.get('/api/users/:id',[authJwt.verifyToken, authJwt.isAdmin], usersControl
 router.delete('/api/users/:id',[authJwt.verifyToken], usersController.deleteUserById);
 
 // Update user
-router.put('/api/users/:id',[authJwt.verifyToken],usersController.updateUserById);
+// router.put('/api/users/:id',[authJwt.verifyToken],usersController.updateUserById);
 
 
 /// ----- Reservations API ----- ///
@@ -58,13 +58,13 @@ router.put('/api/users/:id',[authJwt.verifyToken],usersController.updateUserById
 router.get('/api/reservations', [authJwt.verifyToken, authJwt.isAdmin],reservationController.getAllReservations); 
 
 // Add reservation
-router.post('/api/reservations',[authJwt.verifyToken],reservationController.addReservation);
+router.post('/api/reservations/add',[authJwt.verifyToken],reservationController.addReservation);
 
 // Delete reservation
-router.delete('/api/reservations/:id',[authJwt.verifyToken],reservationController.deleteReservationById);
+router.delete('/api/reservations/delete/:id',[authJwt.verifyToken],reservationController.deleteReservationById);
 
 // Update reservation
-router.put('/api/reservations/:id',[authJwt.verifyToken],reservationController.updateReservationById);
+router.put('/api/reservations/update/:id',[authJwt.verifyToken],reservationController.updateReservationById);
 
 // Get all reservations of a buyer id
 router.get('/api/reservations/getreservationsbybuyerid/:id',[authJwt.verifyToken],reservationController.getReservationtsByBuyerId);
@@ -94,12 +94,16 @@ router.post("/api/auth/logout", authenticationController.logout);
 // Get all users
 router.get('/api/auth/users',[authJwt.verifyToken, authJwt.isAdmin], authenticationController.getUsersList);
 
-router.get("/api/test/all", authorizationController.allAccess);
-router.get("/api/test/user", [authJwt.verifyToken], authorizationController.userBoard);
-router.get(
-"/api/test/admin",
-[authJwt.verifyToken, authJwt.isAdmin],
-authorizationController.adminBoard
-);
+// Update user
+
+router.put('/api/auth/updateuser/:id',[authJwt.verifyToken],usersController.updateUserById)
+router.get('/api/auth/getuser/:id',[authJwt.verifyToken],usersController.getUserById)
+// router.get("/api/test/all", authorizationController.allAccess);
+// router.get("/api/test/user", [authJwt.verifyToken], authorizationController.userBoard);
+// router.get(
+// "/api/test/admin",
+// [authJwt.verifyToken, authJwt.isAdmin],
+// authorizationController.adminBoard
+// );
 
 module.exports = router; // export to use in server.js

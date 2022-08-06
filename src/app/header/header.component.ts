@@ -54,6 +54,11 @@ export class HeaderComponent
     this.onPageChange.emit(Page.MyReservationsList);
   }
 
+  displayUserEditPage()
+  {
+    this.onPageChange.emit(Page.UserEdit);
+  }
+
   // User Functions
   isLoggedIn()
   {

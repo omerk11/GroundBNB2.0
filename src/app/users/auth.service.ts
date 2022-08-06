@@ -26,13 +26,19 @@ export class AuthService {
   }
 
   logOutUser()
-  {
-      this.tokenStorage.signOut();
-      return this.http.post(AUTH_API+'logout', httpOptions); 
-  }
+    {
+        this.tokenStorage.signOut();
+        return this.http.post(AUTH_API+'logout', httpOptions); 
+    }
+  
+    getUsers() :Observable<User[]>
+    {
+      return this.http.get<User[]>(AUTH_API+'users',httpOptions);// requesst all Users from app
+    }
 
-  getUsers() :Observable<User[]>
-  {
-    return this.http.get<User[]>(AUTH_API+'users',httpOptions);// requesst all Users from app
-  }
+    updateUser(user :any) :Observable<any>
+    {
+      const url = AUTH_API+"updateuser/"+user._id;
+      return this.http.put<User>(url,user,httpOptions);
+    }
 }

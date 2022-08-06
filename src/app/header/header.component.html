@@ -60,9 +60,18 @@
     mat-raised-button
     color="accent"
     type="button"
+    (click)="displayUserEditPage()">
+        User Edit
+</button>
+<button 
+    *ngIf="isLoggedIn()"
+    mat-raised-button
+    color="accent"
+    type="button"
     (click)="Logout()">
         Sign Out
 </button>
+
 
 <h3>Hello {{(isLoggedIn() ? getName() + (isAdmin() ? " Admin":" User"):" Please Connect")}}</h3>
 </mat-toolbar>
