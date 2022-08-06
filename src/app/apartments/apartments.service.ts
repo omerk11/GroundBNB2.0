@@ -54,7 +54,6 @@ export class ApartmentsService
     // TODO: validate my apartment
     updateApartment(apartment: Apartment): Observable<Apartment> 
     {
-        console.log(apartment);
         const url = `${this.apiURL}/update/${apartment._id}`;
         return this.http.put<Apartment>(url, apartment, this.httpOptions);
     }

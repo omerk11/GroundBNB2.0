@@ -58,7 +58,7 @@ exports.addElement = async function (table, element) {
       case "reservations":
         element.ownerid = new ObjectId(element.ownerid);
         element.buyerid = new ObjectId(element.buyerid);
-        element.apartmentid = new ObjectID(element.apartmentid);
+        element.apartmentid = new ObjectId(element.apartmentid);
         break;
       default:
         break;
@@ -102,6 +102,18 @@ exports.updateElementById = async function (table, id, updates) {
   try {
     if(updates._id){
       delete updates._id;
+    }
+    switch (table) {
+      case "apartments":
+        updates.ownerid = new ObjectId(updates.ownerid);
+        break;
+      case "reservations":
+        updates.ownerid = new ObjectId(updates.ownerid);
+        updates.buyerid = new ObjectId(updates.buyerid);
+        updates.apartmentid = new ObjectId(updates.apartmentid);
+        break;
+      default:
+        break;
     }
 
     const db = client.db('tables');
