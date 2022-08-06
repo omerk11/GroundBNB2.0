@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Reservation } from '../reservation.model';
+import { exhaustMap, forkJoin, of, switchMap, tap } from 'rxjs';
+import { ApartmentsService } from 'src/app/apartments/apartments.service';
+import { AuthService } from 'src/app/users/auth.service';
+import { Reservation, ReservationView } from '../reservation.model';
 import { ReservationsService } from '../reservations.service';
 
 @Component({
@@ -7,47 +10,73 @@ import { ReservationsService } from '../reservations.service';
   templateUrl: './reservation-list.component.html',
   styleUrls: ['./reservation-list.component.css']
 })
-export class ReservationListComponent implements OnInit
-{
+export class ReservationListComponent implements OnInit {
 
   @Input() isMyReservations: boolean = false;
   @Input() isForMyApartments: boolean = false;
-  reservations: Reservation[] = [];
-  
+  reservations: ReservationView[] = [];
 
-  constructor(public reservationsService:ReservationsService)// this will create a new property ReservationsService in this class
+
+  constructor(
+    public apartmentsService: ApartmentsService, private authService: AuthService,
+    public reservationsService: ReservationsService)// this will create a new property ReservationsService in this class
   {
   }
 
-  ngOnInit(): void 
-  {
+  ngOnInit(): void {
     this.refreshList();
   }
 
-  refreshList(params?: string)
-  {
-    if(this.isMyReservations)
-    {
-      this.reservationsService.getReservationsByBuyerId().subscribe((reservations)=>{this.reservations = reservations;});
-      return;
+  refreshList(params?: string) {
+    if (this.isMyReservations) {
+      this.reservationsService.getReservationsByBuyerId()
+        .pipe(switchMap(res => this.createResView(res))).subscribe((reservations) => { this.reservations = reservations; });
+    } else if (this.isForMyApartments) {
+      this.reservationsService.getReservationsByOwnerId()
+        .pipe(switchMap(res => this.createResView(res))).subscribe((reservations) => { this.reservations = reservations; });
+    } else {
+      this.reservationsService.getReservations(params)
+        .pipe(switchMap(res => this.createResView(res)))
+        .subscribe((reservations) => { this.reservations = reservations; });
     }
-    else if(this.isForMyApartments)
-    {
-      this.reservationsService.getReservationsByOwnerId().subscribe((reservations)=>{this.reservations = reservations;});
-      return;
-    }
-    this.reservationsService.getReservations(params)
-      .subscribe((reservations)=>{this.reservations = reservations;});
   }
 
-  removeReservationFromList(reservation: Reservation)
-  {
+  createResView(res: Reservation[]) {
+    const resView = res.map(r => {
+      return r as ReservationView;
+    });
+
+    resView.forEach(re => {
+      this.apartmentsService.getApartmentById(re.apartmentid)
+        .pipe(
+          tap(apartment => re.apartmentName = apartment.name),
+          exhaustMap(apartment => this.authService.getUserById(apartment.ownerid))
+        ).subscribe(user => re.apartmentOwner = user.firstname + " " + user.lastname);
+    });
+
+    return of(resView);
+  }
+
+  removeReservationFromList(reservation: Reservation) {
     this.reservations = this.reservations.filter((res) => reservation._id !== res._id);
   }
-  
 
+  onSubmitClick() {
+    if (window.confirm("Are you sure you want to update?")) {
+      // this.reservationsService.updateReservation(reservation).subscribe((res) => this.reservation = res);
+    }
+  }
+
+  onDelete(reservation: Reservation) {
+    if (window.confirm("Are you sure you want to delete?")) {
+      this.reservationsService.deleteReservation(reservation).subscribe(() => {
+        this.removeReservationFromList(reservation);
+      });
+    }
+
+
+  }
 }
-
 // reservations: Reservation[] = [
 //   {
 //       appartmentId:"-1",

@@ -1,20 +1,48 @@
 <table class="table">
     <thead>
         <tr>
-            <th >Apartment Name</th>
-            <th >Owner</th>
-            <th >Start Date</th>
-            <th >End Date</th>
-            <th >My Review</th>
-            <th >My Rating</th>
+            <th>Apartment Name</th>
+            <th>Owner</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>My Review</th>
+            <th>My Rating</th>
             <th *ngIf="isMyReservations">Actions</th>
         </tr>
     </thead>
     <tbody>
-        <app-reservation-item
-            *ngFor="let reservation of reservations"
-            [reservation]="reservation"
-            [allowEdit]="isMyReservations">
-        </app-reservation-item>
+        <tr *ngFor="let reservation of reservations; let i = index">
+            <td>Apartment Name: {{reservation.apartmentName}}</td>
+            <td>Owner: {{reservation.apartmentOwner}}</td>
+            <td>Start Date: {{reservation.startdate}}</td>
+            <td>End Date: {{reservation.enddate}}</td>
+            <ng-container *ngIf="!isMyReservations">
+                <td>Review: {{reservation.review}}</td>
+                <td>Rating: {{reservation.rating}}</td>
+            </ng-container>
+            <ng-container *ngIf="isMyReservations">
+                <td>
+                    Review:
+                    <mat-form-field>
+                        <input matInput type="text" name="review" ngModel minlength="3" #review="ngModel"
+                            [(ngModel)]="reservation.review">
+                    </mat-form-field>
+                </td>
+                <td>
+                    Rating:
+                    <mat-form-field>
+                        <input matInput type="number" name="rating" ngModel #rating="ngModel"
+                            [(ngModel)]="reservation.rating">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <button mat-raised-button color="primary" type="submit">
+                        Update Reservation
+                    </button>
+                    <button mat-raised-button color="warn" type="button" (click)="onDelete(reservation)">Delete
+                    </button>
+                </td>
+            </ng-container>
+        </tr>
     </tbody>
 </table>
