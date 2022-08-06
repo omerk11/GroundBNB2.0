@@ -58,6 +58,7 @@ exports.addElement = async function (table, element) {
       case "reservations":
         element.ownerid = new ObjectId(element.ownerid);
         element.buyerid = new ObjectId(element.buyerid);
+        element.apartmentid = new ObjectID(element.apartmentid);
         break;
       default:
         break;
