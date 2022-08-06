@@ -29,11 +29,7 @@ import { ReservationItemComponent } from './reservations/reservation-item/reserv
 import { UserLoginComponent } from './users/user-login/user-login.component';
 import { ApartmentSearchComponent } from './apartments/apartment-search/apartment-search.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
-<<<<<<< HEAD
-
-=======
 import { UserEditComponent } from './users/user-edit/user-edit.component';//added manualy
->>>>>>> main
 
 
 @NgModule({
@@ -50,10 +46,7 @@ import { UserEditComponent } from './users/user-edit/user-edit.component';//adde
     UserLoginComponent,
     ApartmentSearchComponent,
     UserProfileComponent,
-<<<<<<< HEAD
-=======
     UserEditComponent
->>>>>>> main
   ],
   imports: [
     BrowserModule,
