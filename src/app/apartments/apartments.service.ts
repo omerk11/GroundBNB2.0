@@ -49,20 +49,20 @@ export class ApartmentsService
 
     addApartment(apartment: Apartment) : Observable<Apartment>
     {
-        return this.http.post<Apartment>(this.apiURL, apartment, this.httpOptions);
+        return this.http.post<Apartment>(this.apiURL+"/add", apartment, this.httpOptions);
     }
     // TODO: validate my apartment
     updateApartment(apartment: Apartment): Observable<Apartment> 
     {
         console.log(apartment);
-        const url = `${this.apiURL}/${apartment._id}`;
+        const url = `${this.apiURL}/update/${apartment._id}`;
         return this.http.put<Apartment>(url, apartment, this.httpOptions);
     }
 
     // TODO: validate my apartment
     deleteApartment(apartment: Apartment): Observable<Apartment>
     {  
-        const url = `${this.apiURL}/${apartment._id}`;
+        const url = `${this.apiURL}/delete/${apartment._id}`;
         return this.http.delete<Apartment>(url);
     }
 }

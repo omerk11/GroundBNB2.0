@@ -7,12 +7,14 @@
             <th >End Date</th>
             <th >My Review</th>
             <th >My Rating</th>
+            <th *ngIf="isMyReservations">Actions</th>
         </tr>
     </thead>
     <tbody>
         <app-reservation-item
             *ngFor="let reservation of reservations"
-            [reservation]="reservation">
+            [reservation]="reservation"
+            [allowEdit]="isMyReservations">
         </app-reservation-item>
     </tbody>
 </table>

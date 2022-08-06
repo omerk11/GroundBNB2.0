@@ -48,13 +48,13 @@ export class ReservationsService
 
     addReservation(reservation: Reservation) : Observable<Reservation>
     {
-        return this.http.post<Reservation>(this.apiURL, reservation, this.httpOptions);
+        return this.http.post<Reservation>(this.apiURL+"/add", reservation, this.httpOptions);
     }
     // TODO: validate my reservation
     updateReservation(reservation: Reservation): Observable<Reservation> 
     {
         console.log(reservation);
-        const url = `${this.apiURL}/${reservation._id}`;
+        const url = `${this.apiURL}/update/${reservation._id}`;
         reservation._id=undefined;
         return this.http.put<Reservation>(url, reservation, this.httpOptions);
     }
@@ -62,7 +62,7 @@ export class ReservationsService
     // TODO: validate my reservation
     deleteReservation(reservation: Reservation): Observable<Reservation>
     {  
-        const url = `${this.apiURL}/${reservation._id}`;
+        const url = `${this.apiURL}/delete/${reservation._id}`;
         return this.http.delete<Reservation>(url);
     }
 }

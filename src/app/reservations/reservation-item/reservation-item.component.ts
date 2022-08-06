@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ApartmentsService } from 'src/app/apartments/apartments.service';
+import { AuthService } from 'src/app/users/auth.service';
 import { Reservation } from '../reservation.model';
 import { ReservationsService } from '../reservations.service';
 
@@ -11,9 +13,11 @@ import { ReservationsService } from '../reservations.service';
 export class ReservationItemComponent implements OnInit
 {
   @Input() reservation!: Reservation;
-  apartmentName: string = "";
+  @Input() allowEdit: boolean = false;
+  apartmentName: string = "Loading Apartment Name...";
+  apartmentOwner: string = "Loading Owner Name...";
 
-  constructor(public apartmentsService: ApartmentsService, public reservationsService: ReservationsService) 
+  constructor(public apartmentsService: ApartmentsService, public reservationsService: ReservationsService, private authService: AuthService) 
   {
     
   }
@@ -21,7 +25,33 @@ export class ReservationItemComponent implements OnInit
   ngOnInit(): void 
   {
     this.apartmentsService.getApartmentById(this.reservation.apartmentid).subscribe(
-      (apartment) => {this.apartmentName = apartment.name});
+      (apartment) => 
+      {
+        this.apartmentName = apartment.name;
+        
+      
+      });
   }
 
+  onSubmit(form:NgForm)
+  {
+    if(window.confirm("Are you sure you want to update?"))
+    {
+      if(form.invalid)
+      {
+        console.log("error");
+        return;
+      }
+      this.reservationsService.updateReservation(this.reservation).subscribe((res)=>this.reservation = res);
+    }
+  }
+
+  onDelete()
+  {
+    if(window.confirm("Are you sure you want to delete?"))
+    {
+      this.reservationsService.deleteReservation(this.reservation).subscribe();
+    }//TODO: deleting doesnt refresh list
+  }
+  
 }
