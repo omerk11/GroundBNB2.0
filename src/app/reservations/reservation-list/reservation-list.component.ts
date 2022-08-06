@@ -61,9 +61,9 @@ export class ReservationListComponent implements OnInit {
     this.reservations = this.reservations.filter((res) => reservation._id !== res._id);
   }
 
-  onSubmitClick() {
+  onEdit(reservation: Reservation) {
     if (window.confirm("Are you sure you want to update?")) {
-      // this.reservationsService.updateReservation(reservation).subscribe((res) => this.reservation = res);
+      this.reservationsService.updateReservation(reservation).subscribe();
     }
   }
 
