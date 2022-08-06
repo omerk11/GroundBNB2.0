@@ -46,7 +46,7 @@ const updateUserById = async (req, res, next) => {
     // result = await usersService.updateUserById(id,updates);
     // console.log(result);
     // console.log("end updateUserById");
-    res.status(200).send('ok');
+    res.status(200).send(result);
 };
 module.exports = {
     getAllUsers,

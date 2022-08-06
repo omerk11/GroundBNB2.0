@@ -36,11 +36,9 @@ export class AuthService {
       return this.http.get<User[]>(AUTH_API+'users',httpOptions);// requesst all Users from app
     }
 
-    updateUser(user :any) :Observable<User>
+    updateUser(user :any) :Observable<any>
     {
-      const id = user._id;
-      const url = AUTH_API+"updateuser/"+id;
-      user._id = undefined;
+      const url = AUTH_API+"updateuser/"+user._id;
       return this.http.put<User>(url,user,httpOptions);
     }
 }

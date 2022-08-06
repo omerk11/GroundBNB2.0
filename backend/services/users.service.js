@@ -7,7 +7,7 @@ const Role = db.role;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
-exports.getAllUsers = async function() {
+const getAllUsers = async (req,res)=> {
     let response = {message: '', data : ''}
     let result = await mongoModel.getAll(table);
     response.data = result
@@ -22,7 +22,7 @@ exports.getAllUsers = async function() {
     return response;
 };
 
-exports.getUserById = async function(userId) {
+const getUserById = async (userId) =>{
     let response = {message: '', data : ''}
     let result = await mongoModel.getById(table,userId);
     response.data = result
@@ -34,10 +34,10 @@ exports.getUserById = async function(userId) {
     }
     //TODO: validation and create response
 
-    return response;
+    return result;
 };
 
-exports.addUser = async function(user){
+const addUser = async (user)=>{
     let response = {message: '', data : ''}
     let res = await mongoModel.addElement(table,user);
     if(res.acknowledged == true){
@@ -52,39 +52,64 @@ exports.addUser = async function(user){
     return response;
 }
 
-exports.deleteUserById = async function(userId){
+const deleteUserById = async (userId)=>{
     let result = await mongoModel.deleteById(table,userId);
     return result;
     //TODO: validation and create response
 }
 
-exports.updateUserById = async function(userId,changes){
-    // Validate users password
-    console.log(changes);
-    User.findOne({
-        email: changes.email,
-      })
-        .populate("roles", "-__v")
-        .exec((err, user) => {
-          if (err) {
-            console.log('user failed to login 0')
-            return { error: err };
-          }
-          if (!user) {
-            console.log('user failed to login - user was not found')
-    
-            return { error: "User Not found." };
-          }
-          let passwordIsValid = bcrypt.compareSync(
-            changes.password,
-            user.password
-          );
-          if (!passwordIsValid) {
-            console.log('user failed to login - Invalid Password!')
-            return { error: "Invalid Password!" };
-          }});
-    // Check if new password exists
-        if(changes.newpassword){}
-    // let result = await mongoModel.updateElementById(table,userId,changes);
-    return;
+const getUserByEmail = async (email) => {
+  return await User.findOne({ email }).exec();
 }
+const updateUserById = async (userId,changes)=>{
+    // Validate users password
+    // console.log(changes);
+
+    const user = await getUserByEmail(changes.email);
+    if(!user) {
+      console.error("user does not exists");
+      throw new Error("error");
+    }
+
+  const passwordIsValid = bcrypt.compareSync(
+    changes.password,
+    user.password
+  );
+
+  if (!passwordIsValid) {
+    console.log('user failed to login - Invalid Password!')
+    return { error: "Invalid Password!" };
+  }
+
+  if (changes.newpassword) {
+    changes.password = bcrypt.hashSync(changes.newpassword);
+    delete changes.newpassword;
+  } else {
+    changes.password = bcrypt.hashSync(changes.password);
+  }
+
+  const result = await mongoModel.updateElementById(table,userId,changes);
+  let newUser = null;
+  if (result.acknowledged){
+      newUser = await getUserById(userId);
+  }
+  if(newUser === null) {
+    return { error: "could not fetch updated user"};
+  }
+
+  delete newUser.password;
+  delete newUser.apartments;
+  delete newUser.reservations;
+  delete newUser.__v;
+
+  return newUser;
+
+}
+
+module.exports = {
+    getAllUsers,
+    getUserById,
+    addUser,
+    deleteUserById,
+    updateUserById
+};
