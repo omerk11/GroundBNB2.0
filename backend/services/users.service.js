@@ -4,8 +4,8 @@ const config = require("../config/auth.config");
 const db = require("../models");
 const User = db.user;
 const Role = db.role;
-var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const apartmentService = require("../services/apartments.service");
 
 const getAllUsers = async (req,res)=> {
     let response = {message: '', data : ''}
@@ -53,6 +53,10 @@ const addUser = async (user)=>{
 }
 
 const deleteUserById = async (userId)=>{
+    let apartments = await mongoModel.getAllElementsByUserID('apartments',userId);
+    apartments.forEach(async element => {
+      res = await apartmentService.deleteApartmentById(element._id);
+    });    
     let result = await mongoModel.deleteById(table,userId);
     return result;
     //TODO: validation and create response
