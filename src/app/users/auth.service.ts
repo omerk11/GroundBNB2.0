@@ -46,4 +46,9 @@ export class AuthService {
       const url = AUTH_API+"deleteuser/"+userId;
       return this.http.delete<User>(url,httpOptions);
     }
+    getUserById(id: string) :Observable<User>
+    {
+        const url = `${AUTH_API}getuser/${id}`;
+        return this.http.get<User>(url);
+    }
 }

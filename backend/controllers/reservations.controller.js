@@ -14,7 +14,7 @@ const addReservation = async (req, res, next) => {
     result = await reservationsService.addReservation(reservation);
     console.log(result);
     console.log("end addReservation");
-    res.status(200).send();
+    res.status(200).send(result);
 };
 
 const deleteReservationById = async (req, res, next) => {
@@ -29,12 +29,12 @@ const deleteReservationById = async (req, res, next) => {
 
 const updateReservationById = async (req, res, next) => {
     id = req.params.id;
-    updates = req.body.updates;
+    updates = req.body;
     console.log("reservations updateReservationById");
     result = await reservationsService.updateReservationById(id,updates);
     console.log(result);
     console.log("end updateReservationById");
-    res.status(200).send('ok');
+    res.status(200).send(result);
 };
 
 const getReservationtsByBuyerId = async (req, res, next) => {

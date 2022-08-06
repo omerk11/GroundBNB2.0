@@ -50,9 +50,10 @@ const deleteApartmentById = async (apartmentId)=>{
 const updateApartmentById = async (apartmentId,changes) =>{
 
     let result = await mongoModel.updateElementById(table,apartmentId,changes);
-    if(result.acknowledged === true)
+    let apartment;
+    if(result.acknowledged)
     {
-        let apartment = getApartmentById(apartmentId);
+        apartment = getApartmentById(apartmentId);
     }
     return apartment;
 }

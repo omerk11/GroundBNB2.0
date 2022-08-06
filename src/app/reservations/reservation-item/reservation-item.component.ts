@@ -28,8 +28,12 @@ export class ReservationItemComponent implements OnInit
       (apartment) => 
       {
         this.apartmentName = apartment.name;
-        
-      
+
+        this.authService.getUserById(apartment.ownerid).subscribe(
+          (user)=>
+          { 
+            this.apartmentOwner = user.firstname +" "+ user.lastname;
+          });
       });
   }
 
