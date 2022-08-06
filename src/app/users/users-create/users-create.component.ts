@@ -35,9 +35,10 @@
 //     this.usersService.addUser(new_user).subscribe((user)=>this.onUserAdded.emit(null));
 //   }
 // }
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { TokenStorageService } from '../token-storage.service';
 import { User } from '../user.model';
 
 @Component({
@@ -49,8 +50,13 @@ export class UsersCreateComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
-  constructor(private authService: AuthService) { }
+  @Output() onSignUp: EventEmitter<any> = new EventEmitter();
+
+  constructor(private authService: AuthService,private tokenStorage: TokenStorageService) { }
   ngOnInit(): void {
+  }
+  reloadPage(): void {
+    window.location.reload();
   }
   onSubmit(form: NgForm): void {
     if(form.invalid)
@@ -74,6 +80,18 @@ export class UsersCreateComponent implements OnInit {
         this.isSuccessful = true;
         this.isSignUpFailed = false;
         this.errorMessage = "";
+        this.authService.login(new_user.email, new_user.password).subscribe({
+          next: data => {
+            this.errorMessage = "";
+            this.tokenStorage.saveToken(data.accessToken);
+            this.tokenStorage.saveUser(data);
+            this.reloadPage();
+
+          },
+          error: err => {
+            this.errorMessage = err.error.message;
+          }
+        });
       },
       error: err => {
         this.errorMessage = err.error.message;
