@@ -1,7 +1,7 @@
 const mongoModel = require('../models/mongoModel');
 const table = 'reservations';
 
-exports.getAllReservations = async function() {
+const getAllReservations = async () =>{
     let response = {message: '', data : ''}
     let result = await mongoModel.getAll(table);
     response.data = result
@@ -16,38 +16,49 @@ exports.getAllReservations = async function() {
     return result;
 };
 
-exports.addReservation = async function(reservation){
+const addReservation = async (reservation)=>{
     let res = await mongoModel.addElement(table,reservation);
-    // if(res.acknowledged == true){
-    //     response.message = "Succussfully added reservation";
-    //     response.data = res.insertedId;
-    // }
-    // else{
-    //     response.message = "Failed to add reservation";
-    //     response.data = res;
-    // }
 
-    return res;
+    return reservation;
 }
 
+const getReservationById = async (reservationId)=>{ 
+    let result = await mongoModel.getById(table,reservationId);
+    return result;
+}
 
-exports.deleteReservationById = async function(reservationId){
+const deleteReservationById = async (reservationId)=>{
     let result = await mongoModel.deleteById(table,reservationId);
     return result;
     //TODO: validation and create response
 }
 
-exports.updateReservationById = async function(reservationId,changes){
-    let result = await mongoModel.updateElementById(table,reservationId,changes);
-    return result;
+const updateReservationById = async (reservationId,changes)=>{
+    const result = await mongoModel.updateElementById(table,reservationId,changes);
+    let newReservation;
+    if (result.acknowledged){
+        newReservation = await getReservationById(reservationId);
+    }
+    return newReservation;
 }
 
-exports.getReservationtsByBuyerId = async function(userId){ 
+const getReservationtsByBuyerId = async (userId)=>{ 
     let result = await mongoModel.getAllElementsByUserID(table,userId);
     return result;
 }
 
-exports.getReservationtsByOwnerId = async function(userId){ 
+const getReservationtsByOwnerId = async (userId)=>{ 
     let result = await mongoModel.getReservationtsByOwnerId(table,userId);
     return result;
 }
+
+module.exports = {
+    getAllReservations,
+    addReservation,
+    getReservationById,
+    deleteReservationById,
+    updateReservationById,
+    getReservationtsByBuyerId,
+    getReservationtsByOwnerId
+    
+};

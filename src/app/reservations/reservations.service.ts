@@ -55,7 +55,6 @@ export class ReservationsService
     {
         console.log(reservation);
         const url = `${this.apiURL}/update/${reservation._id}`;
-        reservation._id=undefined;
         return this.http.put<Reservation>(url, reservation, this.httpOptions);
     }
 
