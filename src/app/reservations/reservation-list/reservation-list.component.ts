@@ -30,13 +30,18 @@ export class ReservationListComponent implements OnInit {
   }
 
   refreshList(query?: any) {
-    if (this.isMyReservations) {
-      this.reservationsService.getReservationsByBuyerId()
+    if (this.isMyReservations) 
+    {
+      this.reservationsService.getReservationsByBuyerId(query)
         .pipe(switchMap(res => this.createResView(res))).subscribe((reservations) => { this.reservations = reservations; });
-    } else if (this.isForMyApartments) {
-      this.reservationsService.getReservationsByOwnerId()
+    } 
+    else if (this.isForMyApartments) 
+    {
+      this.reservationsService.getReservationsByOwnerId(query)
         .pipe(switchMap(res => this.createResView(res))).subscribe((reservations) => { this.reservations = reservations; });
-    } else {
+    } 
+    else 
+    {
       this.reservationsService.getReservations(query)
         .pipe(switchMap(res => this.createResView(res)))
         .subscribe((reservations) => { this.reservations = reservations; });

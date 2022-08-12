@@ -24,9 +24,9 @@ export class ReservationsService
 
     getReservations(query?: any) :Observable<Reservation[]>
     {
-        return this.http.get<Reservation[]>(this.apiURL);
+        //return this.http.get<Reservation[]>(this.apiURL);
 
-        if(Object.keys(query).length>0)
+        if(Object.keys(query).length>0 && false)
         {
             return this.http.post<Reservation[]>(this.apiURL+"/getreservtionsbyquery",query,this.httpOptions);
         }
@@ -38,16 +38,38 @@ export class ReservationsService
 
     getReservationsByBuyerId(query?: any) :Observable<Reservation[]>
     {
-        let id = this.tokenStorage.getMyId();
-        const url = `${this.apiURL}/getreservationsbybuyerid/${id}`;
-        return this.http.get<Reservation[]>(url);
+        // let id = this.tokenStorage.getMyId();
+        // const url = `${this.apiURL}/getreservationsbybuyerid/${id}`;
+        // return this.http.get<Reservation[]>(url);
+        const id = this.tokenStorage.getMyId();
+        if(Object.keys(query).length>0 && false)
+        {
+            const url = `${this.apiURL}/getreservationsbybuyeridquery/${id}`;
+            return this.http.post<Reservation[]>(url,query,this.httpOptions);
+        }
+        else
+        {
+            const url = `${this.apiURL}/getreservationsbybuyerid/${id}`;
+            return this.http.get<Reservation[]>(url);
+        }
     }
 
     getReservationsByOwnerId(query?: any) :Observable<Reservation[]>
     {
-        let id = this.tokenStorage.getMyId();
-        const url = `${this.apiURL}/getreservationsbyownerid/${id}`;
-        return this.http.get<Reservation[]>(url);
+        // let id = this.tokenStorage.getMyId();
+        // const url = `${this.apiURL}/getreservationsbyownerid/${id}`;
+        // return this.http.get<Reservation[]>(url);
+        const id = this.tokenStorage.getMyId();
+        if(Object.keys(query).length>0 && false)
+        {
+            const url = `${this.apiURL}/getreservationsbyowneridquery/${id}`;
+            return this.http.post<Reservation[]>(url,query,this.httpOptions);
+        }
+        else
+        { 
+            const url = `${this.apiURL}/getreservationsbyownerid/${id}`;
+            return this.http.get<Reservation[]>(url);
+        }
     }
 
     addReservation(reservation: Reservation) : Observable<Reservation>
