@@ -49,7 +49,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Apartment Name</th>
+            <th>Apartment Details</th>
             <ng-container *ngIf="!isForMyApartments">
                 <th>Owner Details</th>
             </ng-container>
@@ -66,19 +66,25 @@
     </thead>
     <tbody>
         <tr *ngFor="let reservation of reservations; let i = index">
-            <td>Apartment Name: {{reservation.apartment.name}}</td>
+            <td>
+                Name: {{reservation.apartment.name}}<br>
+                Address: {{reservation.apartment.city + " " + reservation.apartment.address}}<br>
+                Max-Visitors: {{reservation.apartment.maxvisitors}}
+            </td>
             <ng-container *ngIf="!isForMyApartments">
-                <td>Owner Name: {{reservation.owner.firstname+" "+reservation.owner.lastname}} <br>Owner Phone: {{reservation.owner.phone}}</td>
+                <td>Owner Name: {{reservation.owner.firstname+" "+reservation.owner.lastname}}<br>
+                    Owner Phone: {{reservation.owner.phone}}</td>
             </ng-container>
             <ng-container *ngIf="!isMyReservations">
-                <td>Costumer Name: {{reservation.buyer.firstname+" "+reservation.buyer.lastname}} <br>Costumer Phone: {{reservation.buyer.phone}}</td>
+                <td>Costumer Name: {{reservation.buyer.firstname+" "+reservation.buyer.lastname}}<br>
+                    Costumer Phone: {{reservation.buyer.phone}}</td>
             </ng-container>
             <td>Start Date: {{reservation.startdate}}</td>
             <td>End Date: {{reservation.enddate}}</td>
             <td>{{reservation.apartment.price}}₪/{{reservation.totalprice}}₪</td>
             <ng-container *ngIf="!isMyReservations">
-                <td>Review: {{reservation.review}}</td>
-                <td>Rating: {{reservation.rating}}</td>
+                <td>Review: {{reservation.review? reservation.review :"No Review Submited"}}</td>
+                <td>Rating: {{reservation.rating? reservation.rating:"No Rating Submited" }}</td>
             </ng-container>
             <ng-container *ngIf="isMyReservations">
                 <td>
