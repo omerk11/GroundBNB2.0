@@ -16,6 +16,21 @@ const getAllReservations = async () =>{
     return result;
 };
 
+const getAllReservationsByQuery = async () =>{
+    let response = {message: '', data : ''}
+    let result = await mongoModel.getAll(table);
+    response.data = result
+    if(result.length == 0){
+        response.message = 'Didnt find any reservations';
+    }
+    else{
+        response.message = 'Reservations fetched succussfully';
+    }
+    //TODO: validation and create response
+
+    return result;
+};
+
 const addReservation = async (reservation)=>{
     let res = await mongoModel.addElement(table,reservation);
 
@@ -54,6 +69,7 @@ const getReservationtsByOwnerId = async (userId)=>{
 
 module.exports = {
     getAllReservations,
+    getAllReservationsByQuery,
     addReservation,
     getReservationById,
     deleteReservationById,

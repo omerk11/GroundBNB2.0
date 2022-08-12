@@ -52,7 +52,7 @@ export class ReservationsService
             query = {id:this.tokenStorage.getMyId()}
         }
 
-        const postUrl = `${this.apiURL}/getreservationsbybuyeridquery`;
+        const postUrl = `${this.apiURL}/getreservationsbybuyerquery`;
         return this.http.post<Reservation[]>(postUrl,query,this.httpOptions);
         
     }
@@ -71,7 +71,7 @@ export class ReservationsService
         {
             query = {id:this.tokenStorage.getMyId()}
         }
-        const postUrl = `${this.apiURL}/getreservationsbyowneridquery`;
+        const postUrl = `${this.apiURL}/getreservationsbyownerquery`;
         return this.http.post<Reservation[]>(postUrl,query,this.httpOptions);
  
     }

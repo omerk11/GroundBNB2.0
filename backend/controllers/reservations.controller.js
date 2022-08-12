@@ -8,6 +8,15 @@ const getAllReservations = async (req, res, next) => {
     res.status(200).send(result);
 };
 
+const getAllReservationsByQuery = async (req, res, next) => {//TODO
+    let query = req.body;
+    console.log("reservations getAllReservationsByQuery");
+    result = await reservationsService.getAllReservationsByQuery(query);
+    console.log(result);
+    console.log("end getAllReservationsByQuery");
+    res.status(200).send(result);
+};
+
 const addReservation = async (req, res, next) => {
     reservation = req.body;
     console.log("reservations addReservation");
@@ -47,7 +56,27 @@ const getReservationtsByBuyerId = async (req, res, next) => {
     res.status(200).send(result);
 }
 
+const getReservationtsByBuyerQuery = async (req, res, next) => {//TODO
+    id = req.params.id;
+    console.log(id);
+    console.log("reservations getReservationtByBuyerId");
+    result = await reservationsService.getReservationtsByBuyerId(id);
+    console.log(result);
+    console.log("end getReservationtByBuyerId");
+    res.status(200).send(result);
+}
+
 const getReservationtsByOwnerId = async (req, res, next) => {
+    id = req.params.id;
+    // console.log(id);
+    console.log("reservations getReservationtByOwnerId");
+    result = await reservationsService.getReservationtsByOwnerId(id);
+    console.log(result);
+    console.log("end getReservationtByOwnerId");
+    res.status(200).send(result);
+}
+
+const getReservationtsByOwnerQuery = async (req, res, next) => {//TODO
     id = req.params.id;
     // console.log(id);
     console.log("reservations getReservationtByOwnerId");
@@ -60,9 +89,12 @@ const getReservationtsByOwnerId = async (req, res, next) => {
 
 module.exports = {
     getAllReservations,
+    getAllReservationsByQuery,
     addReservation,
     deleteReservationById,
     updateReservationById,
     getReservationtsByBuyerId,
-    getReservationtsByOwnerId
+    getReservationtsByBuyerQuery,
+    getReservationtsByOwnerId,
+    getReservationtsByOwnerQuery
 };

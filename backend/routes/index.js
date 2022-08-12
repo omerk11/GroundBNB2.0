@@ -56,6 +56,10 @@ router.get('/api/users/:id',[authJwt.verifyToken, authJwt.isAdmin], usersControl
 // Get all reservations
 router.get('/api/reservations', [authJwt.verifyToken, authJwt.isAdmin],reservationController.getAllReservations); 
 
+// Get all reservation by query
+router.post('/api/reservations/getreservtionsbyquery', [authJwt.verifyToken, authJwt.isAdmin],reservationController.getAllReservationsByQuery); 
+
+
 // Add reservation
 router.post('/api/reservations/add',[authJwt.verifyToken],reservationController.addReservation);
 
@@ -68,8 +72,14 @@ router.put('/api/reservations/update/:id',[authJwt.verifyToken],reservationContr
 // Get all reservations of a buyer id
 router.get('/api/reservations/getreservationsbybuyerid/:id',[authJwt.verifyToken],reservationController.getReservationtsByBuyerId);
 
+// Get all reservations of a buyer query
+router.post('/api/reservations/getreservationsbybuyerquery',[authJwt.verifyToken],reservationController.getReservationtsByBuyerQuery);
+
 // Get all reservations to my apartments
 router.get('/api/reservations/getreservationsbyownerid/:id',[authJwt.verifyToken],reservationController.getReservationtsByOwnerId);
+
+// Get all reservations to my apartments query
+router.get('/api/reservations/getreservationsbyownerquery',[authJwt.verifyToken],reservationController.getReservationtsByOwnerId);
 
 
 /// ----- Authentication API ----- ///
