@@ -22,24 +22,28 @@ export class ReservationsService
     {
     }
 
-    getReservations(params?: string) :Observable<Reservation[]>
+    getReservations(query?: any) :Observable<Reservation[]>
     {
-        console.log
-        if(!params)
+        return this.http.get<Reservation[]>(this.apiURL);
+
+        if(Object.keys(query).length>0)
         {
-            params = "";
+            return this.http.post<Reservation[]>(this.apiURL+"/getreservtionsbyquery",query,this.httpOptions);
         }
-        return this.http.get<Reservation[]>(this.apiURL + params);// requesst all Reservations from app
+        else
+        {
+            return this.http.get<Reservation[]>(this.apiURL);// request all apartments from app
+        }
     }
 
-    getReservationsByBuyerId() :Observable<Reservation[]>
+    getReservationsByBuyerId(query?: any) :Observable<Reservation[]>
     {
         let id = this.tokenStorage.getMyId();
         const url = `${this.apiURL}/getreservationsbybuyerid/${id}`;
         return this.http.get<Reservation[]>(url);
     }
 
-    getReservationsByOwnerId() :Observable<Reservation[]>
+    getReservationsByOwnerId(query?: any) :Observable<Reservation[]>
     {
         let id = this.tokenStorage.getMyId();
         const url = `${this.apiURL}/getreservationsbyownerid/${id}`;

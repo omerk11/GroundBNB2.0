@@ -1,3 +1,6 @@
+import { Apartment } from "../apartments/apartment.model";
+import { User } from "../users/user.model";
+
 export interface Reservation {
     _id?: string;
     apartmentid: string,
@@ -10,7 +13,9 @@ export interface Reservation {
 }
 
 export interface ReservationView extends Reservation {
-    apartmentName: string;
-    apartmentOwner: string;
+    apartment: Apartment;
+    owner: User;
+    buyer: User;
+    totalprice: number;
  }
 
