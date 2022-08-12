@@ -43,12 +43,12 @@ const updateReservationById = async (reservationId,changes)=>{
 }
 
 const getReservationtsByBuyerId = async (userId)=>{ 
-    let result = await mongoModel.getAllElementsByUserID(table,userId);
+    let result = await mongoModel.getReservationtsByOwnerId(table,userId,'buyerid');
     return result;
 }
 
 const getReservationtsByOwnerId = async (userId)=>{ 
-    let result = await mongoModel.getReservationtsByOwnerId(table,userId);
+    let result = await mongoModel.getReservationtsByOwnerId(table,userId,'ownerid');
     return result;
 }
 

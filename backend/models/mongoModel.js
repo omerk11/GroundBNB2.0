@@ -5,7 +5,7 @@ const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://admin:1q2w3e@cluster0.hd0gejt.mongodb.net/?retryWrites=true&w=majority";
 
 
-exports.getAll = async function (table) {
+const getAll = async (table) =>{
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -24,7 +24,7 @@ exports.getAll = async function (table) {
   }
 }
 
-exports.getById = async function (table, element_id) {
+const getById = async  (table, element_id)=> {
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -43,7 +43,7 @@ exports.getById = async function (table, element_id) {
   }
 }
 
-exports.addElement = async function (table, element) {
+const addElement = async  (table, element) => {
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -73,9 +73,9 @@ exports.addElement = async function (table, element) {
   }
 }
 
-exports.deleteById = async function (table, element_id) {
-  console.log("mongo deleteById")
-  console.log(element_id);
+const deleteById = async  (table, element_id) =>{
+  //console.log("mongo deleteById")
+  //console.log(element_id);
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -94,7 +94,7 @@ exports.deleteById = async function (table, element_id) {
   }
 }
 
-exports.updateElementById = async function (table, id, updates) {
+const updateElementById = async  (table, id, updates) =>{
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -122,7 +122,7 @@ exports.updateElementById = async function (table, id, updates) {
     let query = { _id: new ObjectId(id) };
     let newvalues = { $set: updates };
     let res = await collection.updateOne(query, newvalues);
-    // console.log(res);
+    // //console.log(res);
     return res;
   } catch (error) {
     console.error(error);
@@ -131,7 +131,7 @@ exports.updateElementById = async function (table, id, updates) {
   }
 }
 
-exports.getAllElementsByUserID = async function (table, userID) {
+const getAllElementsByUserID = async (table, userID) =>{
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -156,7 +156,7 @@ exports.getAllElementsByUserID = async function (table, userID) {
   }
 
 }
-exports.getReservationtsByOwnerId = async function (table, userID) {
+const getReservationtsByOwnerId = async (table, userID,param) =>{
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -165,10 +165,16 @@ exports.getReservationtsByOwnerId = async function (table, userID) {
   try {
     const db = client.db('tables');
     let collection = db.collection(table);
-    let query = { ownerid: new ObjectId(userID) }
+    let query = {};
+    query[param] =  new ObjectId(userID);
     let res = await collection.find(query).toArray();
-    console.log(res);
-    return res;
+    let allReservations = []
+    for (let reservation in res) {
+        let newReservation = await getReservationById(table,reservation._id);
+        allReservations.push(newReservation);
+      }
+    console.log(allReservations);
+    return allReservations;
   } catch (error) {
     console.error(error);
   } finally {
@@ -176,7 +182,7 @@ exports.getReservationtsByOwnerId = async function (table, userID) {
   }
 }
 
-exports.getApartmentsByQuery = async function (table,query) {
+const getApartmentsByQuery = async (table,query) => {
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -230,17 +236,52 @@ exports.getApartmentsByQuery = async function (table,query) {
         [sortParam]: sortValue
       }
     });
-    console.log("-------")
-    console.log(JSON.stringify(aggregateContent));
-    console.log("-------")
+    //console.log("-------")
+    //console.log(JSON.stringify(aggregateContent));
+    //console.log("-------")
     let res = await collection.aggregate(aggregateContent).toArray();
-    // console.log(res);
+    // //console.log(res);
     return res;
   } catch (err) { 
-    console.log("failed to fetch by query");
+    //console.log("failed to fetch by query");
     console.log(err);
   }
   finally {
     client.close();
   }
+}
+
+const getReservationById = async (table,reservationId)=>{
+  const client = await MongoClient.connect(uri).catch(err => {console.log(err); });
+
+  if (!client) {
+    return;
+  }
+  try {
+    const db = client.db('tables');
+    let collection = db.collection(table);
+    let query = { _id: new ObjectId(reservationId) };
+    let reservation = await collection.findOne(query);
+    let apartment = await getById('apartments',reservation.apartmentid);
+    let user = await getById('users',reservation.ownerid);
+    reservation['apartmentname'] = apartment.name;
+    reservation['ownername'] = user.firstname + " " +user.lastname;
+    return reservation;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    client.close();
+  }
+}
+
+module.exports = {
+  getAll,
+  getById,
+  addElement,
+  deleteById,
+  updateElementById,
+  getAllElementsByUserID,
+  getReservationtsByOwnerId,
+  getApartmentsByQuery,
+  getReservationById
 }
