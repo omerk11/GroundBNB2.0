@@ -24,9 +24,10 @@ export class ReservationsService
 
     getReservations(query?: any) :Observable<Reservation[]>
     {
-        //return this.http.get<Reservation[]>(this.apiURL);
+        return this.http.get<Reservation[]>(this.apiURL);
 
-        if(Object.keys(query).length>0 && false)
+        //-----Enable This When Backend Works-----//
+        if(query && Object.keys(query).length > 1 && false)
         {
             return this.http.post<Reservation[]>(this.apiURL+"/getreservtionsbyquery",query,this.httpOptions);
         }
@@ -38,38 +39,41 @@ export class ReservationsService
 
     getReservationsByBuyerId(query?: any) :Observable<Reservation[]>
     {
-        // let id = this.tokenStorage.getMyId();
-        // const url = `${this.apiURL}/getreservationsbybuyerid/${id}`;
-        // return this.http.get<Reservation[]>(url);
         const id = this.tokenStorage.getMyId();
-        if(Object.keys(query).length>0 && false)
+        const url = `${this.apiURL}/getreservationsbybuyerid/${id}`;
+        return this.http.get<Reservation[]>(url);
+        //-----Enable This When Backend Works-----//
+        if(query)
         {
-            const url = `${this.apiURL}/getreservationsbybuyeridquery/${id}`;
-            return this.http.post<Reservation[]>(url,query,this.httpOptions);
+            query.id = this.tokenStorage.getMyId();
         }
         else
         {
-            const url = `${this.apiURL}/getreservationsbybuyerid/${id}`;
-            return this.http.get<Reservation[]>(url);
+            query = {id:this.tokenStorage.getMyId()}
         }
+
+        const postUrl = `${this.apiURL}/getreservationsbybuyeridquery`;
+        return this.http.post<Reservation[]>(postUrl,query,this.httpOptions);
+        
     }
 
     getReservationsByOwnerId(query?: any) :Observable<Reservation[]>
     {
-        // let id = this.tokenStorage.getMyId();
-        // const url = `${this.apiURL}/getreservationsbyownerid/${id}`;
-        // return this.http.get<Reservation[]>(url);
         const id = this.tokenStorage.getMyId();
-        if(Object.keys(query).length>0 && false)
+        const url = `${this.apiURL}/getreservationsbyownerid/${id}`;
+        return this.http.get<Reservation[]>(url);
+        //-----Enable This When Backend Works-----//
+        if(query)
         {
-            const url = `${this.apiURL}/getreservationsbyowneridquery/${id}`;
-            return this.http.post<Reservation[]>(url,query,this.httpOptions);
+            query.id = this.tokenStorage.getMyId();
         }
         else
-        { 
-            const url = `${this.apiURL}/getreservationsbyownerid/${id}`;
-            return this.http.get<Reservation[]>(url);
+        {
+            query = {id:this.tokenStorage.getMyId()}
         }
+        const postUrl = `${this.apiURL}/getreservationsbyowneridquery`;
+        return this.http.post<Reservation[]>(postUrl,query,this.httpOptions);
+ 
     }
 
     addReservation(reservation: Reservation) : Observable<Reservation>
