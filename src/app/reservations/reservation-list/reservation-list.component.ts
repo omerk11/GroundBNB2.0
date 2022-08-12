@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { exhaustMap, forkJoin, of, switchMap, tap } from 'rxjs';
 import { ApartmentsService } from 'src/app/apartments/apartments.service';
 import { AuthService } from 'src/app/users/auth.service';
@@ -16,6 +17,7 @@ export class ReservationListComponent implements OnInit {
   @Input() isForMyApartments: boolean = false;
   reservations: ReservationView[] = [];
 
+  showSearch: boolean = false;
 
   constructor(
     public apartmentsService: ApartmentsService, private authService: AuthService,
@@ -27,15 +29,20 @@ export class ReservationListComponent implements OnInit {
     this.refreshList();
   }
 
-  refreshList(params?: string) {
-    if (this.isMyReservations) {
-      this.reservationsService.getReservationsByBuyerId()
+  refreshList(query?: any) {
+    if (this.isMyReservations) 
+    {
+      this.reservationsService.getReservationsByBuyerId(query)
         .pipe(switchMap(res => this.createResView(res))).subscribe((reservations) => { this.reservations = reservations; });
-    } else if (this.isForMyApartments) {
-      this.reservationsService.getReservationsByOwnerId()
+    } 
+    else if (this.isForMyApartments) 
+    {
+      this.reservationsService.getReservationsByOwnerId(query)
         .pipe(switchMap(res => this.createResView(res))).subscribe((reservations) => { this.reservations = reservations; });
-    } else {
-      this.reservationsService.getReservations(params)
+    } 
+    else 
+    {
+      this.reservationsService.getReservations(query)
         .pipe(switchMap(res => this.createResView(res)))
         .subscribe((reservations) => { this.reservations = reservations; });
     }
@@ -49,9 +56,18 @@ export class ReservationListComponent implements OnInit {
     resView.forEach(re => {
       this.apartmentsService.getApartmentById(re.apartmentid)
         .pipe(
-          tap(apartment => re.apartmentName = apartment.name),
+          tap(apartment => {
+            re.apartment = apartment;
+            // calc price
+            const timeDifference = new Date(re.enddate).getTime() - new Date(re.startdate).getTime();
+            const daysDifference = timeDifference / (1000 * 3600 * 24);
+            re.totalprice = re.apartment.price * daysDifference;
+            this.authService.getUserById(re.buyerid).subscribe(buyer => re.buyer = buyer);
+          }),
           exhaustMap(apartment => this.authService.getUserById(apartment.ownerid))
-        ).subscribe(user => re.apartmentOwner = user.firstname + " " + user.lastname);
+        ).subscribe(user => re.owner = user);
+        
+        
     });
 
     return of(resView);
@@ -73,10 +89,34 @@ export class ReservationListComponent implements OnInit {
         this.removeReservationFromList(reservation);
       });
     }
-
-
   }
+
+  onSearch(form:NgForm)
+    {
+      let query: any = {};
+      if(form.invalid)
+      {
+        console.log("error");
+        return;
+      }
+      if(form.value.date != "")
+      {
+        query.date = form.value.date;
+      }
+      if(form.value.apartmentname != "")
+      {
+        query.apartmentname = form.value.apartmentname;
+      }
+      if(form.value.city != "")
+      {
+        query.city = form.value.city;
+      }
+      
+      this.refreshList(query);
+    }
+      
 }
+
 // reservations: Reservation[] = [
 //   {
 //       appartmentId:"-1",

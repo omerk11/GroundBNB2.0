@@ -4,8 +4,18 @@
 }
 table {
     width: 100%;
-  }
+}
   
-  table, th, td {
-    border:1px solid black;
-  }
+table, th, td {
+  border:1px solid black;
+}
+
+mat-card{
+  width:30%;
+  margin: auto;
+}
+
+mat-form-field,
+textarea{
+    width: 100%;
+}

@@ -1,24 +1,90 @@
+<mat-card>
+    <form (submit)="onSearch(searchForm)" #searchForm="ngForm">
+
+    <mat-checkbox
+        type="button"
+        mat-fab
+        color="primary"
+        (change)="showSearch = !showSearch"
+    ><h2>Search Reservation</h2></mat-checkbox>
+    
+    <div *ngIf="showSearch">
+        <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" name="date" ngModel #date="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        <br>
+        Apartment Name:
+        <mat-form-field>
+            <input 
+            matInput type="text"
+            name="apartmentname"
+            ngModel
+            minlength="3"
+            #apartmentname="ngModel">
+        </mat-form-field>
+        <br>
+        City:
+        <mat-form-field>
+            <input 
+            matInput type="text"
+            name="city"
+            ngModel
+            minlength="3"
+            #city="ngModel">
+        </mat-form-field>
+        <br>
+        <button 
+            mat-raised-button
+            color="accent"
+            type="submit">
+                Search
+        </button>
+    </div>
+</form>
+</mat-card>
+
 <table class="table">
     <thead>
         <tr>
-            <th>Apartment Name</th>
-            <th>Owner</th>
+            <th>Apartment Details</th>
+            <ng-container *ngIf="!isForMyApartments">
+                <th>Owner Details</th>
+            </ng-container>
+            <ng-container *ngIf="!isMyReservations">
+                <th>Costumer Details</th>
+            </ng-container>
             <th>Start Date</th>
             <th>End Date</th>
-            <th>My Review</th>
-            <th>My Rating</th>
+            <th>Price Per Day/Total Price</th>
+            <th>Review</th>
+            <th>Rating</th>
             <th *ngIf="isMyReservations">Actions</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let reservation of reservations; let i = index">
-            <td>Apartment Name: {{reservation.apartmentName}}</td>
-            <td>Owner: {{reservation.apartmentOwner}}</td>
+            <td>
+                Name: {{reservation.apartment.name}}<br>
+                Address: {{reservation.apartment.city + " " + reservation.apartment.address}}<br>
+                Max-Visitors: {{reservation.apartment.maxvisitors}}
+            </td>
+            <ng-container *ngIf="!isForMyApartments">
+                <td>Owner Name: {{reservation.owner.firstname+" "+reservation.owner.lastname}}<br>
+                    Owner Phone: {{reservation.owner.phone}}</td>
+            </ng-container>
+            <ng-container *ngIf="!isMyReservations">
+                <td>Costumer Name: {{reservation.buyer.firstname+" "+reservation.buyer.lastname}}<br>
+                    Costumer Phone: {{reservation.buyer.phone}}</td>
+            </ng-container>
             <td>Start Date: {{reservation.startdate}}</td>
             <td>End Date: {{reservation.enddate}}</td>
+            <td>{{reservation.apartment.price}}₪/{{reservation.totalprice}}₪</td>
             <ng-container *ngIf="!isMyReservations">
-                <td>Review: {{reservation.review}}</td>
-                <td>Rating: {{reservation.rating}}</td>
+                <td>Review: {{reservation.review? reservation.review :"No Review Submited"}}</td>
+                <td>Rating: {{reservation.rating? reservation.rating:"No Rating Submited" }}</td>
             </ng-container>
             <ng-container *ngIf="isMyReservations">
                 <td>
