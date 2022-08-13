@@ -261,23 +261,33 @@ exports.getReserationsByQuery = async function (table,query) {
       }
     };
     let aggregateContent = [];
-    if (query.city) {
-      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city,"g") } } } });
-      match.$match.$and.push({
-        $expr: {
-          $eq: ["$containsCity", true]
+    aggregateContent.push(
+      { $lookup:
+        {
+           from: "apartments",
+           localField: "apartmentid",
+           foreignField: "_id",
+           as: "apartment",
         }
-      });
     }
+    );
+    // if (query.city) {
+    //   aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "apartment.city", regex: new RegExp(query.city,"g") } } } });
+    //   match.$match.$and.push({
+    //     $expr: {
+    //       $eq: ["$containsCity", true]
+    //     }
+    //   });
+    // }
 
-    if (query.name) {
-      aggregateContent.push({ $addFields: { containsName: { $regexMatch: { input: "$name", regex: new RegExp(query.name,"g") } } } });
-      match.$match.$and.push({
-        $expr: {
-          $eq: ["$containsName", true]
-        }
-      });
-    }
+    // if (query.name) {
+    //   aggregateContent.push({ $addFields: { containsName: { $regexMatch: { input: "$name", regex: new RegExp(query.name,"g") } } } });
+    //   match.$match.$and.push({
+    //     $expr: {
+    //       $eq: ["$containsName", true]
+    //     }
+    //   });
+    // }
 
 
     if (query.date) {

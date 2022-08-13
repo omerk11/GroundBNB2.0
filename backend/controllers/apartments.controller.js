@@ -12,10 +12,10 @@ const getAllApartments = async (req, res, next) => {
 
 const getApartmentbyId = async (req, res, next) => {
     id = req.params.id;
-    console.log("apartment getApartmentbyId" + id);
+    // console.log("apartment getApartmentbyId" + id);
     result = await apartmentService.getApartmentById(id);
     // console.log(result);
-    console.log("end getApartmentbyId");
+    // console.log("end getApartmentbyId");
     res.status(200).send(result);
 };
 
@@ -53,20 +53,20 @@ const updateApartmentById = async (req, res, next) => {
 const getApartmentsByOwnerId = async(req, res, next)=>{
     id = req.params.id;
     // console.log(id);
-    console.log("apartment getApartmentByUserId");
+    // console.log("apartment getApartmentByUserId");
     result = await apartmentService.getApartmentsByOwnerId(id);
     // console.log(result);
-    console.log("end getApartmentByUserId");
+    // console.log("end getApartmentByUserId");
     res.status(200).send(result);
 };
 
 const getApartmentsByQuery = async(req, res, next)=>{
     let query = req.body;
-    console.log("apartment getApartmentsByQuery");
-    console.log(query);
+    // console.log("apartment getApartmentsByQuery");
+    // console.log(query);
     result = await apartmentService.getApartmentsByQuery(query);
     // console.log(result);
-    console.log("end getApartmentsByQuery");
+    // console.log("end getApartmentsByQuery");
     res.status(200).send(result);
 };
 

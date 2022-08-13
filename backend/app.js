@@ -28,7 +28,7 @@ db.mongoose
     process.exit();
   });
   function initial() {
-    console.log('initiate DB with roles');
+    // console.log('initiate DB with roles');
     Role.estimatedDocumentCount((err, count) => {
       if (!err && count === 0) {
         new Role({
