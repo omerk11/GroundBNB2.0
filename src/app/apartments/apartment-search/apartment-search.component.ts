@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output, QueryList } from '@angular/cor
 import { NgForm } from '@angular/forms';
 import { ApartmentsService } from '../apartments.service';
 
-
 @Component({
   selector: 'app-apartment-search',
   templateUrl: './apartment-search.component.html',
@@ -12,16 +11,22 @@ export class ApartmentSearchComponent {
 
   @Output() onSearchQuery: EventEmitter<any> = new EventEmitter(); 
   @Output() searchedDates: EventEmitter<object> = new EventEmitter();
+  
 
   show: boolean = false;
 
   constructor(public apartmentsService:ApartmentsService)
   {
-    // this will create a new property apartmentsService in this class
+
   }
-  onSubmit(form:NgForm)
+  onSubmit(form:NgForm | null)
   {
     let query: any = {};
+    if(form == null)
+    {
+      this.onSearchQuery.emit(null);
+      return;
+    }
     if(form.invalid)
     {
       console.log("error");
@@ -46,6 +51,10 @@ export class ApartmentSearchComponent {
     if(form.value.minvisitors != "")
     {
       query.minvisitors = form.value.minvisitors;
+    }
+    if(form.value.description != "")
+    {
+      query.description = form.value.description;
     }
 
     this.onSearchQuery.emit(query);

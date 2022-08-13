@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
     "@googlemaps/js-api-loader": "^1.14.3",
+    "ahocorasick": "^1.0.2",
     "bcryptjs": "^2.4.3",
     "cookie-session": "^2.0.0",
     "jsonwebtoken": "^8.5.1",

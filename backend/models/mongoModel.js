@@ -215,7 +215,7 @@ exports.getApartmentsByQuery = async function (table,query) {
     if (query.minvisitors) {
       match.$match.$and.push({
         $expr: {
-          $lte: ["$maxvisitors", query.minvisitors]
+          $gte: ["$maxvisitors", query.minvisitors]
         }
       });
     }
