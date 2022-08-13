@@ -61,7 +61,7 @@ export class ApartmentListComponent implements OnInit
       runAc = false;
     }
     this.apartmentsService.getApartments(query)
-      .subscribe((apartments)=>{this.apartments = apartments.filter(ap=> !runAc || this.ahocorasick(acList,ap.description));});
+      .subscribe((apartments)=>{this.apartments = apartments.filter(ap=> !runAc || this.ahocorasick(acList,ap.description+" "+ap.name));});
   }
 
   ahocorasick(keywords:string[],search:string):boolean
