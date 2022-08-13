@@ -32,13 +32,13 @@ export class ApartmentItemComponent implements OnInit
 
   ngOnInit(){
     this.tmpId = this.apartment._id?'map-'+this.apartment._id:'';
-    const loader = new Loader({
-      apiKey: "AIzaSyBIzBq78AMY7ALjM6v0fN7Kgw3b8j-N31g",
-    });
-    loader.load().then(() => {
-      this.initialize();
-      this.codeAddress();
-    });
+    // const loader = new Loader({
+    //   apiKey: "AIzaSyBIzBq78AMY7ALjM6v0fN7Kgw3b8j-N31g",
+    // });
+    // loader.load().then(() => {
+    //   this.initialize();
+    //   this.codeAddress();
+    // });
   }
 
   addReservation()

@@ -68,7 +68,6 @@ export class ApartmentListComponent implements OnInit
   {
     const ac = new AhoCorasick(keywords);
     const res = ac.search(search.toLowerCase());
-    console.log(keywords,search.toLowerCase(),res,res.length);
     return res.length > 0;
   }
 

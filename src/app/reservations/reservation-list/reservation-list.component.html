@@ -81,7 +81,7 @@
             </ng-container>
             <td>Start Date: {{reservation.startdate}}</td>
             <td>End Date: {{reservation.enddate}}</td>
-            <td>{{reservation.apartment.price}}₪/{{reservation.totalprice}}₪</td>
+            <td>{{reservation.apartment.price}}$/{{reservation.totalprice}}$</td>
             <ng-container *ngIf="!isMyReservations">
                 <td>Review: {{reservation.review? reservation.review :"No Review Submited"}}</td>
                 <td>Rating: {{reservation.rating? reservation.rating:"No Rating Submited" }}</td>
