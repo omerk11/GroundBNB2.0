@@ -196,7 +196,7 @@ exports.getApartmentsByQuery = async function (table,query) {
     };
     let aggregateContent = [];
     if (query.city) {
-      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city,"g") } } } });
+      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city,"i") } } } });
       match.$match.$and.push({
         $expr: {
           $eq: ["$containsCity", true]
