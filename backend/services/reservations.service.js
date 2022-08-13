@@ -16,18 +16,8 @@ const getAllReservations = async () =>{
     return result;
 };
 
-const getAllReservationsByQuery = async () =>{
-    let response = {message: '', data : ''}
-    let result = await mongoModel.getAll(table);
-    response.data = result
-    if(result.length == 0){
-        response.message = 'Didnt find any reservations';
-    }
-    else{
-        response.message = 'Reservations fetched succussfully';
-    }
-    //TODO: validation and create response
-
+const getAllReservationsByQuery = async (query) =>{
+    let result = await mongoModel.getReserationsByQuery(table,query);
     return result;
 };
 
@@ -75,6 +65,5 @@ module.exports = {
     deleteReservationById,
     updateReservationById,
     getReservationtsByBuyerId,
-    getReservationtsByOwnerId
-    
+    getReservationtsByOwnerId 
 };

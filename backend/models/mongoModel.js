@@ -230,6 +230,82 @@ exports.getApartmentsByQuery = async function (table,query) {
         [sortParam]: sortValue
       }
     });
+    let res = await collection.aggregate(aggregateContent).toArray();
+    // console.log(res);
+    return res;
+  } catch (err) { 
+    console.log("failed to fetch by query");
+    console.log(err);
+  }
+  finally {
+    client.close();
+  }
+}
+
+exports.getReserationsByQuery = async function (table,query) {
+  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+
+  if (!client) {
+    return;
+  }
+
+  try {
+    const db = client.db('tables');
+    let collection = db.collection(table);
+    let match = {
+      $match: {
+        $and: []
+      }
+    };
+    let aggregateContent = [];
+    if (query.city) {
+      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city,"g") } } } });
+      match.$match.$and.push({
+        $expr: {
+          $eq: ["$containsCity", true]
+        }
+      });
+    }
+
+    if (query.name) {
+      aggregateContent.push({ $addFields: { containsName: { $regexMatch: { input: "$name", regex: new RegExp(query.name,"g") } } } });
+      match.$match.$and.push({
+        $expr: {
+          $eq: ["$containsName", true]
+        }
+      });
+    }
+
+
+    if (query.date) {
+      match.$match.$and.push({
+        $expr: {
+          $lte: ["$startdate", query.date]
+        }
+      });
+    }
+
+    if (query.date) {
+      match.$match.$and.push({
+        $expr: {
+          $gte: ["$enddate", query.date]
+        }
+      });
+    }
+    if (match.$match.$and.length > 0) {
+      aggregateContent.push(match);
+    }
+    let sortParam = query.sortorder;
+    let sortValue = 1;
+    if (sortParam.includes("_desc")) {
+      sortParam = sortParam.split("_")[0];
+      sortValue = -1;
+    }
+    aggregateContent.push({
+      $sort: {
+        [sortParam]: sortValue
+      }
+    });
     console.log("-------")
     console.log(JSON.stringify(aggregateContent));
     console.log("-------")
