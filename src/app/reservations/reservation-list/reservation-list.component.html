@@ -1,5 +1,5 @@
 <mat-card>
-    <form (submit)="onSearch(searchForm)" #searchForm="ngForm">
+    <form *ngIf="!(isMyReservations || isForMyApartments)" (submit)="onSearch(searchForm)" #searchForm="ngForm">
 
     <mat-checkbox
         type="button"

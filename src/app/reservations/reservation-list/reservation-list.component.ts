@@ -42,7 +42,7 @@ export class ReservationListComponent implements OnInit {
     } 
     else 
     {
-      this.reservationsService.getReservations(query)
+      this.reservationsService.getAllReservations(query)
         .pipe(switchMap(res => this.createResView(res)))
         .subscribe((reservations) => { this.reservations = reservations; });
     }
