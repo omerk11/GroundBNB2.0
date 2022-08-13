@@ -57,7 +57,7 @@ router.get('/api/users/:id',[authJwt.verifyToken, authJwt.isAdmin], usersControl
 router.get('/api/reservations', [authJwt.verifyToken, authJwt.isAdmin],reservationController.getAllReservations); 
 
 // Get all reservation by query
-router.post('/api/reservations/getreservtionsbyquery', [authJwt.verifyToken],reservationController.getAllReservationsByQuery); 
+router.post('/api/reservations/getreservationsbyquery', [authJwt.verifyToken],reservationController.getAllReservationsByQuery); 
 
 
 // Add reservation

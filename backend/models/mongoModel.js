@@ -59,6 +59,9 @@ exports.addElement = async function (table, element) {
         element.ownerid = new ObjectId(element.ownerid);
         element.buyerid = new ObjectId(element.buyerid);
         element.apartmentid = new ObjectId(element.apartmentid);
+        element.startdate = new Date(element.startdate);
+        element.enddate = new Date(element.enddate);
+
         break;
       default:
         break;
@@ -280,7 +283,7 @@ exports.getReserationsByQuery = async function (table,query) {
     if (query.date) {
       match.$match.$and.push({
         $expr: {
-          $lte: ["$startdate", query.date]
+          $lte: ["$startdate", new Date(query.date)]
         }
       });
     }
@@ -288,29 +291,46 @@ exports.getReserationsByQuery = async function (table,query) {
     if (query.date) {
       match.$match.$and.push({
         $expr: {
-          $gte: ["$enddate", query.date]
+          $gte: ["$enddate", new Date(query.date)]
         }
       });
     }
+    
+    if(query.buyerid){
+      match.$match.$and.push({
+        $expr: {
+          $eq: ["$buyerid", new ObjectId(query.buyerid)]
+        }
+      });
+    }
+
+    if(query.ownerid){
+      match.$match.$and.push({
+        $expr: {
+          $eq: ["$ownerid", new ObjectId(query.ownerid)]
+        }
+      });
+    }
+
     if (match.$match.$and.length > 0) {
       aggregateContent.push(match);
     }
-    let sortParam = query.sortorder;
-    let sortValue = 1;
-    if (sortParam.includes("_desc")) {
-      sortParam = sortParam.split("_")[0];
-      sortValue = -1;
-    }
+    // let sortParam = query.sortorder;
+    // let sortValue = 1;
+    // if (sortParam.includes("_desc")) {
+    //   sortParam = sortParam.split("_")[0];
+    //   sortValue = -1;
+    // }
     aggregateContent.push({
       $sort: {
-        [sortParam]: sortValue
+        ["startdate"]: 1
       }
     });
-    console.log("-------")
-    console.log(JSON.stringify(aggregateContent));
-    console.log("-------")
+    // console.log("-------")
+    // console.log(JSON.stringify(aggregateContent));
+    // console.log("-------")
     let res = await collection.aggregate(aggregateContent).toArray();
-    // console.log(res);
+    console.log(res);
     return res;
   } catch (err) { 
     console.log("failed to fetch by query");

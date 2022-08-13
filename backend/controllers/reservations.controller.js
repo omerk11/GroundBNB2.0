@@ -10,9 +10,10 @@ const getAllReservations = async (req, res, next) => {
 
 const getAllReservationsByQuery = async (req, res, next) => {//TODO
     let query = req.body;
+    console.log(query);
     console.log("reservations getAllReservationsByQuery");
     result = await reservationsService.getAllReservationsByQuery(query);
-    console.log(result);
+    // console.log(result);
     console.log("end getAllReservationsByQuery");
     res.status(200).send(result);
 };
