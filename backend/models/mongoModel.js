@@ -195,44 +195,6 @@ exports.getApartmentsByQuery = async function (table,query) {
       }
     };
     let aggregateContent = [];
-    if(query.startdate && query.enddate)
-    {
-      // apartments = apartments.Where(ap => !(ap.Reservations.FirstOrDefault(r => startDate.Value < r.EndDate) != null
-      //                                             && ap.Reservations.FirstOrDefault(r => endDate.Value > r.StartDate) != null));
-      aggregateContent.push(
-        {
-          $lookup: {
-          from: 'reservations',
-          let: {id: '$_id'},
-          pipeline: [
-            {$match: 
-              {
-              $expr: 
-                { 
-                  $not:
-                  {
-                    $and: 
-                    [
-                      {$eq: ['$apartmentid', '$$id']},
-                      {
-                        $and: 
-                        [
-                          {//query.startdate < reservation.enddate == true
-                            $lt:[new Date(query.startdate),"$enddate"]
-                          },
-                          {//query.enddate > reservation.startdate == true
-                            $gt:[new Date(query.enddate),"$startdate"]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                }
-              }}],
-              as: 'reservations'
-        }
-        });
-    }
     if (query.city) {
       aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city,"g") } } } });
       match.$match.$and.push({
