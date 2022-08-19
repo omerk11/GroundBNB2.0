@@ -104,7 +104,7 @@ exports.updateElementById = async function (table, id, updates) {
     return;
   }
   try {
-    if(updates._id){
+    if (updates._id) {
       delete updates._id;
     }
     switch (table) {
@@ -179,7 +179,7 @@ exports.getReservationtsByOwnerId = async function (table, userID) {
   }
 }
 
-exports.getApartmentsByQuery = async function (table,query) {
+exports.getApartmentsByQuery = async function (table, query) {
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -195,8 +195,53 @@ exports.getApartmentsByQuery = async function (table,query) {
       }
     };
     let aggregateContent = [];
+
+    if (query.startdate && query.enddate) {
+      aggregateContent.push(
+        {
+          $lookup: {
+            from: "reservations",
+            localField: "_id",
+            foreignField: "apartmentid",
+            as: "reservations",
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $or: [
+                      { $lt: [new Date(query.startdate), "$startdate"] },
+                      { $gt: [new Date(query.enddate), "$enddate"] }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        });
+      aggregateContent.push(
+        {
+          $addFields: {
+            isAvailable: {
+              $gte: [{ $size: "$reservations" }, 1]
+            }
+          }
+        });
+      aggregateContent.push(
+        {
+          $unset: "reservations"
+        });
+      aggregateContent.push(
+        {
+          $match: {
+            $expr: {
+              $eq: ["$isAvailable", true]
+            }
+          }
+        });
+    }
+
     if (query.city) {
-      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city,"i") } } } });
+      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city, "i") } } } });
       match.$match.$and.push({
         $expr: {
           $eq: ["$containsCity", true]
@@ -236,7 +281,7 @@ exports.getApartmentsByQuery = async function (table,query) {
     let res = await collection.aggregate(aggregateContent).toArray();
     console.log(res);
     return res;
-  } catch (err) { 
+  } catch (err) {
     console.log("failed to fetch by query");
     console.log(err);
   }
@@ -245,7 +290,7 @@ exports.getApartmentsByQuery = async function (table,query) {
   }
 }
 
-exports.getReserationsByQuery = async function (table,query) {
+exports.getReserationsByQuery = async function (table, query) {
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -262,7 +307,7 @@ exports.getReserationsByQuery = async function (table,query) {
     };
     let aggregateContent = [];
     if (query.city) {
-      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city,"g") } } } });
+      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city, "g") } } } });
       match.$match.$and.push({
         $expr: {
           $eq: ["$containsCity", true]
@@ -271,7 +316,7 @@ exports.getReserationsByQuery = async function (table,query) {
     }
 
     if (query.name) {
-      aggregateContent.push({ $addFields: { containsName: { $regexMatch: { input: "$name", regex: new RegExp(query.name,"g") } } } });
+      aggregateContent.push({ $addFields: { containsName: { $regexMatch: { input: "$name", regex: new RegExp(query.name, "g") } } } });
       match.$match.$and.push({
         $expr: {
           $eq: ["$containsName", true]
@@ -295,8 +340,8 @@ exports.getReserationsByQuery = async function (table,query) {
         }
       });
     }
-    
-    if(query.buyerid){
+
+    if (query.buyerid) {
       match.$match.$and.push({
         $expr: {
           $eq: ["$buyerid", new ObjectId(query.buyerid)]
@@ -304,7 +349,7 @@ exports.getReserationsByQuery = async function (table,query) {
       });
     }
 
-    if(query.ownerid){
+    if (query.ownerid) {
       match.$match.$and.push({
         $expr: {
           $eq: ["$ownerid", new ObjectId(query.ownerid)]
@@ -332,7 +377,7 @@ exports.getReserationsByQuery = async function (table,query) {
     let res = await collection.aggregate(aggregateContent).toArray();
     console.log(res);
     return res;
-  } catch (err) { 
+  } catch (err) {
     console.log("failed to fetch by query");
     console.log(err);
   }
