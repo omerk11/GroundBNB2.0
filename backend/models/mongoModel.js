@@ -240,6 +240,31 @@ exports.getApartmentsByQuery = async function (table, query) {
         });
     }
 
+    aggregateContent.push(
+      {
+        $lookup: {
+          from: "reservations",
+          localField: "_id",
+          foreignField: "apartmentid",
+          as: "reservations_rating"
+        }
+      });
+    aggregateContent.push(
+      {
+        $addFields: {
+          "rating": {
+            $cond: {
+              if: {
+                $eq: [{ $avg: "$reservations_rating.rating" }, null]
+              },
+              then: 0,
+              else: { $avg: "$reservations_rating.rating" }
+            }
+          }
+        }
+      }
+    );
+    
     if (query.city) {
       aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city, "i") } } } });
       match.$match.$and.push({
