@@ -196,7 +196,7 @@ exports.getApartmentsByQuery = async function (table,query) {
     };
     let aggregateContent = [];
     if (query.city) {
-      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city,"g") } } } });
+      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city,"i") } } } });
       match.$match.$and.push({
         $expr: {
           $eq: ["$containsCity", true]
@@ -215,7 +215,7 @@ exports.getApartmentsByQuery = async function (table,query) {
     if (query.minvisitors) {
       match.$match.$and.push({
         $expr: {
-          $lte: ["$maxvisitors", query.minvisitors]
+          $gte: ["$maxvisitors", query.minvisitors]
         }
       });
     }
@@ -234,7 +234,7 @@ exports.getApartmentsByQuery = async function (table,query) {
       }
     });
     let res = await collection.aggregate(aggregateContent).toArray();
-    // console.log(res);
+    console.log(res);
     return res;
   } catch (err) { 
     console.log("failed to fetch by query");

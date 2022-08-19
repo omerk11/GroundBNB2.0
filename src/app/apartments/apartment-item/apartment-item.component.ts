@@ -32,56 +32,12 @@ export class ApartmentItemComponent implements OnInit
 
   ngOnInit(){
     this.tmpId = this.apartment._id?'map-'+this.apartment._id:'';
-    console.log(this.tmpId);
-    const loader = new Loader({
-      apiKey: "AIzaSyBIzBq78AMY7ALjM6v0fN7Kgw3b8j-N31g",
-    });
-    loader.load().then(() => {
-      this.initialize();
-      this.codeAddress();
-    });
-
-
     // const loader = new Loader({
     //   apiKey: "AIzaSyBIzBq78AMY7ALjM6v0fN7Kgw3b8j-N31g",
     // });
-    // let map!:Map;
-    // let  marker!:google.maps.Marker;
-    // let address = this.apartment.city + '+' + this.apartment.address;
-    // address = address.replace(" ", "+");
-    // let service = new Geocoder();
-    // service.geocode({ 'address': address}, function(results:any, status) {
-    //   if (status == 'OK') {
-    //     const latlang = results[0].geometry.location;
-    //     loader.load().then(() => {
-    //           // latlang = new google.maps.LatLng(31.9784515, 34.7760762)
-    //           const options = {
-    //             zoom: 13,
-    //             center: latlang
-    //         };
-    //         map = new Map(document.getElementById('map') as HTMLElement, options);
-    //         marker = new Marker({position: latlang, map: map});
-    //         });
-    //   } else {
-    //     alert('Geocode was not successful for the following reason: ' + status);
-    //   }
-    // });
-    // const url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address+ '&key=AIzaSyBIzBq78AMY7ALjM6v0fN7Kgw3b8j-N31g';
-    // this.http.get<any>(url,this.httpOptions).subscribe(res=>{
-    //   let lat, lng;
-    //   lat = res.results[0].geometry.location.lat;
-    //   lng = res.results[0].geometry.location.lng;
-    //   const latlang = new google.maps.LatLng(lat, lng);
-    //   console.log(latlang);
-    //   loader.load().then(() => {
-    //     // latlang = new google.maps.LatLng(31.9784515, 34.7760762)
-    //     const options = {
-    //       zoom: 13,
-    //       center: latlang
-    //   };
-    //   this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, options);
-    //   this.marker = new google.maps.Marker({position: latlang, map: this.map});
-    //   });
+    // loader.load().then(() => {
+    //   this.initialize();
+    //   this.codeAddress();
     // });
   }
 

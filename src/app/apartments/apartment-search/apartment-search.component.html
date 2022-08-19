@@ -47,11 +47,27 @@
             #minvisitors="ngModel">
         </mat-form-field>
         <br>
+        Search Key Words (Aho Corasick)<br>Enter with ',' between words eg: "beach,free parking"
+        <mat-form-field>
+            <textarea matInput
+            rows=6 
+            name="description"
+            ngModel
+            #description="ngModel"
+            ></textarea>
+        </mat-form-field>
         <button 
             mat-raised-button
             color="accent"
             type="submit">
                 Search
+        </button>
+        <button 
+            mat-raised-button
+            color="warn"
+            type="button"
+            onclick="submit()">
+                Clear
         </button>
     </div>
 </form>

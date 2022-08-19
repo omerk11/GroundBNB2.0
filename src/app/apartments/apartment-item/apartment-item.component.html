@@ -1,12 +1,11 @@
 <mat-expansion-panel>
     <mat-expansion-panel-header>
-        Name: {{apartment.name}} | City: {{apartment.city}} | Price: {{apartment.price}} | 
+        Name: {{apartment.name}} | City: {{apartment.city}} | Price: $ {{apartment.price}} <div *ngIf="searchedDates"> |  
         <button 
-            *ngIf="searchedDates"
             type="button"
             (click)="addReservation()">
             Reserve
-        </button>
+        </button></div>
     </mat-expansion-panel-header>
     <p>
         Description: {{apartment.description}}<br>
