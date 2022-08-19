@@ -8,10 +8,6 @@
         <br><br><br>
     </div>
 
-    <div *ngSwitchCase="Page.ReservationsList">
-        <app-reservation-list ></app-reservation-list>
-    </div>
-
     <div *ngSwitchCase="Page.MyApartmentsList">
         <app-apartment-create (onApartmentAdded)="myApartmentList.refreshList()"></app-apartment-create>
         <app-apartment-list [isMyApartments]="true" #myApartmentList></app-apartment-list>
@@ -33,5 +29,12 @@
 
     <div *ngSwitchCase="Page.UserEdit">
         <app-user-edit (onDeleteUser)="page=Page.SignUp"></app-user-edit>
+    </div>
+
+    <div *ngSwitchCase="Page.AdminPage">
+        <h2>All Users</h2>
+        <app-user-list></app-user-list>
+        <h2>All Reservations</h2>
+        <!-- <app-reservation-list ></app-reservation-list> -->
     </div>
 </main>

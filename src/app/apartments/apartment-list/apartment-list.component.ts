@@ -21,6 +21,7 @@ export class ApartmentListComponent implements OnInit
 
   constructor(public apartmentsService:ApartmentsService)// this will create a new property apartmentsService in this class
   {
+    
   }
 
   ngOnInit(): void 

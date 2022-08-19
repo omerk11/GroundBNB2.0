@@ -1,3 +1,16 @@
+<!-- <datalist id="posibleCities">
+    <option *ngFor="let city of cities" value="{{city}}">
+</datalist>
+<input 
+            matInput type="text"
+            name="city"
+            ngModel
+            required
+            minlength="3"
+            #city="ngModel"
+            list="posibleCities">
+            <mat-error *ngIf="city.invalid">Please enter city</mat-error> -->
+
 <mat-card>
     <form (submit)="onSubmit(apartmentForm)" #apartmentForm="ngForm">
 
@@ -35,13 +48,15 @@
         <br>
         City:
         <mat-form-field>
-            <input 
-            matInput type="text"
+            <mat-select 
+            matInput
             name="city"
             ngModel
             required
             minlength="3"
             #city="ngModel">
+                <mat-option *ngFor="let city of cities" value="{{city}}">{{city}}</mat-option>
+            </mat-select>
             <mat-error *ngIf="city.invalid">Please enter city</mat-error>
         </mat-form-field>
         <br>

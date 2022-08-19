@@ -19,7 +19,7 @@ const getAllUsers = async (req,res)=> {
     }
     //TODO: validation and create response
 
-    return response;
+    return result;
 };
 
 const getUserById = async (userId) =>{

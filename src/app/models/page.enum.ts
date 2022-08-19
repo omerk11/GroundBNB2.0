@@ -7,5 +7,6 @@ export enum Page {
     SignUp = 'signup',
     LogIn = "login",
     LogOut = 'logout',
-    UserEdit = 'useredit'
+    UserEdit = 'useredit',
+    AdminPage = 'adminpage'
   }
