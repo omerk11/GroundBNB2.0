@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { exhaustMap, forkJoin, of, switchMap, tap } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 import { ApartmentsService } from 'src/app/apartments/apartments.service';
 import { AuthService } from 'src/app/users/auth.service';
+import { TokenStorageService } from 'src/app/users/token-storage.service';
 import { Reservation, ReservationView } from '../reservation.model';
 import { ReservationsService } from '../reservations.service';
 
@@ -12,65 +13,45 @@ import { ReservationsService } from '../reservations.service';
   styleUrls: ['./reservation-list.component.css']
 })
 export class ReservationListComponent implements OnInit {
-
   @Input() isMyReservations: boolean = false;
   @Input() isForMyApartments: boolean = false;
   reservations: ReservationView[] = [];
-
   showSearch: boolean = false;
 
   constructor(
+    private readonly tokenStorage: TokenStorageService,
     public apartmentsService: ApartmentsService, private authService: AuthService,
     public reservationsService: ReservationsService)// this will create a new property ReservationsService in this class
-  {
-  }
+  { }
 
   ngOnInit(): void {
     this.refreshList();
   }
 
-  refreshList(query?: any) {
-    if (this.isMyReservations) 
-    {
-      this.reservationsService.getReservationsByBuyerId(query)
-        .pipe(switchMap(res => this.createResView(res))).subscribe((reservations) => { this.reservations = reservations; });
-    } 
-    else if (this.isForMyApartments) 
-    {
-      this.reservationsService.getReservationsByOwnerId(query)
-        .pipe(switchMap(res => this.createResView(res))).subscribe((reservations) => { this.reservations = reservations; });
-    } 
-    else 
-    {
-      this.reservationsService.getAllReservations(query)
-        .pipe(switchMap(res => this.createResView(res)))
-        .subscribe((reservations) => { this.reservations = reservations; });
+  refreshList(query: any = {}) {
+    if (this.isMyReservations) {
+      query = {
+        ...query,
+        buyerid: this.tokenStorage.getMyId()
+      }
+    } else if (this.isForMyApartments) {
+      query = {
+        ...query,
+        ownerid: this.tokenStorage.getMyId()
+      }
     }
-  }
 
-  createResView(res: Reservation[]) {
-    const resView = res.map(r => {
-      return r as ReservationView;
-    });
-
-    resView.forEach(re => {
-      this.apartmentsService.getApartmentById(re.apartmentid)
-        .pipe(
-          tap(apartment => {
-            re.apartment = apartment;
-            // calc price
-            const timeDifference = new Date(re.enddate).getTime() - new Date(re.startdate).getTime();
-            const daysDifference = timeDifference / (1000 * 3600 * 24);
-            re.totalprice = re.apartment.price * daysDifference;
-            this.authService.getUserById(re.buyerid).subscribe(buyer => re.buyer = buyer);
-          }),
-          exhaustMap(apartment => this.authService.getUserById(apartment.ownerid))
-        ).subscribe(user => re.owner = user);
-        
-        
-    });
-
-    return of(resView);
+    this.reservationsService.getReservation(query)
+      .pipe(switchMap(reservations => {
+        return of(reservations.reduce((list, item) => {
+          const timeDifference = new Date(item.enddate).getTime() - new Date(item.startdate).getTime();
+          const daysDifference = timeDifference / (1000 * 3600 * 24);
+          item.totalprice = item.apartment.price * daysDifference;
+          list.push(item);
+          return list;
+        }, new Array<ReservationView>()));
+      }))
+      .subscribe(reservations => this.reservations = reservations);
   }
 
   removeReservationFromList(reservation: Reservation) {
@@ -91,49 +72,23 @@ export class ReservationListComponent implements OnInit {
     }
   }
 
-  onSearch(form:NgForm)
-    {
-      let query: any = {};
-      if(form.invalid)
-      {
-        console.log("error");
-        return;
-      }
-      if(form.value.date != "")
-      {
-        query.date = form.value.date;
-      }
-      if(form.value.apartmentname != "")
-      {
-        query.apartmentname = form.value.apartmentname;
-      }
-      if(form.value.city != "")
-      {
-        query.city = form.value.city;
-      }
-      
-      this.refreshList(query);
+  onSearch(form: NgForm) {
+    let query: any = {};
+    if (form.invalid) {
+      console.log("error");
+      return;
     }
-      
-}
+    if (form.value.date != "") {
+      query.startdate = form.value.date;
+    }
+    if (form.value.apartmentname != "") {
+      query.apartmentName = form.value.apartmentname;
+    }
+    if (form.value.city != "") {
+      query.city = form.value.city;
+    }
 
-// reservations: Reservation[] = [
-//   {
-//       appartmentId:"-1",
-//       ownerId:"-1",
-//       buyerId:"-1",
-//       startdate:new Date(),
-//       endDate:new Date(),
-//       review:"no room service",
-//       rating:1
-//   },
-//   {
-//     appartmentId:"-1",
-//     ownerId:"-1",
-//     buyerId:"-1",
-//     startdate:new Date(),
-//     endDate:new Date(),
-//     review:"no room service",
-//     rating:1
-//   }
-// ];
+    this.refreshList(query);
+  }
+
+}

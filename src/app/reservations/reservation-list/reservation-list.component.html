@@ -76,8 +76,8 @@
                     Owner Phone: {{reservation.owner.phone}}</td>
             </ng-container>
             <ng-container *ngIf="!isMyReservations">
-                <td>Costumer Name: {{reservation.buyer.firstname+" "+reservation.buyer.lastname}}<br>
-                    Costumer Phone: {{reservation.buyer.phone}}</td>
+                <td>Costumer Name: {{reservation.customer.firstname+" "+reservation.customer.lastname}}<br>
+                    Costumer Phone: {{reservation.customer.phone}}</td>
             </ng-container>
             <td>Start Date: {{reservation.startdate}}</td>
             <td>End Date: {{reservation.enddate}}</td>

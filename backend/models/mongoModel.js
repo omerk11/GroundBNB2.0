@@ -355,24 +355,21 @@ exports.getReserationsByQuery = async function (table, query) {
       match.$match.$expr.$and.push({
         $gte: [new Date(query.startdate), "$startdate"]
       });
-      match.$match.$expr.$and.push(
-        {
-          $lte: [new Date(query.startdate), "$enddate"]
-        });
+      match.$match.$expr.$and.push({
+        $lte: [new Date(query.startdate), "$enddate"]
+      });
     }
 
-    if (query.buyer) {
-      match.$match.$expr.$and.push(
-        {
-          $eq: ["$buyerid", "BUYER"]
-        });
+    if (query.buyerid) {
+      match.$match.$expr.$and.push({
+        $eq: ["$buyerid", new ObjectId(query.buyerid)]
+      });
     }
 
-    if (query.owner) {
-      match.$match.$expr.$and.push(
-        {
-          $eq: ["$ownerid", "OWNER"]
-        });
+    if (query.ownerid) {
+      match.$match.$expr.$and.push({
+        $eq: ["$ownerid", new ObjectId(query.ownerid)]
+      });
     }
 
     if (query.city) {
@@ -391,6 +388,7 @@ exports.getReserationsByQuery = async function (table, query) {
         });
     }
     aggregateContent.push(match);
+    return await collection.aggregate(aggregateContent).toArray();
   } catch (err) {
     console.log("failed to fetch by query");
     console.log(err);

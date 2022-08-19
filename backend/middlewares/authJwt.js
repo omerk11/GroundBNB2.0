@@ -20,6 +20,15 @@ verifyToken = (req, res, next) => {
     next();
   });
 };
+
+
+const isCurrentUserAdmin = async req => {
+  const user = await User.findById(req.userId).exec();
+  const roles = await Role.find({ _id: { $in: user.roles } }).exec();
+  return roles.find(r => r.name === "admin") != null;
+}
+
+
 isAdmin = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
@@ -51,6 +60,6 @@ isAdmin = (req, res, next) => {
 const authJwt = {
     verifyToken,
     isAdmin,
-
+    isCurrentUserAdmin
   };
   module.exports = authJwt;

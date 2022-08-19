@@ -1,3 +1,5 @@
+const authJwt = require("../middlewares/authJwt");
+
 const reservationsService = require('../services/reservations.service');
 
 const getAllReservations = async (req, res, next) => {
@@ -10,10 +12,16 @@ const getAllReservations = async (req, res, next) => {
 
 const getAllReservationsByQuery = async (req, res, next) => {//TODO
     let query = req.body;
+
+    if (!query.buyerid && !query.ownerid && !(await authJwt.isCurrentUserAdmin(req))) {
+        res.status(401).send([]);
+        return;
+    }
+    
     console.log(query);
     console.log("reservations getAllReservationsByQuery");
     result = await reservationsService.getAllReservationsByQuery(query);
-    // console.log(result);
+    console.log(result);
     console.log("end getAllReservationsByQuery");
     res.status(200).send(result);
 };
@@ -41,7 +49,7 @@ const updateReservationById = async (req, res, next) => {
     id = req.params.id;
     updates = req.body;
     console.log("reservations updateReservationById");
-    result = await reservationsService.updateReservationById(id,updates);
+    result = await reservationsService.updateReservationById(id, updates);
     console.log(result);
     console.log("end updateReservationById");
     res.status(200).send(result);

@@ -2,86 +2,79 @@ import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";//added manualy
 
-import { Reservation } from "./reservation.model";
+import { Reservation, ReservationView } from "./reservation.model";
 import { TokenStorageService } from "../users/token-storage.service";
 
-@Injectable({providedIn:"root"})
+@Injectable({ providedIn: "root" })
 
-export class ReservationsService
-{
+export class ReservationsService {
     apiURL = "http://localhost:3000/api/reservations";// Reservations api url
 
     httpOptions = // http options?
-    {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-        }),
-    };
+        {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            }),
+        };
 
-    constructor(private http:HttpClient, private tokenStorage: TokenStorageService)
-    {
+    constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
     }
 
-    getAllReservations(query?: any) :Observable<Reservation[]>
-    {
+    getAllReservations(query?: any): Observable<Reservation[]> {
         // Admin
         return this.http.get<Reservation[]>(this.apiURL);
     }
 
-    getReservationsByBuyerId(query?: any) :Observable<Reservation[]>
-    {
+    getReservation(query: any = {}): Observable<ReservationView[]> {
+        const url = `${this.apiURL}/getreservationsbyquery`
+        return this.http.post<ReservationView[]>(url, query);
+    }
+
+    getReservationsByBuyerId(query?: any): Observable<Reservation[]> {
         // const id = this.tokenStorage.getMyId();
         // const tmp = `${this.apiURL}/getreservationsbybuyerid/${id}`;
         // return this.http.get<Reservation[]>(tmp);
         //-----Enable This When Backend Works-----//
-        if(query)
-        {
+        if (query) {
             query.buyerid = this.tokenStorage.getMyId();
         }
-        else
-        {
-            query = {buyerid:this.tokenStorage.getMyId()}
+        else {
+            query = { buyerid: this.tokenStorage.getMyId() }
         }
 
         const url = `${this.apiURL}/getreservationsbyquery`;
-        return this.http.post<Reservation[]>(url,query,this.httpOptions);
-        
+        return this.http.post<Reservation[]>(url, query, this.httpOptions);
+
     }
 
-    getReservationsByOwnerId(query?: any) :Observable<Reservation[]>
-    {
+    getReservationsByOwnerId(query?: any): Observable<Reservation[]> {
         // const id = this.tokenStorage.getMyId();
         // const url = `${this.apiURL}/getreservationsbyownerid/${id}`;
         // return this.http.get<Reservation[]>(url);
         //-----Enable This When Backend Works-----//
-        if(query)
-        {
+        if (query) {
             query.ownerid = this.tokenStorage.getMyId();
         }
-        else
-        {
-            query = {ownerid:this.tokenStorage.getMyId()}
+        else {
+            query = { ownerid: this.tokenStorage.getMyId() }
         }
         const postUrl = `${this.apiURL}/getreservationsbyquery`;
-        return this.http.post<Reservation[]>(postUrl,query,this.httpOptions);
- 
+        return this.http.post<Reservation[]>(postUrl, query, this.httpOptions);
+
     }
 
-    addReservation(reservation: Reservation) : Observable<Reservation>
-    {
-        return this.http.post<Reservation>(this.apiURL+"/add", reservation, this.httpOptions);
+    addReservation(reservation: Reservation): Observable<Reservation> {
+        return this.http.post<Reservation>(this.apiURL + "/add", reservation, this.httpOptions);
     }
     // TODO: validate my reservation
-    updateReservation(reservation: Reservation): Observable<Reservation> 
-    {
+    updateReservation(reservation: Reservation): Observable<Reservation> {
         console.log(reservation);
         const url = `${this.apiURL}/update/${reservation._id}`;
         return this.http.put<Reservation>(url, reservation, this.httpOptions);
     }
 
     // TODO: validate my reservation
-    deleteReservation(reservation: Reservation): Observable<Reservation>
-    {  
+    deleteReservation(reservation: Reservation): Observable<Reservation> {
         const url = `${this.apiURL}/delete/${reservation._id}`;
         return this.http.delete<Reservation>(url);
     }

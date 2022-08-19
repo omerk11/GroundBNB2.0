@@ -15,7 +15,7 @@ export interface Reservation {
 export interface ReservationView extends Reservation {
     apartment: Apartment;
     owner: User;
-    buyer: User;
+    customer: User;
     totalprice: number;
  }
 
