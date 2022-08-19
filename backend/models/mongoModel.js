@@ -104,7 +104,7 @@ exports.updateElementById = async function (table, id, updates) {
     return;
   }
   try {
-    if(updates._id){
+    if (updates._id) {
       delete updates._id;
     }
     switch (table) {
@@ -179,7 +179,7 @@ exports.getReservationtsByOwnerId = async function (table, userID) {
   }
 }
 
-exports.getApartmentsByQuery = async function (table,query) {
+exports.getApartmentsByQuery = async function (table, query) {
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -195,8 +195,53 @@ exports.getApartmentsByQuery = async function (table,query) {
       }
     };
     let aggregateContent = [];
+
+    if (query.startdate && query.enddate) {
+      aggregateContent.push(
+        {
+          $lookup: {
+            from: "reservations",
+            localField: "_id",
+            foreignField: "apartmentid",
+            as: "reservations",
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $or: [
+                      { $lt: [new Date(query.startdate), "$startdate"] },
+                      { $gt: [new Date(query.enddate), "$enddate"] }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        });
+      aggregateContent.push(
+        {
+          $addFields: {
+            isAvailable: {
+              $gte: [{ $size: "$reservations" }, 1]
+            }
+          }
+        });
+      aggregateContent.push(
+        {
+          $unset: "reservations"
+        });
+      aggregateContent.push(
+        {
+          $match: {
+            $expr: {
+              $eq: ["$isAvailable", true]
+            }
+          }
+        });
+    }
+
     if (query.city) {
-      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city,"i") } } } });
+      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$city", regex: new RegExp(query.city, "i") } } } });
       match.$match.$and.push({
         $expr: {
           $eq: ["$containsCity", true]
@@ -236,7 +281,7 @@ exports.getApartmentsByQuery = async function (table,query) {
     let res = await collection.aggregate(aggregateContent).toArray();
     console.log(res);
     return res;
-  } catch (err) { 
+  } catch (err) {
     console.log("failed to fetch by query");
     console.log(err);
   }
@@ -245,7 +290,7 @@ exports.getApartmentsByQuery = async function (table,query) {
   }
 }
 
-exports.getReserationsByQuery = async function (table,query) {
+exports.getReserationsByQuery = async function (table, query) {
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -257,96 +302,99 @@ exports.getReserationsByQuery = async function (table,query) {
     let collection = db.collection(table);
     let match = {
       $match: {
-        $and: []
+        $expr: {
+          $and: [
+          ]
+        }
       }
     };
-    let aggregateContent = [];
-    aggregateContent.push(
-      { $lookup:
-        {
-           from: "apartments",
-           localField: "apartmentid",
-           foreignField: "_id",
-           as: "apartment",
+    let aggregateContent = [
+      {
+        $lookup: {
+          from: "apartments",
+          localField: "apartmentid",
+          foreignField: "_id",
+          as: "apartment"
         }
-    }
-    );
-    // if (query.city) {
-    //   aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "apartment.city", regex: new RegExp(query.city,"g") } } } });
-    //   match.$match.$and.push({
-    //     $expr: {
-    //       $eq: ["$containsCity", true]
-    //     }
-    //   });
-    // }
-
-    // if (query.name) {
-    //   aggregateContent.push({ $addFields: { containsName: { $regexMatch: { input: "$name", regex: new RegExp(query.name,"g") } } } });
-    //   match.$match.$and.push({
-    //     $expr: {
-    //       $eq: ["$containsName", true]
-    //     }
-    //   });
-    // }
-
-
-    if (query.date) {
-      match.$match.$and.push({
-        $expr: {
-          $lte: ["$startdate", new Date(query.date)]
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "ownerid",
+          foreignField: "_id",
+          as: "owner"
         }
-      });
-    }
-
-    if (query.date) {
-      match.$match.$and.push({
-        $expr: {
-          $gte: ["$enddate", new Date(query.date)]
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "buyerid",
+          foreignField: "_id",
+          as: "customer"
         }
-      });
-    }
-    
-    if(query.buyerid){
-      match.$match.$and.push({
-        $expr: {
-          $eq: ["$buyerid", new ObjectId(query.buyerid)]
+      },
+      {
+        $addFields: {
+          "apartment": {
+            $first: "$apartment"
+          },
+          "owner": {
+            $first: "$owner"
+          },
+          "customer": {
+            $first: "$customer"
+          }
         }
-      });
-    }
-
-    if(query.ownerid){
-      match.$match.$and.push({
-        $expr: {
-          $eq: ["$ownerid", new ObjectId(query.ownerid)]
-        }
-      });
-    }
-
-    if (match.$match.$and.length > 0) {
-      aggregateContent.push(match);
-    }
-    // let sortParam = query.sortorder;
-    // let sortValue = 1;
-    // if (sortParam.includes("_desc")) {
-    //   sortParam = sortParam.split("_")[0];
-    //   sortValue = -1;
-    // }
-    aggregateContent.push({
-      $sort: {
-        ["startdate"]: 1
+      },
+      {
+        $unset: ["customer.password", "customer.roles", "owner.password", "owner.roles"]
       }
-    });
-    // console.log("-------")
-    // console.log(JSON.stringify(aggregateContent));
-    // console.log("-------")
-    let res = await collection.aggregate(aggregateContent).toArray();
-    console.log(res);
-    return res;
-  } catch (err) { 
+    ];
+
+    if (query.startdate) {
+      match.$match.$expr.$and.push({
+        $gte: [new Date(query.startdate), "$startdate"]
+      });
+      match.$match.$expr.$and.push(
+        {
+          $lte: [new Date(query.startdate), "$enddate"]
+        });
+    }
+
+    if (query.buyer) {
+      match.$match.$expr.$and.push(
+        {
+          $eq: ["$buyerid", "BUYER"]
+        });
+    }
+
+    if (query.owner) {
+      match.$match.$expr.$and.push(
+        {
+          $eq: ["$ownerid", "OWNER"]
+        });
+    }
+
+    if (query.city) {
+      aggregateContent.push({ $addFields: { containsCity: { $regexMatch: { input: "$apartment.city", regex: new RegExp(query.city, "i") } } } });
+      match.$match.$expr.$and.push(
+        {
+          $eq: ["$containsCity", true]
+        });
+    }
+
+    if (query.apartmentName) {
+      aggregateContent.push({ $addFields: { containsApartmentName: { $regexMatch: { input: "$apartment.name", regex: new RegExp(query.apartmentName, "i") } } } });
+      match.$match.$expr.$and.push(
+        {
+          $eq: ["$containsApartmentName", true]
+        });
+    }
+    aggregateContent.push(match);
+  } catch (err) {
     console.log("failed to fetch by query");
     console.log(err);
-  }
-  finally {
+  } finally {
     client.close();
   }
 }
