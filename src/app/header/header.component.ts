@@ -27,6 +27,11 @@ export class HeaderComponent
     this.onPageChange.emit(Page.ReservationsList);
   }
 
+  displayAdminPage()
+  {
+    this.onPageChange.emit(Page.AdminPage);
+  }
+
   displaySignUpPage()
   {
     this.onPageChange.emit(Page.SignUp);
