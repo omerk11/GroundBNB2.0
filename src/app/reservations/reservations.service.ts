@@ -20,48 +20,50 @@ export class ReservationsService {
     constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
     }
 
-    getAllReservations(query?: any): Observable<Reservation[]> {
-        // Admin
-        return this.http.get<Reservation[]>(this.apiURL);
-    }
+    
 
     getReservation(query: any = {}): Observable<ReservationView[]> {
         const url = `${this.apiURL}/getreservationsbyquery`
         return this.http.post<ReservationView[]>(url, query);
     }
 
-    getReservationsByBuyerId(query?: any): Observable<Reservation[]> {
-        // const id = this.tokenStorage.getMyId();
-        // const tmp = `${this.apiURL}/getreservationsbybuyerid/${id}`;
-        // return this.http.get<Reservation[]>(tmp);
-        //-----Enable This When Backend Works-----//
-        if (query) {
-            query.buyerid = this.tokenStorage.getMyId();
-        }
-        else {
-            query = { buyerid: this.tokenStorage.getMyId() }
-        }
+    // getAllReservations(query?: any): Observable<Reservation[]> {
+    //     // Admin
+    //     return this.http.get<Reservation[]>(this.apiURL);
+    // }
 
-        const url = `${this.apiURL}/getreservationsbyquery`;
-        return this.http.post<Reservation[]>(url, query, this.httpOptions);
+    // getReservationsByBuyerId(query?: any): Observable<Reservation[]> {
+    //     // const id = this.tokenStorage.getMyId();
+    //     // const tmp = `${this.apiURL}/getreservationsbybuyerid/${id}`;
+    //     // return this.http.get<Reservation[]>(tmp);
+    //     //-----Enable This When Backend Works-----//
+    //     if (query) {
+    //         query.buyerid = this.tokenStorage.getMyId();
+    //     }
+    //     else {
+    //         query = { buyerid: this.tokenStorage.getMyId() }
+    //     }
 
-    }
+    //     const url = `${this.apiURL}/getreservationsbyquery`;
+    //     return this.http.post<Reservation[]>(url, query, this.httpOptions);
 
-    getReservationsByOwnerId(query?: any): Observable<Reservation[]> {
-        // const id = this.tokenStorage.getMyId();
-        // const url = `${this.apiURL}/getreservationsbyownerid/${id}`;
-        // return this.http.get<Reservation[]>(url);
-        //-----Enable This When Backend Works-----//
-        if (query) {
-            query.ownerid = this.tokenStorage.getMyId();
-        }
-        else {
-            query = { ownerid: this.tokenStorage.getMyId() }
-        }
-        const postUrl = `${this.apiURL}/getreservationsbyquery`;
-        return this.http.post<Reservation[]>(postUrl, query, this.httpOptions);
+    // }
 
-    }
+    // getReservationsByOwnerId(query?: any): Observable<Reservation[]> {
+    //     // const id = this.tokenStorage.getMyId();
+    //     // const url = `${this.apiURL}/getreservationsbyownerid/${id}`;
+    //     // return this.http.get<Reservation[]>(url);
+    //     //-----Enable This When Backend Works-----//
+    //     if (query) {
+    //         query.ownerid = this.tokenStorage.getMyId();
+    //     }
+    //     else {
+    //         query = { ownerid: this.tokenStorage.getMyId() }
+    //     }
+    //     const postUrl = `${this.apiURL}/getreservationsbyquery`;
+    //     return this.http.post<Reservation[]>(postUrl, query, this.httpOptions);
+
+    // }
 
     addReservation(reservation: Reservation): Observable<Reservation> {
         return this.http.post<Reservation>(this.apiURL + "/add", reservation, this.httpOptions);
