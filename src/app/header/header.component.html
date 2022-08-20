@@ -1,69 +1,35 @@
-<mat-toolbar color="primary">
-    Ground BNB 2.0
-    <button 
-    mat-raised-button
-    color="accent"
-    type="button"
-    (click)="displayApartmentsPage()">
+<header>
+  <mat-toolbar color="primary" class="toolbar">
+    <div class="left">
+      <div class="logo">
+        GroundBNB
+      </div>
+      <button mat-raised-button color="accent" type="button" routerLink="/">
         All Apartments
-</button>
-<button 
-*ngIf="isLoggedIn()"
-    mat-raised-button
-    color="accent"
-    type="button"
-    (click)="displayMyApartmentsPage()">
-    My Apartments
-</button>
-<button 
-*ngIf="isLoggedIn()"
-    mat-raised-button
-    color="accent"
-    type="button"
-    (click)="displayMyReservationsPage()">
-    My Reservations
-</button>
-<button 
-    *ngIf="isAdmin()"
-    mat-raised-button
-    color="accent"
-    type="button"
-    (click)="displayAdminPage()">
+      </button>
+      <button *ngIf="isLoggedIn" mat-raised-button color="accent" type="button" routerLink="/user/apartments">
+        My Apartments
+      </button>
+      <button *ngIf="isLoggedIn" mat-raised-button color="accent" type="button" routerLink="/user/reservations">
+        My Reservations
+      </button>
+      <button *ngIf="isAdmin" mat-raised-button color="accent" type="button" routerLink="">
         Admin Page
-</button>
-<button 
-    *ngIf="!isLoggedIn()"
-    mat-raised-button
-    color="accent"
-    type="button"
-    (click)="displaySignUpPage()">
+      </button>
+    </div>
+    <div class="right">
+      <button *ngIf="!isLoggedIn" mat-raised-button color="accent" type="button" routerLink="/signup">
         Sign Up
-</button>
-<button 
-    *ngIf="!isLoggedIn()"
-    mat-raised-button
-    color="accent"
-    type="button"
-    (click)="displayLoginsPage()">
+      </button>
+      <button *ngIf="!isLoggedIn" mat-raised-button color="accent" type="button" routerLink="/login">
         Login
-</button>
-<button 
-    *ngIf="isLoggedIn()"
-    mat-raised-button
-    color="accent"
-    type="button"
-    (click)="displayUserEditPage()">
-        User Edit
-</button>
-<button 
-    *ngIf="isLoggedIn()"
-    mat-raised-button
-    color="accent"
-    type="button"
-    (click)="Logout()">
-        Sign Out
-</button>
-
-
-<h3>Hello {{(isLoggedIn() ? getName() + (isAdmin() ? " Admin":" User"):" Please Connect")}}</h3>
-</mat-toolbar>
+      </button>
+      <button *ngIf="isLoggedIn" mat-raised-button color="accent" type="button" routerLink="/users/settings">
+        {{currentUser}}
+      </button>
+      <button *ngIf="isLoggedIn" mat-raised-button color="accent" type="button" (click)="logout()">
+        Logout
+      </button>
+    </div>
+  </mat-toolbar>
+</header>

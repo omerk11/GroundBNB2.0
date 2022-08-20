@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Action } from 'rxjs/internal/scheduler/Action';
+import { Loader } from '@googlemaps/js-api-loader';
 import { Apartment } from '../apartment.model';
 import { ApartmentsService } from '../apartments.service';
 declare var require: any
@@ -9,54 +8,63 @@ let AhoCorasick = require('ahocorasick');
 @Component({
   selector: 'app-apartment-list',
   templateUrl: './apartment-list.component.html',
-  styleUrls: ['./apartment-list.component.css']
+  styleUrls: ['./apartment-list.component.scss']
 })
 export class ApartmentListComponent implements OnInit {
+  @Input() isMyApartments: boolean = false;
+
   apartments: Apartment[] = [];
   searchedDates!: object;
   sortOrder: string = "rating_desc";
   prevQuery!: any;
-  @Input() isMyApartments: boolean = false;
 
-  constructor(public apartmentsService: ApartmentsService)// this will create a new property apartmentsService in this class
-  {
+  googleLoder: Loader = new Loader({ apiKey: "AIzaSyBIzBq78AMY7ALjM6v0fN7Kgw3b8j-N31g" });
+  googleGeocoder: any;
 
+  isLoading: boolean = true;
+  displaySearch: boolean = false;
+
+  constructor(public apartmentsService: ApartmentsService) {
+    this.googleLoder.load().then(() => this.googleGeocoder = new google.maps.Geocoder());
   }
 
-  ngOnInit(): void {// when apartment-list is created
+  ngOnInit(): void {
     this.refreshList();
   }
 
   refreshList(query?: any) {
-    this.apartments = [];
     if (this.isMyApartments) {
-      this.apartmentsService.getApartmentsByOwnerId()
-        .subscribe((apartments) => { this.apartments = apartments; });
+      this.apartmentsService.getApartmentsByOwnerId().subscribe((apartments) => {
+        this.apartments = apartments;
+        this.isLoading = false;
+      });
       return;
     }
+
     if (query) {
       query.sortorder = this.sortOrder;
       this.prevQuery = query;
-
-    }
-    else if (this.prevQuery) {
+    } else if (this.prevQuery) {
       query = this.prevQuery;
-    }
-    else {
+    } else {
       query = { sortorder: this.sortOrder };
     }
+
     let runAc: boolean;
     let acList: string[];
+
     if (query.description) {
       acList = query.description.toLowerCase().split(",");
       delete query.description;
       runAc = true;
-    }
-    else {
+    } else {
       runAc = false;
     }
-    this.apartmentsService.getApartments(query)
-      .subscribe((apartments) => { this.apartments = apartments.filter(ap => !runAc || this.ahocorasick(acList, ap.description + " " + ap.name)); });
+
+    this.apartmentsService.getApartments(query).subscribe(apartments => {
+      this.apartments = apartments.filter(ap => !runAc || this.ahocorasick(acList, ap.description + " " + ap.name));
+      this.isLoading = false;
+    });
   }
 
   ahocorasick(keywords: string[], search: string): boolean {

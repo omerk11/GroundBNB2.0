@@ -1,40 +1,3 @@
-// import { Component, EventEmitter, Output } from '@angular/core';
-// import { NgForm } from '@angular/forms';
-// import { User } from '../user.model';
-// import { UsersService } from '../users.service';
-
-
-// @Component({
-//   selector: 'app-users-create',
-//   templateUrl: './users-create.component.html',
-//   styleUrls: ['./users-create.component.css']
-// })
-// export class UsersCreateComponent{
-
-//   @Output() onUserAdded = new EventEmitter();
-
-//   constructor(public usersService:UsersService) { }
-
-//   onSubmit(form:NgForm)
-//   {
-//     if(form.invalid)
-//     {
-//       console.log("error");
-//       return;
-//     }
-//     const new_user: User=
-//     {
-//       name:form.value.name,
-//       password:form.value.password,
-//       email:form.value.email,
-//       phone:form.value.phone,
-//       apartments:[],
-//       reservations: [],
-//       roles:['user']
-//     }
-//     this.usersService.addUser(new_user).subscribe((user)=>this.onUserAdded.emit(null));
-//   }
-// }
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
@@ -52,26 +15,26 @@ export class UsersCreateComponent implements OnInit {
   errorMessage = '';
   @Output() onSignUp: EventEmitter<any> = new EventEmitter();
 
-  constructor(private authService: AuthService,private tokenStorage: TokenStorageService) { }
+  constructor(
+    private authService: AuthService, private tokenStorage: TokenStorageService) { }
   ngOnInit(): void {
   }
   reloadPage(): void {
     window.location.reload();
   }
   onSubmit(form: NgForm): void {
-    if(form.invalid)
-    {
+    if (form.invalid) {
       console.log("error");
       return;
     }
 
-    const new_user : User ={
-      firstname:form.value.firstname,
-      lastname:form.value.lastname,
-      password:form.value.password,
-      email:form.value.email,
-      phone:form.value.phone,
-      roles:['user']
+    const new_user: User = {
+      firstname: form.value.firstname,
+      lastname: form.value.lastname,
+      password: form.value.password,
+      email: form.value.email,
+      phone: form.value.phone,
+      roles: ['user']
     }
     this.authService.signup(new_user).subscribe({
       next: data => {

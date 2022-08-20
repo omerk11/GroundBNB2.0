@@ -1,0 +1,36 @@
+:host {
+  display: block;
+  margin-top: 1rem;
+  width: 1173px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.apartments {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+
+  .apartment-item {
+    &:not(:first-child, :nth-child(4n+1)) {
+      margin-left: 15px;
+    }
+  }
+}
+
+.sort-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  
+  h2 {
+    margin: 0;
+    margin-left: 8px;
+  }
+
+  margin-bottom: 20px;
+  button:not(:first-child) {
+    margin-left: 8px;
+  }
+}

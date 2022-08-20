@@ -1,127 +1,55 @@
-import { Component, EventEmitter, OnInit, Output, QueryList } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ApartmentsService } from '../apartments.service';
 
 @Component({
   selector: 'app-apartment-search',
   templateUrl: './apartment-search.component.html',
-  styleUrls: ['./apartment-search.component.css']
+  styleUrls: ['./apartment-search.component.scss']
 })
 export class ApartmentSearchComponent {
-
-  @Output() onSearchQuery: EventEmitter<any> = new EventEmitter(); 
+  @Output() onSearchQuery: EventEmitter<any> = new EventEmitter();
   @Output() searchedDates: EventEmitter<object> = new EventEmitter();
-  
 
-  show: boolean = false;
+  constructor(public apartmentsService: ApartmentsService) { }
 
-  constructor(public apartmentsService:ApartmentsService)
-  {
-
-  }
-  onSubmit(form:NgForm | null)
-  {
+  onSubmit(form: NgForm | null) {
     let query: any = {};
-    if(form == null)
-    {
+
+    if (form == null) {
       this.onSearchQuery.emit(null);
       return;
     }
-    if(form.invalid)
-    {
-      console.log("error");
+
+    if (form.invalid) {
       return;
     }
-    if(form.value.startdate != "")
-    {
+
+    if (form.value.startdate != "") {
       query.startdate = form.value.startdate;
     }
-    if(form.value.enddate != "")
-    {
-      query.enddate =  form.value.enddate
+    if (form.value.enddate != "") {
+      query.enddate = form.value.enddate
     }
-    if(form.value.city != "")
-    {
+    if (form.value.city != "") {
       query.city = form.value.city;
     }
-    if(form.value.maxprice != "")
-    {
+    if (form.value.maxprice != "") {
       query.maxprice = form.value.maxprice;
     }
-    if(form.value.minvisitors != "")
-    {
+    if (form.value.minvisitors != "") {
       query.minvisitors = form.value.minvisitors;
     }
-    if(form.value.description != "")
-    {
+    if (form.value.description != "") {
       query.description = form.value.description;
     }
-
     this.onSearchQuery.emit(query);
-    if(form.value.startdate && form.value.enddate)
-    {
-      let dates = 
-      {
+
+    if (form.value.startdate && form.value.enddate) {
+      this.searchedDates.emit({
         startdate: form.value.startdate,
         enddate: form.value.enddate
-      }
-      this.searchedDates.emit(dates);
+      });
     }
-    
   }
-  
-
 }
-
-// onSubmit(form:NgForm)
-//   {
-//     let params: string = "?";
-//     let query = {};
-//     if(form.invalid)
-//     {
-//       console.log("error");
-//       return;
-//     }
-//     if(form.value.startDate != "")
-//     {
-//       let date: string = form.value.startDate.getDate() + "/";
-//       date += (form.value.startDate.getMonth()+1) + "/";
-//       date += form.value.startDate.getFullYear();
-//       params += "startDate="+ date +"&";
-//     }
-//     if(form.value.endDate != "")
-//     {
-//       let date: string = form.value.endDate.getDate() + "/";
-//       date += (form.value.endDate.getMonth()+1) + "/";
-//       date += form.value.endDate.getFullYear();
-//       params += "endDate="+ date +"&";
-//     }
-//     if(form.value.city != "")
-//     {
-//       params += "city="+form.value.city +"&";
-//     }
-//     if(form.value.maxprice != "")
-//     {
-//       params += "maxprice="+form.value.maxprice +"&";
-//     }
-//     if(form.value.minvisitors != "")
-//     {
-//       params += "minvisitors="+form.value.minvisitors+"&";
-//     }
-
-//     params = params.substring(0,params.length - 1);
-    
-//     console.log(params);
-
-//     this.onSearchQuery.emit(params);
-//     if(form.value.startDate && form.value.endDate)
-//     {
-//       let dates = 
-//       {
-//         startDate: form.value.startDate,
-//         endDate: form.value.endDate
-//       }
-//       this.searchedDates.emit(dates);
-//     }
-    
-//   }

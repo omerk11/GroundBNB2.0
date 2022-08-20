@@ -1,0 +1,21 @@
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+button {
+  margin-left: 10px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+
+  &,
+  .left {
+    align-items: center;
+    flex-direction: row;
+    display: flex;
+  }
+}

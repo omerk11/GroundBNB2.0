@@ -15,7 +15,7 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 
 
 import { AppComponent } from './app.component';
@@ -26,11 +26,13 @@ import { ApartmentItemComponent } from './apartments/apartment-item/apartment-it
 import { UsersCreateComponent } from './users/users-create/users-create.component';//added manualy
 import { ApartmentEditComponent } from './apartments/apartment-edit/apartment-edit.component';
 import { ReservationListComponent } from './reservations/reservation-list/reservation-list.component';
-import { UserLoginComponent } from './users/user-login/user-login.component';
 import { ApartmentSearchComponent } from './apartments/apartment-search/apartment-search.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { UserEditComponent } from './users/user-edit/user-edit.component';
-import { UserListComponent } from './users/user-list/user-list.component';//added manualy
+import { UserListComponent } from './users/user-list/user-list.component';
+import { HomepageComponent } from './homepage/homepage.component';//added manualy
+import { UserLoginComponent } from './users/user-login/user-login.component';
+import { PipeModule } from './pipe/pipe.module';
 
 
 @NgModule({
@@ -43,11 +45,12 @@ import { UserListComponent } from './users/user-list/user-list.component';//adde
     ApartmentEditComponent,
     UsersCreateComponent,
     ReservationListComponent,
-    UserLoginComponent,
     ApartmentSearchComponent,
     UserProfileComponent,
+    UserLoginComponent,
     UserEditComponent,
-    UserListComponent
+    UserListComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +65,7 @@ import { UserListComponent } from './users/user-list/user-list.component';//adde
     HttpClientModule,
     MatCheckboxModule,
     MatTableModule,
+    PipeModule,
     MatDatepickerModule,
     MatNativeDateModule,
     HttpClientModule,

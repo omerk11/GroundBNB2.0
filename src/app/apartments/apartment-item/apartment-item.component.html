@@ -1,22 +1,28 @@
-<mat-expansion-panel>
-    <mat-expansion-panel-header>
-        Name: {{apartment.name}} | City: {{apartment.city}} | Price: $ {{apartment.price}} <div *ngIf="searchedDates"> |  
-        <button 
-            type="button"
-            (click)="addReservation()">
-            Reserve
-        </button></div>
-    </mat-expansion-panel-header>
-    <p>
-        Description: {{apartment.description}}<br>
-        Address: {{apartment.address}}<br>
-        Max-Visitors: {{apartment.maxvisitors}}<br> 
-    </p>
-    <app-apartment-edit
-        *ngIf="allowEdit"
-        [apartment]="apartment"
-        (onDeleteApartment)="onDelete()"
-    ></app-apartment-edit>
-    <div [id]="this.tmpId"
-    style="height:400px ;width:100%;overflow:auto;" ></div>
-</mat-expansion-panel>
+<mat-card class="apartment">
+  <mat-card-title> {{apartment.name}} </mat-card-title>
+  <mat-card-subtitle> {{apartment.city}} | ${{apartment.price}}/mo </mat-card-subtitle>
+  <mat-card-content>
+    <div class="image-container">
+      <img mat-card-image class="map-image" *ngIf="coordinates != null"
+        [src]="'https://maps.googleapis.com/maps/api/staticmap?center=' + coordinates.lat + ',' + coordinates.lng + '&zoom=14&size=250x200&key=AIzaSyBIzBq78AMY7ALjM6v0fN7Kgw3b8j-N31g'">
+      <div class="marker">
+        <span class="material-icons">
+          place
+        </span>
+      </div>
+    </div>
+    <div class="bio">
+      <p class="desc">{{apartment.description}}</p>
+      <p>
+        <strong>Address</strong>: {{apartment.address}}<br>
+        <strong>Max-Visitors</strong>: {{apartment.maxvisitors}}<br>
+        <strong>Rating</strong>: {{apartment.rating && apartment.rating > 0 ? apartment.rating + '/5' : 'Not Rated'}}
+      </p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions *ngIf="searchedDates || allowEdit">
+    <button *ngIf="searchedDates" mat-raised-button (click)="addReservation()" color="accent" type="button"
+      color="accent">Reserve</button>
+    <app-apartment-edit *ngIf="allowEdit" [apartment]="apartment" (onDeleteApartment)="onDelete()"></app-apartment-edit>
+  </mat-card-actions>
+</mat-card>
