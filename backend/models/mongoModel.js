@@ -422,50 +422,54 @@ exports.getReserationsByQuery = async function (table, query) {
   }
 }
 
-// this function uses mongo map-reduce to calculate the total price of all the reservations times the day diffrence from startdate to enddate for a given user
 exports.getTotalSpendings2 = async function (table, id) {
   
-  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
-  if (!client) {
-    return;
-  }
-
-  try {
-    const db = client.db('tables');
-    let collection = db.collection(table);
-    let map = function () {
-      emit(this.buyerid, {
-        total: this.price * (this.enddate - this.startdate) / (1000 * 60 * 60 * 24)
-      });
-    }
-    let reduce = function (key, values) {
-      let total = 0;
-      for (let i = 0; i < values.length; i++) {
-        total += values[i].total;
-      }
-      return {
-        total: total
-      };
-    }
-    // MongoDB Server: Map-Reduce is not supported for free tier at this time.
-    
-    // let result = await collection.mapReduce(map, reduce, {
-    //   query: {
-    //     buyerid: new ObjectId(id)
-    //   }
-    // });
-    //return result;
-  } catch (err) {
-    console.log("failed to fetch by query");
-    console.log(err);
-  } finally {
-    client.close();
-  }
 }
 
-//this function returns a array the total price of the reservation times the day diffrence from startdate to enddate for a given user
+//this function returns the total price of the reservation times the day diffrence from startdate to enddate for a given user
 exports.getTotalSpendings = async function (table, id) {
+
+  if(false)//MongoDB Server: Map-Reduce is not supported for free tier at this time.
+  {
+    const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+
+    if (!client) {
+      return;
+    }
+  
+    try {
+      const db = client.db('tables');
+      let collection = db.collection(table);
+      let map = function () {
+        emit(this.buyerid, {
+          total: this.price * (this.enddate - this.startdate) / (1000 * 60 * 60 * 24)
+        });
+      }
+      let reduce = function (key, values) {
+        let total = 0;
+        for (let i = 0; i < values.length; i++) {
+          total += values[i].total;
+        }
+        return {
+          total: total
+        };
+      }
+      
+      let result = await collection.mapReduce(map, reduce, {
+        query: {
+          buyerid: new ObjectId(id)
+        }
+      });
+      return result;
+    } catch (err) {
+      console.log("failed to fetch by query");
+      console.log(err);
+    } finally {
+      client.close();
+    }
+  }
+  
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
