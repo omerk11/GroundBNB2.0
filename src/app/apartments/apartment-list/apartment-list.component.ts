@@ -83,12 +83,8 @@ export class ApartmentListComponent implements OnInit {
         sort = this.sortOrder == "price" ? "price_desc" : "price";
         break;
 
-      case "rooms":
-        sort = this.sortOrder == "rooms" ? "rooms_desc" : "rooms";
-        break;
-
       case "guests":
-        sort = this.sortOrder == "guests" ? "guests_desc" : "guests";
+        sort = this.sortOrder == "maxvisitors" ? "maxvisitors_desc" : "maxvisitors";
         break;
 
       case "rating":

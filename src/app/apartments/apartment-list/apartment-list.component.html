@@ -4,14 +4,12 @@
   <h2>Sort By:</h2>
   <button mat-raised-button color="accent" type="button" (click)="sortApartments('price')">Price
   </button>
-  <button mat-raised-button color="accent" type="button" (click)="sortApartments('rooms')">Rooms
-  </button>
   <button mat-raised-button color="accent" type="button" (click)="sortApartments('guests')">Guests
   </button>
   <button mat-raised-button color="accent" type="button" (click)="sortApartments('rating')">Rating
   </button>
 </div>
-<app-apartment-search *ngIf="displaySearch"></app-apartment-search>
+<app-apartment-search *ngIf="displaySearch" (onSearchQuery)="refreshList($event)" (searchedDates)="searchedDates=$event"></app-apartment-search>
 <section class="apartments" *ngIf="apartments.length > 0">
   <app-apartment-item class="apartment-item" *ngFor="let apartment of apartments" [apartment]="apartment"
     [searchedDates]="searchedDates" [googleGeocoder]="googleGeocoder" [allowEdit]="isMyApartments"
