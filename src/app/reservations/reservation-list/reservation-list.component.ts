@@ -26,6 +26,7 @@ export class ReservationListComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshList();
+    this.reservationsService.getTotalSpendings().subscribe((data) => console.log(data));
   }
 
   refreshList(query: any = {}) {

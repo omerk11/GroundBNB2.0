@@ -421,3 +421,97 @@ exports.getReserationsByQuery = async function (table, query) {
     client.close();
   }
 }
+
+// this function uses mongo map-reduce to calculate the total price of all the reservations times the day diffrence from startdate to enddate for a given user
+exports.getTotalSpendings2 = async function (table, id) {
+  
+  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+
+  if (!client) {
+    return;
+  }
+
+  try {
+    const db = client.db('tables');
+    let collection = db.collection(table);
+    let map = function () {
+      emit(this.buyerid, {
+        total: this.price * (this.enddate - this.startdate) / (1000 * 60 * 60 * 24)
+      });
+    }
+    let reduce = function (key, values) {
+      let total = 0;
+      for (let i = 0; i < values.length; i++) {
+        total += values[i].total;
+      }
+      return {
+        total: total
+      };
+    }
+    // MongoDB Server: Map-Reduce is not supported for free tier at this time.
+    
+    // let result = await collection.mapReduce(map, reduce, {
+    //   query: {
+    //     buyerid: new ObjectId(id)
+    //   }
+    // });
+    //return result;
+  } catch (err) {
+    console.log("failed to fetch by query");
+    console.log(err);
+  } finally {
+    client.close();
+  }
+}
+
+//this function returns a array the total price of the reservation times the day diffrence from startdate to enddate for a given user
+exports.getTotalSpendings = async function (table, id) {
+  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+
+  if (!client) {
+    return;
+  }
+
+  try {
+    const db = client.db('tables');
+    let collection = db.collection(table);
+    let match = {
+      $match: {
+        $expr: {
+          $and: [
+            {
+              $eq: ["$buyerid", new ObjectId(id)]
+            }
+          ]
+        }
+      }
+    };
+    let aggregateContent = [
+      match,
+      {
+        $lookup: {
+          from: "apartments",
+          localField: "apartmentid",
+          foreignField: "_id",
+          as: "apartment"
+        }
+      },
+      {
+        $addFields: {
+          "apartment": {
+            $first: "$apartment"
+          }
+        }
+      }
+    ];
+    let result = await collection.aggregate(aggregateContent).toArray();
+    result = result.map((res) => {return {"price":res.apartment.price, "startdate":new Date(res.startdate),"enddate":new Date(res.enddate)}});
+    result = result.reduce(function (result,mapped_res){return result + (mapped_res.price * ((mapped_res.enddate - mapped_res.startdate) / (1000 * 60 * 60 * 24))) },0);
+    return {"result":result};
+  } catch (err) {
+    console.log("failed to fetch by query");
+    console.log(err);
+  } finally {
+    client.close();
+  }
+}

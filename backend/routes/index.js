@@ -81,6 +81,7 @@ router.get('/api/reservations/getreservationsbyownerid/:id',[authJwt.verifyToken
 // Get all reservations to my apartments query
 router.post('/api/reservations/getreservationsbyownerquery',[authJwt.verifyToken],reservationController.getReservationtsByOwnerId);
 
+router.get("/api/reservations/gettotalspendings/:id",[authJwt.verifyToken],reservationController.getTotalSpendings);
 
 /// ----- Authentication API ----- ///
 

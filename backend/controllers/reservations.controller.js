@@ -18,11 +18,11 @@ const getAllReservationsByQuery = async (req, res, next) => {//TODO
         return;
     }
     
-    console.log(query);
-    console.log("reservations getAllReservationsByQuery");
+    //console.log(query);
+    //console.log("reservations getAllReservationsByQuery");
     result = await reservationsService.getAllReservationsByQuery(query);
-    console.log(result);
-    console.log("end getAllReservationsByQuery");
+    //console.log(result);
+    //console.log("end getAllReservationsByQuery");
     res.status(200).send(result);
 };
 
@@ -95,6 +95,15 @@ const getReservationtsByOwnerQuery = async (req, res, next) => {//TODO
     res.status(200).send(result);
 }
 
+const getTotalSpendings = async (req, res, next) => {
+    id = req.params.id;
+    console.log(id);
+    console.log("reservations getTotalSpendings");
+    result = await reservationsService.getTotalSpendings(id);
+    console.log(result);
+    console.log("end getTotalSpendings");
+    res.status(200).send(result);
+}
 
 module.exports = {
     getAllReservations,
@@ -105,5 +114,6 @@ module.exports = {
     getReservationtsByBuyerId,
     getReservationtsByBuyerQuery,
     getReservationtsByOwnerId,
-    getReservationtsByOwnerQuery
+    getReservationtsByOwnerQuery,
+    getTotalSpendings
 };
