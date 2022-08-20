@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ElementRef } from '@angular/core';
+import { Component, ViewChild, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { Apartment } from '../apartment.model';
 import { ApartmentsService } from '../apartments.service';

@@ -3,7 +3,7 @@
   <mat-card-subtitle> {{apartment.city}} | ${{apartment.price}}/mo </mat-card-subtitle>
   <mat-card-content>
     <div class="image-container">
-      <img mat-card-image class="map-image" *ngIf="coordinates != null"
+      <img mat-card-image class="map-image" *ngIf="coordinates != null" 
         [src]="'https://maps.googleapis.com/maps/api/staticmap?center=' + coordinates.lat + ',' + coordinates.lng + '&zoom=14&size=250x200&key=AIzaSyBIzBq78AMY7ALjM6v0fN7Kgw3b8j-N31g'">
       <div class="marker">
         <span class="material-icons">

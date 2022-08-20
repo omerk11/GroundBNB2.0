@@ -4,6 +4,8 @@ import { Apartment } from '../apartment.model';
 import { Reservation } from 'src/app/reservations/reservation.model';
 import { ApartmentsService } from '../apartments.service';
 import { TokenStorageService } from 'src/app/users/token-storage.service';
+import { ViewChild } from '@angular/core';
+import { ElementRef } from '@angular/core';
 
 
 @Component({
@@ -18,6 +20,7 @@ export class ApartmentItemComponent implements OnInit {
   @Input() googleGeocoder!: any;
   @Output() onDeleteApartment: EventEmitter<Apartment> = new EventEmitter();
   coordinates: { lat: number, lng: number } | null = null;
+  renderImage: boolean = true;
 
   map!: any;
   constructor(
@@ -55,5 +58,14 @@ export class ApartmentItemComponent implements OnInit {
         console.error('Geocode was not successful for the following reason: ' + status);
       }
     });
+  }
+  isInViewport(element: HTMLElement) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
   }
 }
