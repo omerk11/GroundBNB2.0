@@ -69,10 +69,16 @@ export class ReservationsService {
         return this.http.post<Reservation>(this.apiURL + "/add", reservation, this.httpOptions);
     }
     // TODO: validate my reservation
-    updateReservation(reservation: Reservation): Observable<Reservation> {
-        console.log(reservation);
+    updateReservation(reservation: ReservationView): Observable<Reservation> {
+
+        const tmp = JSON.parse(JSON.stringify(reservation)) as any;
+        delete tmp.apartment;
+        delete tmp.owner;
+        delete tmp.customer;
+        delete tmp.totalprice;
+        console.log(tmp);
         const url = `${this.apiURL}/update/${reservation._id}`;
-        return this.http.put<Reservation>(url, reservation, this.httpOptions);
+        return this.http.put<Reservation>(url, tmp, this.httpOptions);
     }
 
     // TODO: validate my reservation
