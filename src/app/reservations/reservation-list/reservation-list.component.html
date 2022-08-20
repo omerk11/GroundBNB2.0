@@ -1,114 +1,113 @@
-<mat-card>
-    <form *ngIf="(isMyReservations || isForMyApartments)" (submit)="onSearch(searchForm)" #searchForm="ngForm">
+<mat-card *ngIf="(isMyReservations)">
+  <form  (submit)="onSearch(searchForm)" #searchForm="ngForm">
 
-    <mat-checkbox
-        type="button"
-        mat-fab
-        color="primary"
-        (change)="showSearch = !showSearch"
-    ><h2>Search Reservation</h2></mat-checkbox>
-    
-    <div *ngIf="showSearch">
-        <mat-form-field appearance="fill">
-            <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker" name="date" ngModel #date="ngModel">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        <br>
-        Apartment Name:
-        <mat-form-field>
-            <input 
-            matInput type="text"
-            name="apartmentname"
-            ngModel
-            minlength="3"
-            #apartmentname="ngModel">
-        </mat-form-field>
-        <br>
-        City:
-        <mat-form-field>
-            <input 
-            matInput type="text"
-            name="city"
-            ngModel
-            minlength="3"
-            #city="ngModel">
-        </mat-form-field>
-        <br>
-        <button 
-            mat-raised-button
-            color="accent"
-            type="submit">
-                Search
-        </button>
+    <div *ngIf="!isForMyApartments">
+      <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" name="date" ngModel #date="ngModel">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <br>
+      Apartment Name:
+      <mat-form-field>
+        <input matInput type="text" name="apartmentname" ngModel minlength="3" #apartmentname="ngModel">
+      </mat-form-field>
+      <br>
+      City:
+      <mat-form-field>
+        <input matInput type="text" name="city" ngModel minlength="3" #city="ngModel">
+      </mat-form-field>
+      <br>
+      <button mat-raised-button color="accent" type="submit">
+        Search
+      </button>
     </div>
-</form>
-</mat-card>
+  </form>
+</mat-card> 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Apartment Details</th>
-            <ng-container *ngIf="!isForMyApartments">
-                <th>Owner Details</th>
-            </ng-container>
-            <ng-container *ngIf="!isMyReservations">
-                <th>Costumer Details</th>
-            </ng-container>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Price Per Day/Total Price</th>
-            <th>Review</th>
-            <th>Rating</th>
-            <th *ngIf="isMyReservations">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let reservation of reservations; let i = index">
-            <td>
-                Name: {{reservation.apartment.name}}<br>
-                Address: {{reservation.apartment.city + " " + reservation.apartment.address}}<br>
-                Max-Visitors: {{reservation.apartment.maxvisitors}}
-            </td>
-            <ng-container *ngIf="!isForMyApartments">
-                <td>Owner Name: {{reservation.owner.firstname+" "+reservation.owner.lastname}}<br>
-                    Owner Phone: {{reservation.owner.phone}}</td>
-            </ng-container>
-            <ng-container *ngIf="!isMyReservations">
-                <td>Costumer Name: {{reservation.customer.firstname+" "+reservation.customer.lastname}}<br>
-                    Costumer Phone: {{reservation.customer.phone}}</td>
-            </ng-container>
-            <td>Start Date: {{reservation.startdate}}</td>
-            <td>End Date: {{reservation.enddate}}</td>
-            <td>{{reservation.apartment.price}}$/{{reservation.totalprice}}$</td>
-            <ng-container *ngIf="!isMyReservations">
-                <td>Review: {{reservation.review? reservation.review :"No Review Submited"}}</td>
-                <td>Rating: {{reservation.rating? reservation.rating:"No Rating Submited" }}</td>
-            </ng-container>
-            <ng-container *ngIf="isMyReservations">
-                <td>
-                    Review:
-                    <mat-form-field>
-                        <input matInput type="text" name="review" ngModel minlength="3" #review="ngModel"
-                            [(ngModel)]="reservation.review">
-                    </mat-form-field>
-                </td>
-                <td>
-                    Rating:
-                    <mat-form-field>
-                        <input matInput type="number" name="rating" ngModel #rating="ngModel"
-                            [(ngModel)]="reservation.rating">
-                    </mat-form-field>
-                </td>
-                <td>
-                    <button mat-raised-button color="primary" type="button" (click)="onEdit(reservation)">
-                        Update Reservation
-                    </button>
-                    <button mat-raised-button color="warn" type="button" (click)="onDelete(reservation)">Delete
-                    </button>
-                </td>
-            </ng-container>
-        </tr>
-    </tbody>
+<table mat-table [dataSource]="reservations" class="mat-elevation-z8">
+  <ng-container matColumnDef="details">
+    <th mat-header-cell *matHeaderCellDef> Apartment Details </th>
+    <td mat-cell *matCellDef="let reservation">
+      Name: {{reservation.apartment.name}}<br>
+      Address: {{reservation.apartment.city + " " + reservation.apartment.address}}<br>
+      Max-Visitors: {{reservation.apartment.maxvisitors}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="owner" *ngIf="!isForMyApartments">
+    <th mat-header-cell *matHeaderCellDef> Owner Details </th>
+    <td mat-cell *matCellDef="let reservation">
+      Owner Name: {{reservation.owner.firstname+" "+reservation.owner.lastname}}<br>
+      Owner Phone: {{reservation.owner.phone}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="customer" *ngIf="!isMyReservations">
+    <th mat-header-cell *matHeaderCellDef> Costumer Details </th>
+    <td mat-cell *matCellDef="let reservation">
+      Costumer Name: {{reservation.customer.firstname+" "+reservation.customer.lastname}}<br>
+      Costumer Phone: {{reservation.customer.phone}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="startdate">
+    <th mat-header-cell *matHeaderCellDef> Start Date </th>
+    <td mat-cell *matCellDef="let reservation"> {{reservation.startdate}} </td>
+  </ng-container>
+  <ng-container matColumnDef="enddate">
+    <th mat-header-cell *matHeaderCellDef> End Date </th>
+    <td mat-cell *matCellDef="let reservation"> {{reservation.enddate}} </td>
+  </ng-container>
+  <ng-container matColumnDef="priceperday">
+    <th mat-header-cell *matHeaderCellDef> Price Per Day/Total Price </th>
+    <td mat-cell *matCellDef="let reservation">
+
+      {{reservation.apartment.price}}$/{{reservation.totalprice}}$
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="review">
+    <th mat-header-cell *matHeaderCellDef>Review </th>
+    <td mat-cell *matCellDef="let reservation">
+
+      <ng-container *ngIf="isMyReservations">
+
+        Review:
+        <mat-form-field>
+          <input matInput type="text" name="review" ngModel minlength="3" #review="ngModel"
+            [(ngModel)]="reservation.review">
+        </mat-form-field>
+      </ng-container>
+      <ng-container *ngIf="!isMyReservations">
+        Review: {{reservation.review? reservation.review :"No Review Submited"}}
+      </ng-container>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="rating">
+    <th mat-header-cell *matHeaderCellDef> Rating</th>
+    <td mat-cell *matCellDef="let reservation">
+      <ng-container *ngIf="isMyReservations">
+        Rating:
+        <mat-form-field>
+          <input matInput type="number" name="rating" ngModel #rating="ngModel" [(ngModel)]="reservation.rating">
+        </mat-form-field>
+      </ng-container>
+      <ng-container *ngIf="!isMyReservations">
+        {{reservation.rating? reservation.rating:"No Rating Submited" }}
+      </ng-container>
+
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions" *ngIf="isMyReservations">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let reservation"> 
+    
+        <button mat-raised-button color="primary" type="button" (click)="onEdit(reservation)">
+            Update Reservation
+          </button>
+          <button mat-raised-button color="warn" type="button" (click)="onDelete(reservation)">Delete
+          </button>    
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>

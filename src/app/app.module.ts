@@ -33,6 +33,8 @@ import { UserListComponent } from './users/user-list/user-list.component';
 import { HomepageComponent } from './homepage/homepage.component';//added manualy
 import { UserLoginComponent } from './users/user-login/user-login.component';
 import { PipeModule } from './pipe/pipe.module';
+import { UserApartmentsComponent } from './users/user-apartments/user-apartments.component';
+import { UserReservationsComponent } from './users/user-reservations/user-reservations.component';
 
 
 @NgModule({
@@ -50,7 +52,9 @@ import { PipeModule } from './pipe/pipe.module';
     UserLoginComponent,
     UserEditComponent,
     UserListComponent,
-    HomepageComponent
+    HomepageComponent,
+    UserApartmentsComponent,
+    UserReservationsComponent
   ],
   imports: [
     BrowserModule,

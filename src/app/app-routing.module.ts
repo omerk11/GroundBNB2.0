@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomepageComponent } from './homepage/homepage.component';
 import { AuthGuard } from './users/auth.guard';
+import { UserApartmentsComponent } from './users/user-apartments/user-apartments.component';
+import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { UserLoginComponent } from './users/user-login/user-login.component';
+import { UserReservationsComponent } from './users/user-reservations/user-reservations.component';
 import { UsersCreateComponent } from './users/users-create/users-create.component';
 
 const routes: Routes = [
@@ -13,6 +16,18 @@ const routes: Routes = [
   {
     path: 'signup',
     component: UsersCreateComponent
+  },
+  {
+    path: 'user/settings',
+    component: UserEditComponent
+  },
+  {
+    path: 'user/apartments',
+    component: UserApartmentsComponent
+  },
+  {
+    path: 'user/reservations',
+    component: UserReservationsComponent
   },
   {
     path: '',

@@ -6,35 +6,6 @@
 (onPageChange)="page=$event"
 ></app-header>
 <main [ngSwitch]="page">
-    <div *ngSwitchCase="Page.ApartmentsList">
-        <app-apartment-search (onSearchQuery)="apartmentList.refreshList($event)" (searchedDates)="apartmentList.searchedDates=$event"></app-apartment-search>
-        <app-apartment-list #apartmentList></app-apartment-list>
-        <br><br><br>
-    </div>
-
-    <div *ngSwitchCase="Page.MyApartmentsList">
-        <app-apartment-create (onApartmentAdded)="myApartmentList.refreshList()"></app-apartment-create>
-        <app-apartment-list [isMyApartments]="true" #myApartmentList></app-apartment-list>
-        <h2>Reservations For My Apartments:</h2>
-        <app-reservation-list [isForMyApartments]="true"></app-reservation-list>
-    </div>
-
-    <div *ngSwitchCase="Page.MyReservationsList">
-        <app-reservation-list [isMyReservations]="true"></app-reservation-list>
-    </div>
-
-    <div *ngSwitchCase="Page.SignUp">
-        <app-users-create ></app-users-create>
-    </div>
-
-    <div *ngSwitchCase="Page.LogIn">
-        <app-user-login></app-user-login>
-    </div>
-
-    <div *ngSwitchCase="Page.UserEdit">
-        <app-user-edit (onDeleteUser)="page=Page.SignUp"></app-user-edit>
-    </div>
-
     <div *ngSwitchCase="Page.AdminPage">
         <h2>All Users</h2>
         <app-user-list></app-user-list>
