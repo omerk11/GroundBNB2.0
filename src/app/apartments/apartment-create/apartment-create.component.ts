@@ -38,7 +38,6 @@ export class ApartmentCreateComponent
       address:form.value.address,
       price:form.value.price,
       maxvisitors:form.value.maxvisitors,
-      images:[],
       ownerid:this.tokenStorage.getMyId(),
     }
     this.apartmentsService.addApartment(new_apartment).subscribe((apartment)=>this.onApartmentAdded.emit(null));

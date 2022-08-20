@@ -55,6 +55,7 @@ export class ReservationListComponent implements OnInit {
       }
     }
     this.refreshList();
+    this.reservationsService.getTotalSpendings().subscribe((data) => console.log(data));
   }
 
   refreshList(query: any = {}) {

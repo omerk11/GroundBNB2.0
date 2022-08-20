@@ -8,7 +8,6 @@ export interface Apartment {
     address: string;
     price: number;
     maxvisitors: number;
-    images: string[];
     ownerid: string;
     rating?: number;
 }

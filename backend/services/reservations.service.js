@@ -57,6 +57,11 @@ const getReservationtsByOwnerId = async (userId)=>{
     return result;
 }
 
+const getTotalSpendings = async (userId)=>{
+    let result = await mongoModel.getTotalSpendings(table,userId);
+    return result;
+}
+
 module.exports = {
     getAllReservations,
     getAllReservationsByQuery,
@@ -65,5 +70,6 @@ module.exports = {
     deleteReservationById,
     updateReservationById,
     getReservationtsByBuyerId,
-    getReservationtsByOwnerId 
+    getReservationtsByOwnerId,
+    getTotalSpendings
 };
