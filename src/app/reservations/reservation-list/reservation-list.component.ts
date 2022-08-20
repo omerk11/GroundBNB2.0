@@ -60,7 +60,7 @@ export class ReservationListComponent implements OnInit {
 
   onEdit(reservation: Reservation) {
     if (window.confirm("Are you sure you want to update?")) {
-      this.reservationsService.updateReservation(reservation).subscribe();
+      this.reservationsService.updateReservation(reservation as ReservationView).subscribe();
     }
   }
 
