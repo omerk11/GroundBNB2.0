@@ -222,7 +222,7 @@ exports.getApartmentsByQuery = async function (table, query) {
         {
           $addFields: {
             isAvailable: {
-              $gte: [{ $size: "$reservations" }, 1]
+              $lt: [{ $size: "$reservations" }, 1]
             }
           }
         });
@@ -422,10 +422,6 @@ exports.getReserationsByQuery = async function (table, query) {
   }
 }
 
-exports.getTotalSpendings2 = async function (table, id) {
-  
-
-}
 
 //this function returns the total price of the reservation times the day diffrence from startdate to enddate for a given user
 exports.getTotalSpendings = async function (table, id) {
