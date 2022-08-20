@@ -25,7 +25,13 @@
     </div>
   </form>
 </mat-card> 
-
+<br>
+<div *ngIf="isMyReservations">
+  <h2>
+    You have spened {{totalSpendings}}$
+  </h2>
+</div>
+<br>
 <table mat-table [dataSource]="reservations" class="mat-elevation-z8">
   <ng-container matColumnDef="details">
     <th mat-header-cell *matHeaderCellDef> Apartment Details </th>

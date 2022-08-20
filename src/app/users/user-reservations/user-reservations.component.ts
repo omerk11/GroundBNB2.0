@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ReservationsService } from 'src/app/reservations/reservations.service';
 
 @Component({
   selector: 'app-user-reservations',
@@ -7,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserReservationsComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(public reservationsService: ReservationsService) { }
   ngOnInit(): void {
+    
   }
 
 }

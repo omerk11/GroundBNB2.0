@@ -26,6 +26,8 @@ export class ReservationListComponent implements OnInit {
     public reservationsService: ReservationsService)// this will create a new property ReservationsService in this class
   { }
 
+  totalSpendings: number = 0;
+
   ngOnInit(): void {
     if (!this.isForMyApartments) {
       this.displayedColumns = ['details', "owner", 'startdate', 'enddate', 'priceperday', "review", "rating"];
@@ -36,8 +38,9 @@ export class ReservationListComponent implements OnInit {
         this.displayedColumns = ['details', 'startdate', 'enddate', 'priceperday', "review", "rating", "actions"];
       }
     }
+    this.reservationsService.getTotalSpendings().subscribe((data) => this.totalSpendings = data.result);
+  
     this.refreshList();
-    this.reservationsService.getTotalSpendings().subscribe((data) => console.log(data));
   }
 
   refreshList(query: any = {}) {

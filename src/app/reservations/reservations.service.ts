@@ -87,9 +87,9 @@ export class ReservationsService {
         return this.http.delete<Reservation>(url);
     }
 
-    getTotalSpendings(): Observable<number>
+    getTotalSpendings(): Observable<any>
     {
         const url = `${this.apiURL}/gettotalspendings/${this.tokenStorage.getMyId()}`;
-        return this.http.get<number>(url);
+        return this.http.get<any>(url);
     }
 }
