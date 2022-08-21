@@ -49,7 +49,7 @@ export class ReservationListComponent implements OnInit {
     //     this.displayedColumns = ['details', 'startdate', 'enddate', 'priceperday', "review", "rating", "actions"];
     //   }
     // }
-    this.reservationsService.getTotalSpendings().subscribe((data) => this.totalSpendings = data.result);
+    // this.reservationsService.getTotalSpendings().subscribe((data) => this.totalSpendings = data.result);
   
     this.refreshList();
   }
