@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminpageComponent } from './adminpage/adminpage.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { AuthGuard } from './users/auth.guard';
 import { UserApartmentsComponent } from './users/user-apartments/user-apartments.component';
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: 'user/reservations',
     component: UserReservationsComponent
+  },
+  {
+    path: 'adminpage',
+    component: AdminpageComponent
   },
   {
     path: '',

@@ -20,6 +20,6 @@ export class UserListComponent implements OnInit {
 
   refreshList()
   {
-    this.authservice.getUsers().subscribe((users)=>{this.users = users;console.log(users);});
+    this.authservice.getUsers().subscribe((users)=>{this.users = users;});
   }
 }

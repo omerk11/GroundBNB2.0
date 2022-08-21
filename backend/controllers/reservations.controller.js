@@ -21,7 +21,7 @@ const getAllReservationsByQuery = async (req, res, next) => {//TODO
     //console.log(query);
     //console.log("reservations getAllReservationsByQuery");
     result = await reservationsService.getAllReservationsByQuery(query);
-    //console.log(result);
+    console.log(result);
     //console.log("end getAllReservationsByQuery");
     res.status(200).send(result);
 };

@@ -43,6 +43,20 @@ export class ApartmentSearchComponent {
     if (form.value.description != "") {
       query.description = form.value.description;
     }
+    // Date Validations
+    if(query.startdate >= query.enddate) {
+      //swap the dates
+      let temp = query.startdate;
+      query.startdate = query.enddate;
+      query.enddate = temp;
+      
+    }
+    const today = new Date();
+    if(query.startdate < today) {
+      alert("Dates must be in the future");
+      return;
+    }
+
     this.onSearchQuery.emit(query);
 
     if (form.value.startdate && form.value.enddate) {

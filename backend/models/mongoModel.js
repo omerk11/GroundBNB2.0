@@ -316,6 +316,8 @@ exports.getApartmentsByQuery = async function (table, query) {
 }
 
 exports.getReserationsByQuery = async function (table, query) {
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  console.log(query);
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -412,7 +414,10 @@ exports.getReserationsByQuery = async function (table, query) {
           $eq: ["$containsApartmentName", true]
         });
     }
-    aggregateContent.push(match);
+    if (match.$match.$expr.$and.length > 0) {
+      aggregateContent.push(match);
+    }
+    
     return await collection.aggregate(aggregateContent).toArray();
   } catch (err) {
     console.log("failed to fetch by query");
@@ -509,7 +514,7 @@ exports.getTotalSpendings = async function (table, id) {
     result = result.reduce(function (result,mapped_res){return result + (mapped_res.price * ((mapped_res.enddate - mapped_res.startdate) / (1000 * 60 * 60 * 24))) },0);
     return {"result":result};
   } catch (err) {
-    console.log("failed to fetch by query");
+    console.log("failed to fetch by query total spendings");
     console.log(err);
   } finally {
     client.close();
