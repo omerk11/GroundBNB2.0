@@ -1,6 +1,7 @@
-<form (submit)="onSubmit(apartmentForm)" #apartmentForm="ngForm">
+<form  (submit)="onSubmit(apartmentForm)" #apartmentForm="ngForm">
     <h2>Edit Apartment</h2>
-    Name:
+    <strong>Name:</strong><br>
+    <div >
     <mat-form-field>
         <input 
         matInput type="text"
@@ -13,7 +14,7 @@
         <mat-error *ngIf="name.invalid">Please enter title</mat-error>
     </mat-form-field>
     <br>
-    Description:
+    <strong>Description:</strong><br>
     <mat-form-field>
         <textarea matInput
         rows=6 
@@ -26,20 +27,15 @@
         <mat-error *ngIf="description.invalid">Please enter description</mat-error>
     </mat-form-field>
     <br>
-    City:
+    <strong>City:</strong><br>
     <mat-form-field>
-        <input 
-        matInput type="text"
-        name="city"
-        ngModel
-        required
-        minlength="3"
-        #city="ngModel"
-        [(ngModel)]="apartment.city">
+        <mat-select matInput name="city" ngModel required minlength="3" #city="ngModel">
+          <mat-option *ngFor="let city of cities" value="{{this.apartment.city}}">{{city}}</mat-option>
+        </mat-select>
         <mat-error *ngIf="city.invalid">Please enter city</mat-error>
-    </mat-form-field>
-    <br>
-    Address:
+      </mat-form-field>
+      <br>
+      <strong>Address:</strong><br>
     <mat-form-field>
         <input 
         matInput type="text"
@@ -52,7 +48,7 @@
         <mat-error *ngIf="address.invalid">Please enter address</mat-error>
     </mat-form-field>
     <br>
-    Price:
+    <strong>Price:</strong><br>
     <mat-form-field>
         <input 
         matInput type="number"
@@ -64,7 +60,7 @@
         <mat-error *ngIf="price.invalid">Please enter price</mat-error>
     </mat-form-field>
     <br>
-    Max-Visitors:
+    <strong>Max-Visitors:</strong><br>
     <mat-form-field>
         <input 
         matInput type="number"
@@ -88,4 +84,5 @@
         type="button"
         (click)="onDelete()">Delete
     </button>
+</div>
 </form>

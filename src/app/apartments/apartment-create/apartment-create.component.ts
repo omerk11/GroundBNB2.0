@@ -37,6 +37,14 @@ export class ApartmentCreateComponent {
       maxvisitors: form.value.maxvisitors,
       ownerid: this.tokenStorage.getMyId(),
     }
+    if(new_apartment.price < 0) {
+      alert("Price must be greater than 0");
+      return;
+    }
+    if(new_apartment.maxvisitors < 0) {
+      alert("Max Visitors must be greater than 0");
+      return;
+    }
     this.apartmentsService.addApartment(new_apartment).subscribe((apartment) => this.onApartmentAdded.emit(null));
   }
 }
