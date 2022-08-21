@@ -99,6 +99,12 @@ export class ReservationListComponent implements OnInit {
   }
 
   onEdit(reservation: Reservation) {
+    if(reservation.rating){
+      if(reservation.rating >5 || reservation.rating <0 ){
+        window.alert('Please choose rating between 1-5');
+      }
+      return
+    }
     if (window.confirm("Are you sure you want to update?")) {
       this.reservationsService.updateReservation(reservation as ReservationView).subscribe();
     }
