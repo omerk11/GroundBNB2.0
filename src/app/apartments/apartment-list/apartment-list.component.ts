@@ -3,6 +3,7 @@ import { Component, ViewChild, EventEmitter, Input, OnDestroy, OnInit, Output } 
 import { Loader } from '@googlemaps/js-api-loader';
 import { Apartment } from '../apartment.model';
 import { ApartmentsService } from '../apartments.service';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 declare var require: any
 let AhoCorasick = require('ahocorasick');
 
@@ -11,7 +12,7 @@ let AhoCorasick = require('ahocorasick');
   templateUrl: './apartment-list.component.html',
   styleUrls: ['./apartment-list.component.scss']
 })
-export class ApartmentListComponent implements OnInit {
+export class ApartmentListComponent implements OnInit, OnDestroy {
   @Input() isMyApartments: boolean = false;
 
   apartments: Apartment[] = [];
@@ -24,6 +25,7 @@ export class ApartmentListComponent implements OnInit {
 
   isLoading: boolean = true;
   displaySearch: boolean = false;
+  webSocket!: WebSocketSubject<unknown>;
 
   constructor(public apartmentsService: ApartmentsService) {
     this.googleLoder.load().then(() => this.googleGeocoder = new google.maps.Geocoder());
@@ -31,6 +33,21 @@ export class ApartmentListComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshList();
+    this.webSocket = webSocket('ws://localhost:8080');
+
+    this.webSocket.subscribe({
+      next: (msg: any) => {
+        const data = JSON.parse(msg);
+        this.removeApartmentFromList(data.apartmentId, true);
+        console.log('message received: ' + msg);
+      }, // Called whenever there is a message from the server.
+      error: err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
+      complete: () => console.log('complete') // Called when connection is closed (for whatever reason).
+     });
+  }
+
+  ngOnDestroy(): void {
+    this.webSocket && this.webSocket.complete(); // Closes the connection.
   }
 
   refreshList(query?: any) {
@@ -76,8 +93,12 @@ export class ApartmentListComponent implements OnInit {
     return res.length > 0;
   }
 
-  removeApartmentFromList(apartment: Apartment) {
-    this.apartments = this.apartments.filter((ap) => apartment._id !== ap._id);
+  removeApartmentFromList(id: string, fromWebSocket: boolean = false) {
+    if(!this.apartments.find(k => k._id === id)) return;
+    if(!fromWebSocket)  {
+      this.webSocket.next({ apartmentId: id });
+    }
+    this.apartments = [...this.apartments.filter((ap) => id !== ap._id)];
   }
 
   sortApartments(sort: string) {

@@ -30,12 +30,14 @@ const addApartment = async (req, res, next) => {
 
 const deleteApartmentById = async (req, res, next) => {
     let id = req.params.id;
-    console.log("apartment deleteApartmentById");
-    console.log(id);
+    // console.log("apartment deleteApartmentById");
+    // console.log(id);
     let result = await apartmentService.deleteApartmentById(id);
+
+
     // console.log(result);
-    console.log("end deleteApartmentById");
-    res.status(200).send('ok');
+    // console.log("end deleteApartmentById");
+    res.status(200).send(result);
 };
 
 const updateApartmentById = async (req, res, next) => {

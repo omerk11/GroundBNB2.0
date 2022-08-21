@@ -1,3 +1,4 @@
+const wsServer = require('./websocket');
 const app = require('./backend/app');
 const debug = require("debug")("node-angular");
 const http = require('http');
@@ -44,3 +45,20 @@ const server = http.createServer(app);
 server.on("error", onError);
 server.on("listening", onListening);
 server.listen(port);
+
+
+
+wsServer.on('request', function (request) {
+    var connection = request.accept();
+    console.log((new Date()) + ' Connection accepted.');
+    connection.on('message', function (message) {
+        if (message.type === 'utf8') {
+            console.log('Received Message: ' + message.utf8Data);
+            connection.sendUTF(JSON.stringify(message.utf8Data));
+            wsServer.broadcast(JSON.stringify(message.utf8Data));
+        }
+    });
+    connection.on('close', function (reasonCode, description) {
+        console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
+    });
+  });
