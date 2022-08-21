@@ -26,6 +26,7 @@ export class ApartmentCreateComponent {
       console.log("error");
       return;
     }
+    
 
     const new_apartment: Apartment =
     {
