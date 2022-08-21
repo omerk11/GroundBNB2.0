@@ -9,12 +9,19 @@
   <button mat-raised-button color="accent" type="button" (click)="sortApartments('rating')">Rating
   </button>
 </div>
+
 <app-apartment-search *ngIf="displaySearch" (onSearchQuery)="refreshList($event)" (searchedDates)="searchedDates=$event"></app-apartment-search>
 <section class="apartments" *ngIf="apartments.length > 0">
-  <app-apartment-item class="apartment-item" *ngFor="let apartment of apartments" [apartment]="apartment"
+  <app-apartment-item class="apartment-item" *ngFor="let apartment of this.apartments.slice(this.MAXPERPAGE*this.currpage,this.MAXPERPAGE*(this.currpage+1))" [apartment]="apartment"
     [searchedDates]="searchedDates" [googleGeocoder]="googleGeocoder" [allowEdit]="isMyApartments"
     (onDeleteApartment)="removeApartmentFromList($event)"></app-apartment-item>
 </section>
-
+<div>
+  <p>
+    <button mat-raised-button color="accent" type="button" (click)="prevPage()">Prev</button>
+    {{this.currpage  +1 }}
+    <button mat-raised-button color="accent" type="button" (click)="nextPage()">Next</button>
+  </p>
+</div>
 <p class="info-text mat-body-1" *ngIf="!isLoading && apartments.length <= 0">No Apartments</p>
 <p class="info-text mat-body-1" *ngIf="isLoading">Loading...</p>

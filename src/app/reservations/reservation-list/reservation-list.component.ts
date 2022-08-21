@@ -36,7 +36,7 @@ export class ReservationListComponent implements OnInit {
       if (this.isMyReservations) {
         this.displayedColumns = ['details', "owner", 'startdate', 'enddate', 'priceperday', "review", "rating", "actions"];
       } else {
-        this.displayedColumns = ['details',"owner","customer", 'startdate', 'enddate', 'priceperday', "review", "rating", "actions"];
+        this.displayedColumns = ['details',"owner","customer", 'startdate', 'enddate', 'priceperday', "review", "rating"];
       }
     }
 

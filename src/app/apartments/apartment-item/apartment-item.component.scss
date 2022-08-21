@@ -3,8 +3,9 @@
 }
 
 .apartment {
-  overflow: hidden;
+  overflow: scroll;
   width: 250px;
+  height: 500px;
 
   .bio {
     margin-top: 10px;
