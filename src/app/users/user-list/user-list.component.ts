@@ -9,6 +9,7 @@ import { User } from '../user.model';
 })
 export class UserListComponent implements OnInit {
   users: User[] = [];
+  displayedColumns = ['username','email', 'phone', 'roles'];
   constructor(public authservice: AuthService) { 
 
   }

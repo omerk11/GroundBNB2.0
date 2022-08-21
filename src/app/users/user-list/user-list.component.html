@@ -1,8 +1,34 @@
-<div *ngFor="let user of users">
+<!-- <div *ngFor="let user of users">
 
         <p>{{user.firstname + " " + user.lastname}}</p>
         <p>{{user.email}}</p>
         <p>{{user.phone}}</p>
+        <p>{{user.roles}}</p>
         <br>
 
-</div>
+</div> -->
+
+<mat-card>
+      <table mat-table [dataSource]="users" class="mat-elevation-z8">
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef> User Name </th>
+          <td mat-cell *matCellDef="let user">
+                {{user.firstname+' '+user.lastname}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+        </ng-container>
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef> Phone </th>
+          <td mat-cell *matCellDef="let user"> {{user.phone}} </td>
+        </ng-container>
+        <ng-container matColumnDef="roles">
+          <th mat-header-cell *matHeaderCellDef> Roles </th>
+          <td mat-cell *matCellDef="let user"> {{user.roles}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      
