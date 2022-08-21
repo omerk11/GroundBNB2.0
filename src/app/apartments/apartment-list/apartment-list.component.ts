@@ -18,6 +18,9 @@ export class ApartmentListComponent implements OnInit {
   searchedDates!: object;
   sortOrder: string = "rating_desc";
   prevQuery!: any;
+  currpage = 0;
+  MAXPERPAGE = 8;
+
 
   googleLoder: Loader = new Loader({ apiKey: "AIzaSyBIzBq78AMY7ALjM6v0fN7Kgw3b8j-N31g" });
   googleGeocoder: any;
@@ -31,6 +34,21 @@ export class ApartmentListComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshList();
+  }
+
+  nextPage(){
+    if(this.apartments.slice((this.MAXPERPAGE*(this.currpage+1)),(this.MAXPERPAGE*(this.currpage+2))).length <1)
+    {
+      return;
+    }
+    this.currpage++;
+  }
+
+  prevPage(){
+    if(this.currpage<=0){
+      return;
+    }
+    this.currpage--;
   }
 
   refreshList(query?: any) {

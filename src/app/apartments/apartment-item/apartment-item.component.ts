@@ -6,6 +6,7 @@ import { ApartmentsService } from '../apartments.service';
 import { TokenStorageService } from 'src/app/users/token-storage.service';
 import { ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
+import { timeInterval } from 'rxjs';
 
 
 @Component({
@@ -55,6 +56,7 @@ export class ApartmentItemComponent implements OnInit {
       if (status == 'OK') {
         this.coordinates = { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() };
       } else {
+        setTimeout(this.codeAddress,1000);
         console.error('Geocode was not successful for the following reason: ' + status);
       }
     });
