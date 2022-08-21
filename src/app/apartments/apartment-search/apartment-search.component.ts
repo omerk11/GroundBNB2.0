@@ -52,7 +52,7 @@ export class ApartmentSearchComponent {
       
     }
     const today = new Date();
-    if(query.startdate < today || query.enddate < today) {
+    if(query.startdate < today) {
       alert("Dates must be in the future");
       return;
     }
