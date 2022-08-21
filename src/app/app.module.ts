@@ -35,6 +35,7 @@ import { UserLoginComponent } from './users/user-login/user-login.component';
 import { PipeModule } from './pipe/pipe.module';
 import { UserApartmentsComponent } from './users/user-apartments/user-apartments.component';
 import { UserReservationsComponent } from './users/user-reservations/user-reservations.component';
+import { AdminpageComponent } from './adminpage/adminpage.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { UserReservationsComponent } from './users/user-reservations/user-reserv
     UserListComponent,
     HomepageComponent,
     UserApartmentsComponent,
-    UserReservationsComponent
+    UserReservationsComponent,
+    AdminpageComponent
   ],
   imports: [
     BrowserModule,

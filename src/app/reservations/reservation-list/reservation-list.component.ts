@@ -36,7 +36,7 @@ export class ReservationListComponent implements OnInit {
       if (this.isMyReservations) {
         this.displayedColumns = ['details', "owner", 'startdate', 'enddate', 'priceperday', "review", "rating", "actions"];
       } else {
-        this.displayedColumns = ['details', 'startdate', 'enddate', 'priceperday', "review", "rating", "actions"];
+        this.displayedColumns = ['details',"owner","customer", 'startdate', 'enddate', 'priceperday', "review", "rating", "actions"];
       }
     }
 
@@ -49,7 +49,15 @@ export class ReservationListComponent implements OnInit {
     //     this.displayedColumns = ['details', 'startdate', 'enddate', 'priceperday', "review", "rating", "actions"];
     //   }
     // }
-    this.reservationsService.getTotalSpendings().subscribe((data) => this.totalSpendings = data.result);
+    this.reservationsService.getTotalSpendings().subscribe((data) => 
+    {
+      try {
+        this.totalSpendings = data.result;
+      }
+      catch (e) {
+        this.totalSpendings = 0;
+      }
+    });
   
     this.refreshList();
   }
@@ -74,6 +82,10 @@ export class ReservationListComponent implements OnInit {
             const timeDifference = new Date(item.enddate).getTime() - new Date(item.startdate).getTime();
             const daysDifference = timeDifference / (1000 * 3600 * 24);
             item.totalprice = item.apartment.price * daysDifference;
+            list.push(item);
+          }
+          else {
+            item.totalprice = NaN;
             list.push(item);
           }
           return list;

@@ -36,9 +36,9 @@
   <ng-container matColumnDef="details">
     <th mat-header-cell *matHeaderCellDef> Apartment Details </th>
     <td mat-cell *matCellDef="let reservation">
-      Name: {{reservation.apartment.name}}<br>
-      Address: {{reservation.apartment.city + " " + reservation.apartment.address}}<br>
-      Max-Visitors: {{reservation.apartment.maxvisitors}}
+      Name: {{reservation.apartment !== undefined? reservation.apartment.name : "No Apartment"}}<br>
+      Address: {{reservation.apartment !== undefined?  reservation.apartment.city + " " + reservation.apartment.address : "No Apartment"}}<br>
+      Max-Visitors: {{reservation.apartment !== undefined ? reservation.apartment.maxvisitors : "No Apartment"}}
     </td>
   </ng-container>
   <ng-container matColumnDef="owner" *ngIf="!isForMyApartments">
@@ -67,7 +67,7 @@
     <th mat-header-cell *matHeaderCellDef> Price Per Day/Total Price </th>
     <td mat-cell *matCellDef="let reservation">
 
-      {{reservation.apartment.price}}$/{{reservation.totalprice}}$
+      {{reservation.apartment !== undefined? reservation.apartment.price :"No Price"}}$/{{reservation.totalprice}}$
     </td>
   </ng-container>
   <ng-container matColumnDef="review">
@@ -99,15 +99,14 @@
       <ng-container *ngIf="!isMyReservations">
         {{reservation.rating? reservation.rating:"No Rating Submited" }}
       </ng-container>
-
     </td>
   </ng-container>
 
-  <ng-container matColumnDef="actions" *ngIf="isMyReservations">
+  <ng-container matColumnDef="actions" *ngIf="!isForMyApartments">
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let reservation"> 
     
-        <button mat-raised-button color="primary" type="button" (click)="onEdit(reservation)">
+        <button *ngIf="isMyReservations" mat-raised-button color="primary" type="button" (click)="onEdit(reservation)">
             Update Reservation
           </button>
           <button mat-raised-button color="warn" type="button" (click)="onDelete(reservation)">Delete

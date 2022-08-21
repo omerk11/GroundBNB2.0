@@ -134,7 +134,7 @@ const logout = async (req, res) => {
 const getUsersList = async (req,res)=>{
   console.log("auth getAllUsers");
   result = await usersService.getAllUsers();
-  console.log(result);
+  //console.log(result);
   console.log("end auth getAllUsers");
   res.status(200).send(result);
 }
