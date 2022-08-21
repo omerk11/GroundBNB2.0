@@ -27,8 +27,13 @@
 </mat-card> 
 <br>
 <div *ngIf="isMyReservations">
-  <h2>
+  <h2 class="title">
     You have spened {{totalSpendings}}$
+  </h2>
+</div>
+<div *ngIf="!(isMyReservations || isForMyApartments)">
+  <h2 class="title">
+    All Reservations
   </h2>
 </div>
 <br>

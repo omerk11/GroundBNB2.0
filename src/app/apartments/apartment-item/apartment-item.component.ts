@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ReservationsService } from 'src/app/reservations/reservations.service';
 import { Apartment } from '../apartment.model';
 import { Reservation } from 'src/app/reservations/reservation.model';
@@ -19,11 +19,12 @@ export class ApartmentItemComponent implements OnInit {
   @Input() searchedDates!: any;
   @Input() allowEdit: boolean = false;
   @Input() googleGeocoder!: any;
-  @Output() onDeleteApartment: EventEmitter<Apartment> = new EventEmitter();
+  @Output() onDeleteApartment: EventEmitter<string> = new EventEmitter();
   coordinates: { lat: number, lng: number } | null = null;
   renderImage: boolean = true;
 
   map!: any;
+
   constructor(
     public apartmentsService: ApartmentsService,
     public reservationsService: ReservationsService,
@@ -32,6 +33,7 @@ export class ApartmentItemComponent implements OnInit {
 
   ngOnInit() {
     this.codeAddress();
+
   }
 
   addReservation() {
@@ -47,7 +49,7 @@ export class ApartmentItemComponent implements OnInit {
   }
 
   onDelete() {
-    this.onDeleteApartment.emit(this.apartment);
+    this.onDeleteApartment.emit(this.apartment._id);
   }
 
   codeAddress() {
