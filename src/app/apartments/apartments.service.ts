@@ -50,8 +50,8 @@ export class ApartmentsService {
     }
 
     // TODO: validate my apartment
-    deleteApartment(apartment: Apartment): Observable<Apartment> {
+    deleteApartment(apartment: Apartment) {
         const url = `${this.apiURL}/delete/${apartment._id}`;
-        return this.http.delete<Apartment>(url);
+        return this.http.delete(url);
     }
 }
