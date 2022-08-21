@@ -316,8 +316,6 @@ exports.getApartmentsByQuery = async function (table, query) {
 }
 
 exports.getReserationsByQuery = async function (table, query) {
-  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-  console.log(query);
   const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
 
   if (!client) {
@@ -510,7 +508,7 @@ exports.getTotalSpendings = async function (table, id) {
       }
     ];
     let result = await collection.aggregate(aggregateContent).toArray();
-    result = result.map((res) => {return {"price":res.apartment.price, "startdate":new Date(res.startdate),"enddate":new Date(res.enddate)}});
+    result = result.map((res) => {return {"price":res.apartment!==undefined?res.apartment.price:0, "startdate":new Date(res.startdate),"enddate":new Date(res.enddate)}});
     result = result.reduce(function (result,mapped_res){return result + (mapped_res.price * ((mapped_res.enddate - mapped_res.startdate) / (1000 * 60 * 60 * 24))) },0);
     return {"result":result};
   } catch (err) {
