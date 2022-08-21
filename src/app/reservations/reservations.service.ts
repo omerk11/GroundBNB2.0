@@ -82,8 +82,9 @@ export class ReservationsService {
     }
 
     // TODO: validate my reservation
-    deleteReservation(reservation: Reservation): Observable<Reservation> {
+    deleteReservation(reservation: Reservation): Observable<any> {
         const url = `${this.apiURL}/delete/${reservation._id}`;
+        
         return this.http.delete<Reservation>(url);
     }
 

@@ -112,7 +112,11 @@ export class ReservationListComponent implements OnInit {
 
   onDelete(reservation: Reservation) {
     if (window.confirm("Are you sure you want to delete?")) {
-      this.reservationsService.deleteReservation(reservation).subscribe(() => {
+      this.reservationsService.deleteReservation(reservation).subscribe((message) => {
+        console.log(message);
+        if(message.deletedCount === 0){
+          alert('No Reservation found!');
+        }       
         this.removeReservationFromList(reservation);
       });
     }

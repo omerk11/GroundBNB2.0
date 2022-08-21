@@ -25,7 +25,7 @@ const addApartment = async (req, res, next) => {
     let result = await apartmentService.addApartment(apartment);
     // console.log(result);
     console.log("end addApartment");
-    res.status(200).send();
+    res.status(200).send(result);
 };
 
 const deleteApartmentById = async (req, res, next) => {
@@ -49,7 +49,7 @@ const updateApartmentById = async (req, res, next) => {
     result = await apartmentService.updateApartmentById(id,updates);
     // console.log(result);
     console.log("end updateApartment");
-    res.status(200).send('ok');
+    res.status(200).send(result);
 };
 
 const getApartmentsByOwnerId = async(req, res, next)=>{

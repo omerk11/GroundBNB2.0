@@ -304,7 +304,7 @@ exports.getApartmentsByQuery = async function (table, query) {
       }
     });
     let res = await collection.aggregate(aggregateContent).toArray();
-    console.log(res);
+    // console.log(res);
     return res;
   } catch (err) {
     console.log("failed to fetch by query");

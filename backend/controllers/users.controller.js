@@ -23,7 +23,7 @@ const addUser = async (req, res, next) => {
     result = await usersService.addUser(user);
     // console.log(result);
     // console.log("end addUser");
-    res.status(200).send();
+    res.status(200).send(result);
 };
 
 const deleteUserById = async (req, res, next) => {
