@@ -62,6 +62,11 @@ const getTotalSpendings = async (userId)=>{
     return result;
 }
 
+const getReservationsPerDay = async () => {
+    const result = await mongoModel.getReservationsPerDay(table);
+    return result;
+}
+
 module.exports = {
     getAllReservations,
     getAllReservationsByQuery,
@@ -71,5 +76,6 @@ module.exports = {
     updateReservationById,
     getReservationtsByBuyerId,
     getReservationtsByOwnerId,
-    getTotalSpendings
+    getTotalSpendings,
+    getReservationsPerDay
 };

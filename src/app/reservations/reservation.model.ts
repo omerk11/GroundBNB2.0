@@ -19,3 +19,7 @@ export interface ReservationView extends Reservation {
     totalprice: number;
  }
 
+export interface ReservationsPerDay {
+    date: string;
+    reservationsCount: number;
+}
