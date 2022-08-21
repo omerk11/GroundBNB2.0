@@ -45,8 +45,11 @@ export class ApartmentSearchComponent {
     }
     // Date Validations
     if(query.startdate >= query.enddate) {
-      alert("Start date must be before end date");
-      return;
+      //swap the dates
+      let temp = query.startdate;
+      query.startdate = query.enddate;
+      query.enddate = temp;
+      
     }
     const today = new Date();
     if(query.startdate < today || query.enddate < today) {
