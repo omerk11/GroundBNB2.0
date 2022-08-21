@@ -4,7 +4,7 @@
       <div class="logo">
         GroundBNB
       </div>
-      <button mat-raised-button color="accent" type="button" routerLink="/">
+      <button *ngIf="isLoggedIn" mat-raised-button color="accent" type="button" routerLink="/">
         All Apartments
       </button>
       <button *ngIf="isLoggedIn" mat-raised-button color="accent" type="button" routerLink="/user/apartments">

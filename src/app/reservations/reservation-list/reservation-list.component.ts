@@ -29,15 +29,26 @@ export class ReservationListComponent implements OnInit {
   totalSpendings: number = 0;
 
   ngOnInit(): void {
-    if (!this.isForMyApartments) {
-      this.displayedColumns = ['details', "owner", 'startdate', 'enddate', 'priceperday', "review", "rating"];
+
+    if (this.isForMyApartments) {
+      this.displayedColumns = ['details', "customer", 'startdate', 'enddate', 'priceperday', "review", "rating"];
     } else {
-      if (!this.isMyReservations) {
-        this.displayedColumns = ['details', "customer", 'startdate', 'enddate', 'priceperday', "review", "rating"];
+      if (this.isMyReservations) {
+        this.displayedColumns = ['details', "owner", 'startdate', 'enddate', 'priceperday', "review", "rating", "actions"];
       } else {
         this.displayedColumns = ['details', 'startdate', 'enddate', 'priceperday', "review", "rating", "actions"];
       }
     }
+
+    // if (!this.isForMyApartments) {
+    //   this.displayedColumns = ['details', "owner", 'startdate', 'enddate', 'priceperday', "review", "rating"];
+    // } else {
+    //   if (!this.isMyReservations) {
+    //     this.displayedColumns = ['details', "customer", 'startdate', 'enddate', 'priceperday', "review", "rating"];
+    //   } else {
+    //     this.displayedColumns = ['details', 'startdate', 'enddate', 'priceperday', "review", "rating", "actions"];
+    //   }
+    // }
     this.reservationsService.getTotalSpendings().subscribe((data) => this.totalSpendings = data.result);
   
     this.refreshList();

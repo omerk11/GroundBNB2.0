@@ -34,6 +34,8 @@ export class ApartmentListComponent implements OnInit {
   }
 
   refreshList(query?: any) {
+    this.isLoading = true;
+    this.apartments = [];
     if (this.isMyApartments) {
       this.apartmentsService.getApartmentsByOwnerId().subscribe((apartments) => {
         this.apartments = apartments;
