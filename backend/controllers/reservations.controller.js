@@ -85,6 +85,11 @@ const getReservationtsByOwnerId = async (req, res, next) => {
     res.status(200).send(result);
 }
 
+const getReservationsPerDay = async (req, res, next) => {
+    result = await reservationsService.getReservationsPerDay();
+    res.status(200).send(result);
+}
+
 const getReservationtsByOwnerQuery = async (req, res, next) => {//TODO
     id = req.params.id;
     // console.log(id);
@@ -115,5 +120,6 @@ module.exports = {
     getReservationtsByBuyerQuery,
     getReservationtsByOwnerId,
     getReservationtsByOwnerQuery,
-    getTotalSpendings
+    getTotalSpendings,
+    getReservationsPerDay
 };

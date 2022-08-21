@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";//added manualy
 
-import { Reservation, ReservationView } from "./reservation.model";
+import { Reservation, ReservationsPerDay, ReservationView } from "./reservation.model";
 import { TokenStorageService } from "../users/token-storage.service";
 
 @Injectable({ providedIn: "root" })
@@ -64,6 +64,10 @@ export class ReservationsService {
     //     return this.http.post<Reservation[]>(postUrl, query, this.httpOptions);
 
     // }
+
+    getreservationsperday(): Observable<ReservationsPerDay[]> {
+        return this.http.get<ReservationsPerDay[]>(`${this.apiURL}/getreservationsperday`, this.httpOptions);
+    }
 
     addReservation(reservation: Reservation): Observable<Reservation> {
         return this.http.post<Reservation>(this.apiURL + "/add", reservation, this.httpOptions);

@@ -518,3 +518,46 @@ exports.getTotalSpendings = async function (table, id) {
     client.close();
   }
 }
+
+
+exports.getReservationsPerDay = async (table) => {
+  const client = await MongoClient.connect(uri).catch(err => { console.log(err); });
+  if (!client) {
+    return [];
+  }
+
+  try {
+    const db = client.db('tables');
+    let collection = db.collection(table);
+    let aggregateContent = [{
+      $group: {
+          _id: "$startdate",
+          reservations: {
+              $push: "$$ROOT"
+          }
+      }
+  },
+  {
+      $project: {
+          _id: 0,
+          date: { $first: { $split: [ { $toString: "$_id" }, "T" ] } },
+          reservationsCount: { $size: "$reservations" }
+      }
+  },
+  {
+      $sort: {
+          _id: 1
+      }
+  }];
+
+    let result = await collection.aggregate(aggregateContent).toArray();
+    return result;
+    
+  } catch (err) {
+    console.log("getReservationsPerDay ERROR");
+    console.log(err);
+    return [];
+  } finally {
+    client.close();
+  }
+}

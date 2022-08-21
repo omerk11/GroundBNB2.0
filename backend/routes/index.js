@@ -60,6 +60,10 @@ router.get('/api/reservations', [authJwt.verifyToken, authJwt.isAdmin],reservati
 router.post('/api/reservations/getreservationsbyquery', [authJwt.verifyToken],reservationController.getAllReservationsByQuery); 
 
 
+// Reservations Statistics Per Day
+router.get('/api/reservations/getreservationsperday', [authJwt.verifyToken, authJwt.isAdmin],reservationController.getReservationsPerDay); 
+
+
 // Add reservation
 router.post('/api/reservations/add',[authJwt.verifyToken],reservationController.addReservation);
 
