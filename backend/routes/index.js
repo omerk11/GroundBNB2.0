@@ -87,6 +87,9 @@ router.post('/api/reservations/getreservationsbyownerquery',[authJwt.verifyToken
 
 router.get("/api/reservations/gettotalspendings/:id",[authJwt.verifyToken],reservationController.getTotalSpendings);
 
+
+router.get("/api/reservations/getreservationsperday",[authJwt.verifyToken],reservationController.getReservationsPerDay)
+
 /// ----- Authentication API ----- ///
 
 // User sign up

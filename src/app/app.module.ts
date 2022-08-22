@@ -36,6 +36,7 @@ import { PipeModule } from './pipe/pipe.module';
 import { UserApartmentsComponent } from './users/user-apartments/user-apartments.component';
 import { UserReservationsComponent } from './users/user-reservations/user-reservations.component';
 import { AdminpageComponent } from './adminpage/adminpage.component';
+import { UsersStatisticsComponent } from './adminpage/users-statistics/users-statistics.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { AdminpageComponent } from './adminpage/adminpage.component';
     HomepageComponent,
     UserApartmentsComponent,
     UserReservationsComponent,
-    AdminpageComponent
+    AdminpageComponent,
+    UsersStatisticsComponent
   ],
   imports: [
     BrowserModule,

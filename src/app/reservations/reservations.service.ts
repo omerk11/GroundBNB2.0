@@ -80,7 +80,7 @@ export class ReservationsService {
         delete tmp.owner;
         delete tmp.customer;
         delete tmp.totalprice;
-        console.log(tmp);
+        // console.log(tmp);
         const url = `${this.apiURL}/update/${reservation._id}`;
         return this.http.put<Reservation>(url, tmp, this.httpOptions);
     }
@@ -97,4 +97,5 @@ export class ReservationsService {
         const url = `${this.apiURL}/gettotalspendings/${this.tokenStorage.getMyId()}`;
         return this.http.get<any>(url);
     }
+
 }

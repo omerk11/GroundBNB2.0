@@ -21,5 +21,5 @@ export interface ReservationView extends Reservation {
 
 export interface ReservationsPerDay {
     date: string;
-    reservationsCount: number;
+    reservationsCount: string ;
 }
