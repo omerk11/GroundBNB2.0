@@ -87,7 +87,7 @@ const getReservationtsByOwnerId = async (req, res, next) => {
 
 const getReservationsPerDay = async (req, res, next) => {
     result = await reservationsService.getReservationsPerDay();
-    console.log(result);
+    // console.log(result);
     result.forEach(element => {
         element.reservationsCount = String(element.reservationsCount);
     });
