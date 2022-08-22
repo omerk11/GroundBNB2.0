@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { NotificationsService } from 'angular2-notifications';
 import { AuthService } from '../auth.service';
 import { TokenStorageService } from '../token-storage.service';
 import { User } from '../user.model';
@@ -13,20 +14,23 @@ export class UsersCreateComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
+  isCreating: boolean = false;
   @Output() onSignUp: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private authService: AuthService, private tokenStorage: TokenStorageService) { }
+    private authService: AuthService, private tokenStorage: TokenStorageService, private notificationsService: NotificationsService) { }
   ngOnInit(): void {
   }
   reloadPage(): void {
     window.location.reload();
   }
   onSubmit(form: NgForm): void {
-    if (form.invalid) {
+    if (form.invalid || this.isCreating) {
       console.log("error");
       return;
     }
+
+    this.isCreating = true;
     let emailRegex = /^(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
     let phoneRegex = /^\d{10}$/;
     if (!emailRegex.test(form.value.email)) {
@@ -71,6 +75,9 @@ export class UsersCreateComponent implements OnInit {
         this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
       }
+
     });
+    this.notificationsService.success('User created', 'User has been created', { timeOut: 3000, showProgressBar: true , animate: 'fade' , position:['bottom','right']});
+    this.isCreating = false;
   }
 }

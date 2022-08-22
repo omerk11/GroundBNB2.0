@@ -20,19 +20,23 @@ const routes: Routes = [
   },
   {
     path: 'user/settings',
-    component: UserEditComponent
+    component: UserEditComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'user/apartments',
-    component: UserApartmentsComponent
+    component: UserApartmentsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'user/reservations',
-    component: UserReservationsComponent
+    component: UserReservationsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'adminpage',
-    component: AdminpageComponent
+    component: AdminpageComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '',

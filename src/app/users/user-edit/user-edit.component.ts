@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { NotificationsService } from 'angular2-notifications';
 import { AuthService } from '../auth.service';
 import { TokenStorageService } from '../token-storage.service';
 import { User } from '../user.model';
@@ -12,8 +13,9 @@ import { User } from '../user.model';
 export class UserEditComponent implements OnInit {
   @Output() onDeleteUser: EventEmitter<any> = new EventEmitter(); 
 
-  constructor(public tokenService: TokenStorageService, private authService: AuthService) { }
+  constructor(public tokenService: TokenStorageService, private authService: AuthService, private notificationsService: NotificationsService) { }
   user: any = {};
+
   ngOnInit(): void {
     let tmp = this.tokenService.getUser();
     this.setUserVar(tmp);
@@ -49,6 +51,7 @@ export class UserEditComponent implements OnInit {
 
       this.tokenService.saveUser(modifiedUser);
       this.setUserVar(modifiedUser);
+      this.notificationsService.success('User updated', 'User has been updated', { timeOut: 3000, showProgressBar: true , animate: 'fade' , position:['bottom','right']});
     }
     );
 

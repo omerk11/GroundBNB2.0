@@ -56,6 +56,14 @@ exports.addElement = async function (table, element) {
         element.ownerid = new ObjectId(element.ownerid);
         break;
       case "reservations":
+        //varify that this reservation doesnt already exist by apartment id buyer id and dates
+        let query = { apartmentid: new ObjectId(element.apartmentid), buyerid: new ObjectId(element.buyerid), startdate: element.startdate, enddate: element.enddate };
+        let check = await collection.findOne(query);
+        if (check) {
+          return { error: "reservation already exists" };
+        }
+
+
         element.ownerid = new ObjectId(element.ownerid);
         element.buyerid = new ObjectId(element.buyerid);
         element.apartmentid = new ObjectId(element.apartmentid);

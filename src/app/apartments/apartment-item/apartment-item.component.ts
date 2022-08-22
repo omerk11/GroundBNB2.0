@@ -4,6 +4,7 @@ import { Apartment } from '../apartment.model';
 import { Reservation } from 'src/app/reservations/reservation.model';
 import { ApartmentsService } from '../apartments.service';
 import { TokenStorageService } from 'src/app/users/token-storage.service';
+import { NotificationsService } from 'angular2-notifications';
 import { ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { timeInterval } from 'rxjs';
@@ -20,15 +21,19 @@ export class ApartmentItemComponent implements OnInit {
   @Input() allowEdit: boolean = false;
   @Input() googleGeocoder!: any;
   @Output() onDeleteApartment: EventEmitter<string> = new EventEmitter();
+  @Output() onReservationsAdded: EventEmitter<string> = new EventEmitter();
+
   coordinates: { lat: number, lng: number } | null = null;
   renderImage: boolean = true;
-
+  isReserving: boolean = false;
   map!: any;
 
   constructor(
     public apartmentsService: ApartmentsService,
     public reservationsService: ReservationsService,
-    private tokenStorage: TokenStorageService) { }
+    private tokenStorage: TokenStorageService,
+    private notificationsService: NotificationsService
+  ) { }
 
 
   ngOnInit() {
@@ -37,19 +42,32 @@ export class ApartmentItemComponent implements OnInit {
   }
 
   addReservation() {
-    if (this.searchedDates && this.apartment._id) {
+    if (this.searchedDates && this.apartment._id && !this.isReserving) {
+      this.isReserving = true;
       this.reservationsService.addReservation({
         apartmentid: this.apartment._id,
         ownerid: this.apartment.ownerid,
         buyerid: this.tokenStorage.getMyId(),
         startdate: this.searchedDates.startdate,
         enddate: this.searchedDates.enddate,
-      } as Reservation).subscribe();
-    }
+      } as Reservation).subscribe((msg:any)=>{
+        if(msg.error)
+        {
+          this.notificationsService.error('Error', msg.error);
+
+        }
+        else{
+          this.notificationsService.success('Reservation added', 'Reservation has been added', { timeOut: 3000, showProgressBar: true , animate: 'fade' , position:['bottom','right']});
+          this.onReservationsAdded.emit(this.apartment._id);
+        }
+        this.isReserving = false;
+      });
+      }
   }
 
   onDelete() {
     this.onDeleteApartment.emit(this.apartment._id);
+    
   }
 
   codeAddress() {
