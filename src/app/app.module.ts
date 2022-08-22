@@ -16,6 +16,8 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+
 
 
 import { AppComponent } from './app.component';
@@ -76,7 +78,8 @@ import { AdminpageComponent } from './adminpage/adminpage.component';
     MatNativeDateModule,
     HttpClientModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    SimpleNotificationsModule.forRoot()
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

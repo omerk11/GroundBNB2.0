@@ -4,6 +4,7 @@ import { Loader } from '@googlemaps/js-api-loader';
 import { Apartment } from '../apartment.model';
 import { ApartmentsService } from '../apartments.service';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { NotificationsService } from 'angular2-notifications';
 declare var require: any
 let AhoCorasick = require('ahocorasick');
 
@@ -30,7 +31,7 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
   displaySearch: boolean = false;
   webSocket!: WebSocketSubject<unknown>;
 
-  constructor(public apartmentsService: ApartmentsService) {
+  constructor(public apartmentsService: ApartmentsService, private notificationsService: NotificationsService) {
     this.googleLoder.load().then(() => this.googleGeocoder = new google.maps.Geocoder());
   }
 
@@ -42,7 +43,7 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
       next: (msg: any) => {
         const data = JSON.parse(msg);
         this.removeApartmentFromList(data.apartmentId, true);
-        console.log('message received: ' + msg);
+        //console.log('message received: ' + msg);
       }, // Called whenever there is a message from the server.
       error: err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
       complete: () => console.log('complete') // Called when connection is closed (for whatever reason).
@@ -117,6 +118,9 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
       this.webSocket.next({ apartmentId: id });
     }
     this.apartments = [...this.apartments.filter((ap) => id !== ap._id)];
+    if(this.isMyApartments) {
+      this.notificationsService.warn('Apartment deleted', 'Apartment has been deleted', { timeOut: 3000, showProgressBar: true , animate: 'fade', position:['bottom','right']});
+    }
   }
 
   sortApartments(sort: string) {
@@ -136,5 +140,9 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
     this.sortOrder = sort;
 
     this.refreshList();
+  }
+
+  newReservationAdded(id: string) {
+    this.removeApartmentFromList(id);
   }
 }
