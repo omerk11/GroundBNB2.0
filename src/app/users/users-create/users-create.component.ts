@@ -34,12 +34,12 @@ export class UsersCreateComponent implements OnInit {
     let emailRegex = /^(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
     let phoneRegex = /^\d{10}$/;
     if (!emailRegex.test(form.value.email)) {
-      window.alert("Please enter a valid email address!");
+      this.errorMessage = "Please enter a valid email address!";
       return;
     }
 
     if (!phoneRegex.test(form.value.phone)) {
-      window.alert("Please enter a valid phone number!");
+      this.errorMessage = "Please enter a valid phone number!";
       return;
     }
 
