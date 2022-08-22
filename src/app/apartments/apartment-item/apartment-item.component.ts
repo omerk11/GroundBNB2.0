@@ -50,9 +50,16 @@ export class ApartmentItemComponent implements OnInit {
         buyerid: this.tokenStorage.getMyId(),
         startdate: this.searchedDates.startdate,
         enddate: this.searchedDates.enddate,
-      } as Reservation).subscribe(()=>{
-        this.notificationsService.success('Reservation added', 'Reservation has been added', { timeOut: 3000, showProgressBar: true , animate: 'fade' , position:['bottom','right']});
-        this.onReservationsAdded.emit(this.apartment._id);
+      } as Reservation).subscribe((msg:any)=>{
+        if(msg.error)
+        {
+          this.notificationsService.error('Error', msg.error);
+
+        }
+        else{
+          this.notificationsService.success('Reservation added', 'Reservation has been added', { timeOut: 3000, showProgressBar: true , animate: 'fade' , position:['bottom','right']});
+          this.onReservationsAdded.emit(this.apartment._id);
+        }
         this.isReserving = false;
       });
       }
