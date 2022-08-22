@@ -40,6 +40,14 @@
       <mat-error *ngIf="maxvisitors.invalid">Please enter max visitors</mat-error>
     </mat-form-field>
     <br>
+    <mat-error
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="errorMessage"
+            >
+              {{errorMessage}}
+            </mat-error>
+    <br>
     <button mat-raised-button color="accent" type="submit">
       save apartment
     </button>

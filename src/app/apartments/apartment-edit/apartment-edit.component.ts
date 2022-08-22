@@ -10,6 +10,7 @@ import { ApartmentsService } from '../apartments.service';
   styleUrls: ['./apartment-edit.component.css']
 })
 export class ApartmentEditComponent {
+  errorMessage: string = "";
   @Input() apartment!: Apartment;
   @Output() onDeleteApartment: EventEmitter<Apartment> = new EventEmitter();
 
@@ -22,12 +23,15 @@ export class ApartmentEditComponent {
 
 
   onSubmit(form: NgForm) {
-    if(this.apartment.price < 0) {
-      alert("Price must be greater than 0");
-      return;
-    }
-    if(this.apartment.maxvisitors < 0) {
-      alert("Max Visitors must be greater than 0");
+    
+    if(this.apartment.maxvisitors < 0 || this.apartment.price < 0)
+    {
+      if(this.apartment.price < 0) {
+        this.errorMessage = "Price must be greater than 0 ";
+      }
+      if(this.apartment.maxvisitors < 0) {
+        this.errorMessage = this.errorMessage + "Max Visitors must be greater than 0";
+      }
       return;
     }
     if (window.confirm("Are you sure you want to update?")) {

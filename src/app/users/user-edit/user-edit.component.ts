@@ -12,6 +12,7 @@ import { User } from '../user.model';
 })
 export class UserEditComponent implements OnInit {
   @Output() onDeleteUser: EventEmitter<any> = new EventEmitter(); 
+  errorMessage = '';
 
   constructor(public tokenService: TokenStorageService, private authService: AuthService, private notificationsService: NotificationsService) { }
   user: any = {};
@@ -39,6 +40,18 @@ export class UserEditComponent implements OnInit {
   onSubmit(form: NgForm): void {
     if (form.invalid) {
       console.log("error");
+      return;
+    }
+
+    let emailRegex = /^(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
+    let phoneRegex = /^\d{10}$/;
+    if (!emailRegex.test(form.value.email)) {
+      this.errorMessage = "Please enter a valid email address!";
+      return;
+    }
+
+    if (!phoneRegex.test(form.value.phone)) {
+      this.errorMessage = "Please enter a valid phone number!";
       return;
     }
 

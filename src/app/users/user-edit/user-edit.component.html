@@ -78,6 +78,8 @@
         <mat-error *ngIf="newpassword.invalid">Please enter a password</mat-error>
     </mat-form-field>
     <br>
+    <mat-error *ngIf="errorMessage">{{errorMessage}}</mat-error>
+    <br>
     <button 
         mat-raised-button
         color="accent"
