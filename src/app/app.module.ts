@@ -39,6 +39,7 @@ import { UserApartmentsComponent } from './users/user-apartments/user-apartments
 import { UserReservationsComponent } from './users/user-reservations/user-reservations.component';
 import { AdminpageComponent } from './adminpage/adminpage.component';
 import { UsersStatisticsComponent } from './adminpage/users-statistics/users-statistics.component';
+import { CmsPipePipe } from './reservations/cms-pipe.pipe';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { UsersStatisticsComponent } from './adminpage/users-statistics/users-sta
     UserApartmentsComponent,
     UserReservationsComponent,
     AdminpageComponent,
-    UsersStatisticsComponent
+    UsersStatisticsComponent,
+    CmsPipePipe
   ],
   imports: [
     BrowserModule,

@@ -30,12 +30,6 @@
   <h2 class="title">
     You have spened {{totalSpendings}}$
   </h2>
-  <h2 class="title">
-      Your 3 most visited cities are:
-  </h2>
-  <div>
-    
-  </div>
 </div>
 <div *ngIf="!(isMyReservations || isForMyApartments)">
   <h2 class="title">
@@ -127,3 +121,8 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+<br>
+<div class="title" *ngIf="!(isMyReservations || isForMyApartments)">
+  <h2> Most Visited Cities</h2>
+  <h3>{{this.top3 | cmsPipe}} </h3>
+</div>

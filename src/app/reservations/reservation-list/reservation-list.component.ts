@@ -29,7 +29,6 @@ export class ReservationListComponent implements OnInit {
     public reservationsService: ReservationsService)// this will create a new property ReservationsService in this class
   { }
   top3 = new Map();
-  csm = []
   totalSpendings: number = 0;
 
   ngOnInit(): void {
@@ -89,7 +88,9 @@ export class ReservationListComponent implements OnInit {
       .subscribe(reservations => {
         this.reservations = reservations;
         this.reservations.forEach(element => {
-          this.sketch.update(element.apartment.city,1);
+          if(element.apartment){
+            this.sketch.update(element.apartment.city,1);
+          }
         });
         this.cities.forEach(element=>{
           let tmp = this.sketch.query(element);

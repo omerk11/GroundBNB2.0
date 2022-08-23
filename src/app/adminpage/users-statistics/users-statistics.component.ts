@@ -20,7 +20,7 @@ export class UsersStatisticsComponent implements OnInit {
   ngOnInit(): void {
     this.reservationsService.getreservationsperday().subscribe((data)=>{
       this.data=data;
-      console.log(data);
+      // console.log(data);
       this.createSvg();
       this.drawBars(this.data);
     });
