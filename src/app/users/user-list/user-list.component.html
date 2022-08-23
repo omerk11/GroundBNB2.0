@@ -9,9 +9,10 @@
 </div> -->
 <h2 class="title">
         All Users
+        <button mat-raised-button *ngIf="this.users.length>5" (click)="toggle()">{{allRowsExpanded ? 'Collapse Users List' : 'Expand Users List'}}</button>
       </h2>
-
-      <table mat-table [dataSource]="users" class="mat-elevation-z8">
+      <br>
+      <table mat-table [dataSource]="allRowsExpanded? users:users.slice(0,3)" class="mat-elevation-z8" >
         <ng-container matColumnDef="username">
           <th mat-header-cell *matHeaderCellDef> User Name </th>
           <td mat-cell *matCellDef="let user">
@@ -33,4 +34,6 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+      
+
       

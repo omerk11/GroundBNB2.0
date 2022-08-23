@@ -10,6 +10,7 @@ import { User } from '../user.model';
 export class UserListComponent implements OnInit {
   users: User[] = [];
   displayedColumns = ['username','email', 'phone', 'roles'];
+  allRowsExpanded: boolean = false;
   constructor(public authservice: AuthService) { 
 
   }
@@ -22,5 +23,9 @@ export class UserListComponent implements OnInit {
   refreshList()
   {
     this.authservice.getUsers().subscribe((users)=>{this.users = users;});
+  }
+
+  toggle() {
+    this.allRowsExpanded = !this.allRowsExpanded;
   }
 }

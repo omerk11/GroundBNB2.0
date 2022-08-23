@@ -30,14 +30,26 @@
   <h2 class="title">
     You have spened {{totalSpendings}}$
   </h2>
+  <h2 class="title">
+    My Reservations
+    <button mat-raised-button *ngIf="this.reservations.length>5" (click)="toggle()">{{allRowsExpanded ? 'Collapse Reservations List' : 'Expand Reservations List'}}</button>
+  </h2>
 </div>
 <div *ngIf="!(isMyReservations || isForMyApartments)">
   <h2 class="title">
     All Reservations
+    <button mat-raised-button *ngIf="this.reservations.length>5" (click)="toggle()">{{allRowsExpanded ? 'Collapse Reservations List' : 'Expand Reservations List'}}</button>
   </h2>
 </div>
 <br>
-<table mat-table [dataSource]="reservations" class="mat-elevation-z8">
+<div *ngIf="isForMyApartments">
+  <h2 class="'title">
+    Reservations For My Apartments
+    <button mat-raised-button *ngIf="this.reservations.length>5" (click)="toggle()">{{allRowsExpanded ? 'Collapse Reservations List' : 'Expand Reservations List'}}</button>
+  </h2>
+</div>
+<br>
+<table mat-table [dataSource]="allRowsExpanded? reservations:reservations.slice(0,3)" class="mat-elevation-z8">
   <ng-container matColumnDef="details">
     <th mat-header-cell *matHeaderCellDef> Apartment Details </th>
     <td mat-cell *matCellDef="let reservation">
@@ -124,5 +136,5 @@
 <br>
 <div class="title" *ngIf="!(isMyReservations || isForMyApartments)">
   <h2> Most Visited Cities</h2>
-  <h3>{{this.top3 | cmsPipe}} </h3>
+  <h3 [innerHTML] = 'this.top3 | cmsPipe'> </h3>
 </div>
