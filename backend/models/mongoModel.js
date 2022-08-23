@@ -14,6 +14,7 @@ exports.getAll = async function (table) {
   try {
     const db = client.db('tables');
     let collection = db.collection(table);
+    
     let query = {};
     let res = await collection.find(query).toArray();
     return res;
@@ -198,6 +199,8 @@ exports.getApartmentsByQuery = async function (table, query) {
   try {
     const db = client.db('tables');
     let collection = db.collection(table);
+    //
+    //console.log(await collection.distinct("city"));//
     let match = {
       $match: {
         $and: []
