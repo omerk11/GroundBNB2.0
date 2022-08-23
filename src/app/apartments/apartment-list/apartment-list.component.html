@@ -11,7 +11,7 @@
 </div>
 
 <app-apartment-search *ngIf="displaySearch" (onSearchQuery)="refreshList($event)" (searchedDates)="searchedDates=$event"></app-apartment-search>
-<div class="paging">
+<div class="paging" *ngIf="apartments.length > 0">
   <p>
     <button mat-raised-button color="accent" type="button" (click)="prevPage()">Prev</button>
     Current Page: {{this.currpage  +1 }}
@@ -23,7 +23,7 @@
     [searchedDates]="searchedDates" [googleGeocoder]="googleGeocoder" [allowEdit]="isMyApartments"
     (onDeleteApartment)="removeApartmentFromList($event)" (onReservationsAdded)="newReservationAdded($event)"></app-apartment-item>
 </section>
-<div class="paging">
+<div class="paging" *ngIf="apartments.length > 0">
   <p>
     <button mat-raised-button color="accent" type="button" (click)="prevPage()">Prev</button>
     Current Page: {{this.currpage  +1 }}
