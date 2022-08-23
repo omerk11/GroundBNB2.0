@@ -25,7 +25,7 @@
         Login
       </button>
       <button *ngIf="isLoggedIn" mat-raised-button color="accent" type="button" routerLink="/user/settings">
-        {{currentUser}}
+        {{currentUser | userNameCapital}}
       </button>
       <button *ngIf="isLoggedIn" mat-raised-button color="accent" type="button" (click)="logout()">
         Logout
