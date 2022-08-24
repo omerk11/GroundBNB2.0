@@ -2,7 +2,8 @@ const { ObjectID, ObjectId } = require('bson');
 
 const MongoClient = require('mongodb').MongoClient;
 
-const uri = "mongodb+srv://admin:1q2w3e@cluster0.hd0gejt.mongodb.net/?retryWrites=true&w=majority";
+const uri = 
+      
 
 
 exports.getAll = async function (table) {
