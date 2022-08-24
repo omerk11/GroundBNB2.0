@@ -24,7 +24,7 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
   MAXPERPAGE = 8;
 
 
-  googleLoder: Loader = new Loader({ apiKey: "AIzaSyBIzBq78AMY7ALjM6v0fN7Kgw3b8j-N31g" });
+  googleLoder: Loader = new Loader({ apiKey: "" });
   googleGeocoder: any;
 
   isLoading: boolean = true;

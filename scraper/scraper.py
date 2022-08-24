@@ -8,7 +8,7 @@ import csv
 from geopy.geocoders import GoogleV3
 
 def create_apartment(userid,apartmentlist):
-    geolocator = GoogleV3(api_key='AIzaSyBIzBq78AMY7ALjM6v0fN7Kgw3b8j-N31g')
+    geolocator = GoogleV3(api_key=)
     name = apartmentlist[4]
     des = apartmentlist[5]
     city = apartmentlist[12].split(",")[0]
